@@ -4,6 +4,7 @@
         "**/*.user": true,  
         "**/.git": true,  
         "**/bin": true,  
-        "**/obj": true
+        "**/obj": true,
+        "**/packages":true
     }  
 }
