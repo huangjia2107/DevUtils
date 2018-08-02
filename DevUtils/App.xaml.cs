@@ -8,8 +8,9 @@ namespace DevUtils
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : PrismApplication
+    public partial class App : Application //PrismApplication
     {
+        /*
         protected override Window CreateShell()
         {
             return Container.Resolve<MainWindow>();
@@ -19,5 +20,6 @@ namespace DevUtils
         {
 
         }
+         */
     }
 }
