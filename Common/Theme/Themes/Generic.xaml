@@ -6,6 +6,7 @@
         
         <ResourceDictionary Source="/Theme;component/Themes/Styles/ButtonStyle.xaml"/>
         <ResourceDictionary Source="/Theme;component/Themes/Styles/RepeatButtonStyle.xaml"/>
+        <ResourceDictionary Source="/Theme;component/Themes/Styles/StatusToggleStyle.xaml"/>
 
         <ResourceDictionary Source="/Theme;component/Themes/Styles/NumericBoxStyle.xaml"/>
         <ResourceDictionary Source="/Theme;component/Themes/Styles/UserWindowStyle.xaml"/>

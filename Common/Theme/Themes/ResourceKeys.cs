@@ -30,17 +30,21 @@ namespace Theme.Themes
             get { return new ComponentResourceKey(typeof(ResourceKeys), TitlebarButtonStyle); }
         }
 
-        public const string FgWhiteCloseBtnStyle = "FgWhiteCloseBtnStyle";
-        public static ComponentResourceKey FgWhiteCloseBtnStyleKey
+        public const string TitlebarCloseButtonStyle = "TitlebarCloseButtonStyle";
+        public static ComponentResourceKey TitlebarCloseButtonStyleKey
         {
-            get { return new ComponentResourceKey(typeof(ResourceKeys), FgWhiteCloseBtnStyle); }
-        }
+            get { return new ComponentResourceKey(typeof(ResourceKeys), TitlebarCloseButtonStyle); }
+        } 
+        
+        #endregion
 
-        public const string FgRedCloseBtnStyle = "FgRedCloseBtnStyle";
-        public static ComponentResourceKey FgRedCloseBtnStyleKey
+        #region StatusToggle
+
+        public const string StatusToggleStyle = "StatusToggleStyle";
+        public static ComponentResourceKey StatusToggleStyleKey
         {
-            get { return new ComponentResourceKey(typeof(ResourceKeys), FgRedCloseBtnStyle); }
-        }
+            get { return new ComponentResourceKey(typeof(ResourceKeys), StatusToggleStyle); }
+        } 
 
         #endregion
 
@@ -50,6 +54,22 @@ namespace Theme.Themes
         public static ComponentResourceKey NormalRepeatButtonStyleKey
         {
             get { return new ComponentResourceKey(typeof(ResourceKeys), NormalRepeatButtonStyle); }
+        }
+
+        #endregion
+
+        #region UserWindow
+
+        public const string NormalUserWindowStyle = "NormalUserWindowStyle";
+        public static ComponentResourceKey NormalUserWindowStyleKey
+        {
+            get { return new ComponentResourceKey(typeof(ResourceKeys), NormalUserWindowStyle); }
+        }
+
+        public const string MiniUserWindowStyle = "MiniUserWindowStyle";
+        public static ComponentResourceKey MiniUserWindowStyleKey
+        {
+            get { return new ComponentResourceKey(typeof(ResourceKeys), MiniUserWindowStyle); }
         }
 
         #endregion

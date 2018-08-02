@@ -33,49 +33,27 @@
     <Style x:Key="{x:Static themes:ResourceKeys.TitlebarButtonStyleKey}" 
            BasedOn="{StaticResource {x:Static themes:ResourceKeys.NoBgButtonBaseStyleKey}}" 
            TargetType="{x:Type Button}">
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Foreground" Value="#999999"/>
         <Style.Triggers>
             <Trigger Property="IsMouseOver"  Value="True">
-                <Setter Property="Background" Value="#FFC1C1C1"/>
-                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="Foreground" Value="#333333"/>
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="#FFDDDDDD"/>
-                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="Foreground" Value="#333333"/>
             </Trigger>
         </Style.Triggers>
-    </Style>
-
-    <!--Close Button [ Fg:White ]-->
-    <Style x:Key="{x:Static themes:ResourceKeys.FgWhiteCloseBtnStyleKey}" 
+    </Style> 
+     
+    <Style x:Key="{x:Static themes:ResourceKeys.TitlebarCloseButtonStyleKey}" 
            BasedOn="{StaticResource {x:Static themes:ResourceKeys.NoBgButtonBaseStyleKey}}"  
            TargetType="{x:Type Button}">
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Foreground" Value="#999999"/>
         <Style.Triggers>
-            <Trigger Property="IsMouseOver"  Value="True">
-                <Setter Property="Background" Value="#FFDC0505"/>
-                <Setter Property="Foreground" Value="White"/>
+            <Trigger Property="IsMouseOver"  Value="True"> 
+                <Setter Property="Foreground" Value="Red"/>
             </Trigger>
-            <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="#FFC30404"/>
-                <Setter Property="Foreground" Value="White"/>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
-    <!--Close Button [ Fg:Red ]-->
-    <Style x:Key="{x:Static themes:ResourceKeys.FgRedCloseBtnStyleKey}"
-           BasedOn="{StaticResource {x:Static themes:ResourceKeys.NoBgButtonBaseStyleKey}}"  
-           TargetType="{x:Type Button}">
-        <Setter Property="Foreground" Value="Red"/>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver"  Value="True">
-                <Setter Property="Background" Value="#FFDC0505"/>
-                <Setter Property="Foreground" Value="White"/>
-            </Trigger>
-            <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="#FFC30404"/>
-                <Setter Property="Foreground" Value="White"/>
+            <Trigger Property="IsPressed"  Value="True">
+                <Setter Property="Foreground" Value="Red"/>
             </Trigger>
         </Style.Triggers>
     </Style>
