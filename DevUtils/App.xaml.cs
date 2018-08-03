@@ -1,7 +1,9 @@
 ﻿using System.Windows;
+using DevUtils.Datas;
 using DevUtils.Views;
 using Prism.Autofac;
 using Prism.Ioc;
+using Prism.Modularity;
 
 namespace DevUtils
 {
@@ -18,8 +20,8 @@ namespace DevUtils
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
+            
         }
-         */
+        */
     }
 }

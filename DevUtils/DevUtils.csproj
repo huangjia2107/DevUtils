@@ -74,11 +74,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Datas\DataManager.cs" />
     <Compile Include="Models\AppData.cs" />
     <Compile Include="Models\SettingModel.cs" />
     <Compile Include="Models\UtilData.cs" />
     <Compile Include="Models\UtilModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\SettingControlViewModel.cs" />
+    <Compile Include="ViewModels\UtilControlViewModel.cs" />
+    <Compile Include="Views\SettingControl.xaml.cs">
+      <DependentUpon>SettingControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UtilControl.xaml.cs">
+      <DependentUpon>UtilControl.xaml</DependentUpon>
+    </Compile>
     <Page Include="Views\CommonWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -98,6 +107,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\SettingControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UtilControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -131,6 +148,10 @@
     <ProjectReference Include="..\Common\Theme\Theme.csproj">
       <Project>{12d80fee-9832-44c6-bfc0-f7702175742b}</Project>
       <Name>Theme</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Interfaces\UtilModelInterface\UtilModelInterface.csproj">
+      <Project>{70665092-fd85-43d8-9aee-06cc59556595}</Project>
+      <Name>UtilModelInterface</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -24,18 +24,30 @@ namespace Theme.Themes
             get { return new ComponentResourceKey(typeof(ResourceKeys), NormalButtonStyle); }
         }
 
-        public const string TitlebarButtonStyle = "TitlebarButtonStyle";
-        public static ComponentResourceKey TitlebarButtonStyleKey
+        public const string MiniWindowTitlebarButtonStyle = "MiniWindowTitlebarButtonStyle";
+        public static ComponentResourceKey MiniWindowTitlebarButtonStyleKey
         {
-            get { return new ComponentResourceKey(typeof(ResourceKeys), TitlebarButtonStyle); }
+            get { return new ComponentResourceKey(typeof(ResourceKeys), MiniWindowTitlebarButtonStyle); }
         }
 
-        public const string TitlebarCloseButtonStyle = "TitlebarCloseButtonStyle";
-        public static ComponentResourceKey TitlebarCloseButtonStyleKey
+        public const string MiniWindowTitlebarCloseButtonStyle = "MiniWindowTitlebarCloseButtonStyle";
+        public static ComponentResourceKey MiniWindowTitlebarCloseButtonStyleKey
         {
-            get { return new ComponentResourceKey(typeof(ResourceKeys), TitlebarCloseButtonStyle); }
-        } 
-        
+            get { return new ComponentResourceKey(typeof(ResourceKeys), MiniWindowTitlebarCloseButtonStyle); }
+        }
+
+        public const string MainWindowTitlebarBtnStyle = "MainWindowTitlebarBtnStyle";
+        public static ComponentResourceKey MainWindowTitlebarBtnStyleKey
+        {
+            get { return new ComponentResourceKey(typeof(ResourceKeys), MainWindowTitlebarBtnStyle); }
+        }
+
+        public const string MainWindowTitlebarCloseBtnStyle = "MainWindowTitlebarCloseBtnStyle";
+        public static ComponentResourceKey MainWindowTitlebarCloseBtnStyleKey
+        {
+            get { return new ComponentResourceKey(typeof(ResourceKeys), MainWindowTitlebarCloseBtnStyle); }
+        }
+
         #endregion
 
         #region StatusToggle
@@ -70,6 +82,22 @@ namespace Theme.Themes
         public static ComponentResourceKey MiniUserWindowStyleKey
         {
             get { return new ComponentResourceKey(typeof(ResourceKeys), MiniUserWindowStyle); }
+        }
+
+        #endregion
+
+        #region ListBox
+
+        public const string NormalListBoxStyle = "NormalListBoxStyle";
+        public static ComponentResourceKey NormalListBoxStyleKey
+        {
+            get { return new ComponentResourceKey(typeof(ResourceKeys), NormalListBoxStyle); }
+        }
+
+        public const string HorizontalListBoxStyle = "HorizontalListBoxStyle";
+        public static ComponentResourceKey HorizontalListBoxStyleKey
+        {
+            get { return new ComponentResourceKey(typeof(ResourceKeys), HorizontalListBoxStyle); }
         }
 
         #endregion

@@ -7,11 +7,12 @@ namespace DevUtils.Models
     {
         public SettingModel()
         {
-            ShortcutCountPerRow = 5;
+            ShortcutCount = 5;
         }
 
-        public int ShortcutCountPerRow { get; set; }
-
-
+        public int ShortcutCount { get; set; }
+        public bool IsStartupWithSystem { get; set; }
+        public bool IsSystemTrayAfterStartup { get; set; }
+        public bool IsSystemTrayAfterClose { get; set; }
     }
 }

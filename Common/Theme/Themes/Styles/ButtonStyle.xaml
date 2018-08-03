@@ -30,7 +30,7 @@
     </Style>
 
     <!--Titlebar Button-->
-    <Style x:Key="{x:Static themes:ResourceKeys.TitlebarButtonStyleKey}" 
+    <Style x:Key="{x:Static themes:ResourceKeys.MiniWindowTitlebarButtonStyleKey}" 
            BasedOn="{StaticResource {x:Static themes:ResourceKeys.NoBgButtonBaseStyleKey}}" 
            TargetType="{x:Type Button}">
         <Setter Property="Foreground" Value="#999999"/>
@@ -44,7 +44,7 @@
         </Style.Triggers>
     </Style> 
      
-    <Style x:Key="{x:Static themes:ResourceKeys.TitlebarCloseButtonStyleKey}" 
+    <Style x:Key="{x:Static themes:ResourceKeys.MiniWindowTitlebarCloseButtonStyleKey}" 
            BasedOn="{StaticResource {x:Static themes:ResourceKeys.NoBgButtonBaseStyleKey}}"  
            TargetType="{x:Type Button}">
         <Setter Property="Foreground" Value="#999999"/>
@@ -58,5 +58,36 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="{x:Static themes:ResourceKeys.MainWindowTitlebarBtnStyleKey}" 
+           BasedOn="{StaticResource {x:Static themes:ResourceKeys.NoBgButtonBaseStyleKey}}" 
+           TargetType="{x:Type Button}">
+        <Setter Property="Foreground" Value="White"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver"  Value="True">
+                <Setter Property="Background" Value="#B3B3B3"/>
+                <Setter Property="Foreground" Value="Black"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="#9F9F9F"/>
+                <Setter Property="Foreground" Value="Black"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+     
+    <Style x:Key="{x:Static themes:ResourceKeys.MainWindowTitlebarCloseBtnStyleKey}" 
+           BasedOn="{StaticResource {x:Static themes:ResourceKeys.NoBgButtonBaseStyleKey}}"  
+           TargetType="{x:Type Button}">
+        <Setter Property="Foreground" Value="White"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver"  Value="True">
+                <Setter Property="Background" Value="#FFDC0505"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="#FFC30404"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
     
 </ResourceDictionary>

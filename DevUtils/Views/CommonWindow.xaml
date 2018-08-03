@@ -3,9 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:Theme.Controls;assembly=Theme"
         xmlns:themes="clr-namespace:Theme.Themes;assembly=Theme"
-        Style="{DynamicResource {x:Static themes:ResourceKeys.NormalUserWindowStyleKey}}"
-        Title="CommonWindow"  WindowStartupLocation="CenterScreen">
+                     Style="{DynamicResource {x:Static themes:ResourceKeys.NormalUserWindowStyleKey}}"
+        ResizeMode="NoResize"
+        Title="Window"  WindowStartupLocation="CenterScreen">
     <Grid>
-        
+
     </Grid>
 </controls:UserWindow>

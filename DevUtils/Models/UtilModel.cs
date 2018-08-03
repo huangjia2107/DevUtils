@@ -1,4 +1,5 @@
 ﻿using System;
+using UtilModelInterface;
 
 namespace DevUtils.Models
 {
@@ -6,5 +7,6 @@ namespace DevUtils.Models
     public class UtilModel
     {
         public string Name { get; set; }
+        public string IconPath { get; set; }
     }
 }
