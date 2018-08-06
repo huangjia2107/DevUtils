@@ -25,9 +25,9 @@
                 <Setter.Value>
                     <DataTemplate>
                         <Grid>
-                            <Border BorderBrush="LightGray" BorderThickness="1" Background="Transparent" CornerRadius="1"
+                            <Border BorderBrush="LightGray" BorderThickness="1" Background="#05D3D3D3" CornerRadius="1"
                                     Visibility="{Binding IsMouseOver,ElementName=border,Converter={StaticResource boolToVisibilityConverter},ConverterParameter={x:Static Visibility.Visible}}"/>
-                            <Border x:Name="border" Height="55" Padding="5" Margin="0,5" Background="Transparent">
+                            <Border x:Name="border" Height="55" Padding="5" Margin="0,8" Background="Transparent">
                                 <Grid IsHitTestVisible="False">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="45"/>
@@ -197,17 +197,18 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Grid>
-                                <Border BorderBrush="LightGray" BorderThickness="1" Background="Transparent" CornerRadius="1"
+                                <Border BorderBrush="#3498db" BorderThickness="1" Background="#013498db" Margin="5" CornerRadius="1"
                                         Visibility="{Binding IsMouseOver,ElementName=border,Converter={StaticResource boolToVisibilityConverter},ConverterParameter={x:Static Visibility.Visible}}"/>
-                                <Border x:Name="border" Height="75" Width="70" Padding="5" Margin="5" Background="Transparent">
+                                <Border x:Name="border" Height="80" Width="85" Padding="5" Margin="5,8" Background="Transparent"
+                                        ToolTip="{Binding Name}">
                                     <Grid IsHitTestVisible="False">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="*"/>
                                             <RowDefinition Height="10"/>
                                             <RowDefinition Height="auto"/>
                                         </Grid.RowDefinitions>
-                                        <Image Grid.Row="0" Source="../Assets/Utils.png"/>
-                                        <TextBlock Grid.Row="2" FontSize="12" Foreground="Gray" Text="{Binding Name}" TextTrimming="CharacterEllipsis" ToolTip="{Binding Text,RelativeSource={RelativeSource Self}}" HorizontalAlignment="Center"/>
+                                        <Image Grid.Row="0" Source="../Assets/Utils.png" Width="45" Height="45"/>
+                                        <TextBlock Grid.Row="2" FontSize="13" Foreground="Gray" Text="{Binding Name}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center"/>
                                     </Grid>
                                 </Border>
                             </Grid>
