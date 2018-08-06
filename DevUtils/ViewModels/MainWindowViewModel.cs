@@ -30,7 +30,7 @@ namespace DevUtils.ViewModels
                         {
                             Title = "设置",
                             Height = 385,
-                            Width = 530,
+                            Width = 550,
                             Content = new SettingControl
                             {
                                 DataContext = new SettingControlViewModel(DataManager.Instance().CurAppData.SettingsData)
@@ -51,8 +51,8 @@ namespace DevUtils.ViewModels
                        (new CommonWindow
                        {
                            Title = "工具",
-                           Height = 385,
-                           Width = 530,
+                           Height = 550,
+                           Width = 920,
                            Content = new UtilControl
                            {
                                DataContext = new UtilControlViewModel(DataManager.Instance().CurAppData.UtilsData)

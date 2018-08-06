@@ -75,6 +75,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Datas\DataManager.cs" />
+    <Compile Include="Datas\ResourcesMap.cs" />
+    <Compile Include="Helps\Converters.cs" />
     <Compile Include="Models\AppData.cs" />
     <Compile Include="Models\SettingModel.cs" />
     <Compile Include="Models\UtilData.cs" />
@@ -155,6 +157,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Assets\Utils.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -9,6 +9,7 @@
         <ResourceDictionary Source="/Theme;component/Themes/Styles/StatusToggleStyle.xaml"/>
 
         <ResourceDictionary Source="/Theme;component/Themes/Styles/CheckBoxStyle.xaml"/>
+        <ResourceDictionary Source="/Theme;component/Themes/Styles/RadioButtonStyle.xaml"/>
         <ResourceDictionary Source="/Theme;component/Themes/Styles/ListBoxStyle.xaml"/>
         
         <ResourceDictionary Source="/Theme;component/Themes/Styles/NumericBoxStyle.xaml"/>

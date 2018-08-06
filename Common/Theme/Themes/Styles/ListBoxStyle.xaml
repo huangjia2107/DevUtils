@@ -29,7 +29,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="{x:Static themes:ResourceKeys.NormalListBoxStyleKey}" 
+    <Style x:Key="{x:Static themes:ResourceKeys.NormalListBoxItemStyleKey}" 
            TargetType="{x:Type ListBoxItem}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -61,8 +61,8 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="{x:Static themes:ResourceKeys.HorizontalListBoxStyleKey}" 
-           BasedOn="{StaticResource {x:Static themes:ResourceKeys.NormalListBoxStyleKey}}"
+    <Style x:Key="{x:Static themes:ResourceKeys.HorizontalListBoxItemStyleKey}" 
+           BasedOn="{StaticResource {x:Static themes:ResourceKeys.NormalListBoxItemStyleKey}}"
            TargetType="{x:Type ListBoxItem}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="LightGray"/>
@@ -73,6 +73,39 @@
             <Trigger Property="IsSelected" Value="true">
                 <Setter Property="Background" Value="#3498db"/>
                 <Setter Property="Foreground" Value="White"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="{x:Static themes:ResourceKeys.UtilListBoxItemStyleKey}" 
+           BasedOn="{StaticResource {x:Static themes:ResourceKeys.NormalListBoxItemStyleKey}}"
+           TargetType="{x:Type ListBoxItem}">
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+        <Setter Property="Padding" Value="0"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver"  Value="True">
+                <Setter Property="Background" Value="White"/>
+            </Trigger>
+            <Trigger Property="IsSelected" Value="true">
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="Foreground" Value="#3498db"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="{x:Static themes:ResourceKeys.UtilDispalyListBoxItemStyleKey}" 
+           BasedOn="{StaticResource {x:Static themes:ResourceKeys.NormalListBoxItemStyleKey}}"
+           TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver"  Value="True">
+                <Setter Property="BorderBrush" Value="Gray"/>
+            </Trigger>
+            <Trigger Property="IsSelected" Value="true">
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="Foreground" Value="#3498db"/>
             </Trigger>
         </Style.Triggers>
     </Style>
