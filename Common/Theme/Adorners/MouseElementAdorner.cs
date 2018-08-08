@@ -27,7 +27,6 @@ namespace Theme.Adorners
             : base(element)
         {
             IsHitTestVisible = false;
-            SnapShotEnabled = false;
 
             _posRelative = posRelative;
             _draggedElement = element as FrameworkElement;
