@@ -35,6 +35,10 @@
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -44,6 +48,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adorners\MouseElementAdorner.cs" />
+    <Compile Include="Behaviors\DragElementAdornerBehavior.cs" />
+    <Compile Include="Behaviors\DragItemsPositionBehavior.cs" />
     <Compile Include="Controls\NumericBox.cs" />
     <Compile Include="Controls\StatusToggle.cs" />
     <Compile Include="Controls\UserWindow.cs" />
