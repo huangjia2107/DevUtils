@@ -6,11 +6,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Documents;
 using Theme.Adorners;
+using Utils.Extensions;
 
 namespace Theme.Behaviors
 {
     public class DragItemsPositionBehavior : Behavior<Panel>
     {
+        private Point _cacheMouseDownPos;
+
         private MouseElementAdorner _elementAdorner = null;
         private MouseElementAdorner GetElementAdorner(UIElement child)
         {
@@ -79,7 +82,9 @@ namespace Theme.Behaviors
 
             foreach (UIElement child in AssociatedObject.Children)
             {
-                var hitResult = VisualTreeHelper.HitTest(child, e.GetPosition(child));
+                _cacheMouseDownPos = e.GetPosition(child);
+
+                var hitResult = VisualTreeHelper.HitTest(child, _cacheMouseDownPos);
                 if (hitResult != null)
                 {
                     StartDrag(child);
@@ -146,16 +151,46 @@ namespace Theme.Behaviors
 
         private void UpdateChildPosition(UIElement dragedChild)
         {
-            var posToChild = Mouse.GetPosition(dragedChild);
             var posToPanel = Mouse.GetPosition(AssociatedObject);
-            var frameworkElement = dragedChild as FrameworkElement;
+            var dragedElement = dragedChild as FrameworkElement;
 
-            var childRect = new Rect(posToPanel.X - posToChild.X, posToPanel.Y - posToChild.Y, frameworkElement.ActualWidth, frameworkElement.ActualHeight);
+            var childRect = new Rect(posToPanel.X - _cacheMouseDownPos.X, posToPanel.Y - _cacheMouseDownPos.Y, dragedElement.ActualWidth, dragedElement.ActualHeight);
 
             //find the child which has max overlapping area with dragedChild
+            Size? maxOverlapSize = null;
+            FrameworkElement maxOverlapChild = null;
+            foreach (FrameworkElement fe in AssociatedObject.Children)
+            {
+                if (fe == dragedElement)
+                    continue;
 
+                var sp = fe.TranslatePoint(new Point(), AssociatedObject);
+                var overlapSize = GetOverlapSize(new Rect(sp, new Point(sp.X + fe.ActualWidth, sp.Y + fe.ActualHeight)), childRect);
+
+                if (overlapSize.IsEmpty)
+                    continue;
+
+                if (maxOverlapSize == null || (overlapSize.Width * overlapSize.Height).GreaterThan(maxOverlapSize.Value.Width * maxOverlapSize.Value.Height))
+                {
+                    maxOverlapSize = overlapSize;
+                    maxOverlapChild = fe;
+                }
+            }
+
+            if (!maxOverlapSize.HasValue || maxOverlapSize.Value.IsEmpty || maxOverlapChild == null)
+                return;                                                                                                          
 
             //check the overlapping area whether match the exchanging child condition
+            if (maxOverlapSize.Value.Width.GreaterThanOrClose(maxOverlapChild.ActualWidth / 2) && maxOverlapSize.Value.Height.GreaterThanOrClose(maxOverlapChild.ActualHeight / 2))
+            {
+                AssociatedObject.Children.Remove(dragedChild);
+                AssociatedObject.Children.Insert(AssociatedObject.Children.IndexOf(maxOverlapChild), dragedChild);
+            }
+        }
+
+        private Size GetOverlapSize(Rect rect1, Rect rect2)
+        {
+            return Rect.Intersect(rect1, rect2).Size;
         }
 
         #endregion
