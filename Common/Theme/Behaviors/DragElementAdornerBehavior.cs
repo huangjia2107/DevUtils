@@ -127,7 +127,7 @@ namespace Theme.Behaviors
             if (AssociatedObject == null)
                 return null;
 
-            return new MouseElementAdorner(AssociatedObject, Mouse.GetPosition(AssociatedObject)) { SnapShotEnabled = _hiddenWhileDragging };
+            return new MouseElementAdorner(AssociatedObject, Mouse.GetPosition(AssociatedObject));
         }
 
         private void StartDrag()

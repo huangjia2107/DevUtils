@@ -1,8 +1,8 @@
 ﻿using System.Windows.Documents;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Markup;
-using Utils.Native;
+using System.Windows.Media.Imaging;
+using System.Windows.Input;
 
 namespace Theme.Adorners
 {
@@ -10,18 +10,7 @@ namespace Theme.Adorners
     {
         Point _posRelative;
         FrameworkElement _draggedElement = null;
-        VisualBrush _visualBrush = null;
-
-        private bool _snapShotEnabled = false;
-        public bool SnapShotEnabled
-        {
-            get { return _snapShotEnabled; }
-            set
-            {
-                _snapShotEnabled = value;
-                _visualBrush = ConstructVisualBrush();
-            }
-        }
+        ImageBrush _imageBrush = null;
 
         public MouseElementAdorner(UIElement element, Point posRelative)
             : base(element)
@@ -30,6 +19,7 @@ namespace Theme.Adorners
 
             _posRelative = posRelative;
             _draggedElement = element as FrameworkElement;
+            _imageBrush = ConstructImageBrush();
         }
 
         public void Update()
@@ -37,14 +27,24 @@ namespace Theme.Adorners
             InvalidateVisual();
         }
 
-        private UIElement CloneUIElement(UIElement element)
+        public RenderTargetBitmap RenderVisualToBitmap(Visual vsual, int width, int height)
         {
-            return XamlReader.Parse(XamlWriter.Save(element)) as UIElement;
+            var drawingVisual = new DrawingVisual();
+            using (var context = drawingVisual.RenderOpen())
+            {
+                context.DrawRectangle(new VisualBrush(vsual), null, new Rect(0, 0, width, height));
+                context.Close();
+            }
+
+            RenderTargetBitmap rtb = new RenderTargetBitmap(width, height, 96, 96, PixelFormats.Default);
+            rtb.Render(drawingVisual);
+
+            return rtb;
         }
 
-        private VisualBrush ConstructVisualBrush()
+        private ImageBrush ConstructImageBrush()
         {
-            return new VisualBrush(_snapShotEnabled ? CloneUIElement(_draggedElement) : _draggedElement);
+            return new ImageBrush(RenderVisualToBitmap(_draggedElement, (int)_draggedElement.ActualWidth, (int)_draggedElement.ActualHeight));
         }
 
         protected override void OnRender(DrawingContext drawingContext)
@@ -53,22 +53,15 @@ namespace Theme.Adorners
 
             if (_draggedElement != null)
             {
-                var screenPos = new Win32.POINT();
-                if (Win32.GetCursorPos(ref screenPos))
-                {
-                    var pos = _draggedElement.PointFromScreen(new Point(screenPos.X, screenPos.Y));
+                var pos = Mouse.GetPosition(_draggedElement);
 
-                    var rect = new Rect(
-                        pos.X - _posRelative.X,
-                        pos.Y - _posRelative.Y,
-                        _draggedElement.ActualWidth,
-                        _draggedElement.ActualHeight);
+                var rect = new Rect(
+                    pos.X - _posRelative.X,
+                    pos.Y - _posRelative.Y,
+                    _draggedElement.ActualWidth,
+                    _draggedElement.ActualHeight);
 
-                    if (_visualBrush == null)
-                        _visualBrush = ConstructVisualBrush();
-
-                    drawingContext.DrawRectangle(_visualBrush, new Pen(Brushes.Transparent, 0), rect);
-                }
+                drawingContext.DrawRectangle(_imageBrush, null, rect);
             }
         }
     }
