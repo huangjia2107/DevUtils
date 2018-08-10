@@ -7,22 +7,23 @@ using System.Windows.Media;
 using System.Windows.Documents;
 using Theme.Adorners;
 using Utils.Extensions;
+using Utils.Native;
 
 namespace Theme.Behaviors
 {
     public class DragItemsPositionBehavior : Behavior<Panel>
     {
         private Point _cacheMouseDownPos;
+        private UIElement _dragedChild = null;
 
-        private MouseElementAdorner _elementAdorner = null;
-        private MouseElementAdorner GetElementAdorner(UIElement child)
+        private MousePanelAdorner _panelAdorner = null;
+        private MousePanelAdorner GetPanelAdorner(UIElement panel, UIElement draggedChild)
         {
-            if (_elementAdorner == null)
-                _elementAdorner = ConstructMouseElementAdorner(child);
+            if (_panelAdorner == null)
+                _panelAdorner = ConstructMousePanelAdorner(panel, draggedChild);
 
-            return _elementAdorner;
+            return _panelAdorner;
         }
-
 
         private AdornerLayer _rootAdornerLayer = null;
         private AdornerLayer RootAdornerLayer
@@ -30,7 +31,7 @@ namespace Theme.Behaviors
             get
             {
                 if (_rootAdornerLayer == null)
-                    _rootAdornerLayer = AdornerLayer.GetAdornerLayer(RootElement);
+                    _rootAdornerLayer = AdornerLayer.GetAdornerLayer(AdornerLayerProvider);
 
                 if (_rootAdornerLayer == null)
                     throw new Exception("There is no AdornerLayer in RootElement.");
@@ -39,23 +40,64 @@ namespace Theme.Behaviors
             }
         }
 
-        private UIElement _rootElement = null;
-        private UIElement RootElement
+        private bool? _isFromItemsPanelTemplate = null;
+        private bool IsFromItemsPanelTemplate
         {
             get
             {
-                if (_rootElement == null)
+                if (!_isFromItemsPanelTemplate.HasValue)
+                    _isFromItemsPanelTemplate = VisualTreeHelper.GetParent(AssociatedObject) is ItemsPresenter;
+
+                return _isFromItemsPanelTemplate.Value;
+            }
+        }
+
+        private ItemsControl _itemsContainer = null;
+        private ItemsControl ItemsContainer
+        {
+            get
+            {
+                if (_itemsContainer == null)
                 {
                     DependencyObject associatedObject = AssociatedObject;
-                    for (DependencyObject i = associatedObject; i != null && AdornerLayer.GetAdornerLayer((Visual)i) != null; i = VisualTreeHelper.GetParent(associatedObject))
+                    for (DependencyObject i = associatedObject; i != null; i = VisualTreeHelper.GetParent(associatedObject))
                     {
+                        if (i is ItemsControl)
+                        {
+                            _itemsContainer = i as ItemsControl;
+                            break;
+                        }
+
+                        associatedObject = i;
+                    }
+                }
+
+                return _itemsContainer;
+            }
+        }
+
+        private UIElement _adornerLayerProvider = null;
+        private UIElement AdornerLayerProvider
+        {
+            get
+            {
+                if (_adornerLayerProvider == null)
+                {
+                    DependencyObject topObjectWithAdornerLayer = null;
+                    DependencyObject associatedObject = AssociatedObject;
+
+                    for (DependencyObject i = associatedObject; i != null; i = VisualTreeHelper.GetParent(associatedObject))
+                    {
+                        if (AdornerLayer.GetAdornerLayer((Visual)i) != null)
+                            topObjectWithAdornerLayer = i;
+
                         associatedObject = i;
                     }
 
-                    _rootElement = associatedObject as UIElement;
+                    _adornerLayerProvider = topObjectWithAdornerLayer as UIElement;
                 }
 
-                return _rootElement;
+                return _adornerLayerProvider;
             }
         }
 
@@ -63,17 +105,23 @@ namespace Theme.Behaviors
 
         protected override void OnAttached()
         {
-            AssociatedObject.AddHandler(UIElement.MouseLeftButtonDownEvent, new MouseButtonEventHandler(this.OnMouseLeftButtonDown), false);
+            AssociatedObject.AddHandler(UIElement.MouseLeftButtonDownEvent, new MouseButtonEventHandler(OnMouseLeftButtonDown), true);
         }
 
         protected override void OnDetaching()
         {
-            AssociatedObject.RemoveHandler(UIElement.MouseLeftButtonDownEvent, new MouseButtonEventHandler(this.OnMouseLeftButtonDown));
+            AssociatedObject.RemoveHandler(UIElement.MouseLeftButtonDownEvent, new MouseButtonEventHandler(OnMouseLeftButtonDown));
         }
 
         #endregion
 
         #region Event
+
+        private void OnQueryContinueDrag(object sender, QueryContinueDragEventArgs e)
+        {
+            _panelAdorner.Update();
+            MoveChild(_dragedChild);
+        }
 
         private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -93,65 +141,49 @@ namespace Theme.Behaviors
             }
         }
 
-        private void OnMouseMove(object sender, MouseEventArgs e)
-        {
-            HandleDrag(sender as UIElement);
-        }
-
-        private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            (sender as UIElement).ReleaseMouseCapture();
-        }
-
-        private void OnLostMouseCapture(object sender, MouseEventArgs e)
-        {
-            EndDrag(sender as UIElement);
-        }
-
         #endregion
 
         #region Func
 
-        private MouseElementAdorner ConstructMouseElementAdorner(UIElement child)
+        private MousePanelAdorner ConstructMousePanelAdorner(UIElement panel, UIElement draggedChild)
         {
-            if (child == null)
+            if (panel == null || draggedChild == null)
                 return null;
 
-            return new MouseElementAdorner(child, Mouse.GetPosition(child));
+            return new MousePanelAdorner(panel, draggedChild as FrameworkElement, Mouse.GetPosition(draggedChild));
         }
 
-        private void StartDrag(UIElement child)
+        private void StartDrag(UIElement dragedChild)
         {
-            RootAdornerLayer.Add(GetElementAdorner(child));
+            _dragedChild = dragedChild;
 
-            child.Opacity = 0;
-            child.CaptureMouse();
-            child.MouseMove += OnMouseMove;
-            child.LostMouseCapture += this.OnLostMouseCapture;
-            child.AddHandler(UIElement.MouseLeftButtonUpEvent, new MouseButtonEventHandler(OnMouseLeftButtonUp), false);
+            RootAdornerLayer.Add(GetPanelAdorner(AssociatedObject, _dragedChild));
+            _dragedChild.Opacity = 0;
+
+            DragDrop.AddQueryContinueDragHandler(AssociatedObject, OnQueryContinueDrag);
+            DragDrop.DoDragDrop(AssociatedObject, _dragedChild, DragDropEffects.Move);
+
+            EndDrag();
         }
 
-        private void HandleDrag(UIElement child)
-        {
-            GetElementAdorner(child).Update();
-            UpdateChildPosition(child);
+        private void EndDrag()
+        { 
+            DragDrop.RemoveQueryContinueDragHandler(AssociatedObject, OnQueryContinueDrag);
+
+            RootAdornerLayer.Remove(_panelAdorner);
+            _panelAdorner = null;
+
+            _dragedChild.Opacity = 1;
+            _dragedChild = null;
         }
 
-        private void EndDrag(UIElement child)
+        private void MoveChild(UIElement dragedChild)
         {
-            RootAdornerLayer.Remove(GetElementAdorner(child));
-            _elementAdorner = null;
+            var screenPos = new Win32.POINT();
+            if (!Win32.GetCursorPos(ref screenPos))
+                return;
 
-            child.Opacity = 1;
-
-            child.MouseMove -= OnMouseMove;
-            child.LostMouseCapture -= this.OnLostMouseCapture;
-            child.RemoveHandler(UIElement.MouseLeftButtonUpEvent, new MouseButtonEventHandler(OnMouseLeftButtonUp));
-        }
-
-        private void UpdateChildPosition(UIElement dragedChild)
-        {
-            var posToPanel = Mouse.GetPosition(AssociatedObject);
+            var posToPanel = AssociatedObject.PointFromScreen(new Point(screenPos.X, screenPos.Y));
             var dragedElement = dragedChild as FrameworkElement;
 
             var childRect = new Rect(posToPanel.X - _cacheMouseDownPos.X, posToPanel.Y - _cacheMouseDownPos.Y, dragedElement.ActualWidth, dragedElement.ActualHeight);
@@ -177,14 +209,31 @@ namespace Theme.Behaviors
                 }
             }
 
-            if (!maxOverlapSize.HasValue || maxOverlapSize.Value.IsEmpty || maxOverlapChild == null)
-                return;                                                                                                          
-
             //check the overlapping area whether match the exchanging child condition
+            if (!maxOverlapSize.HasValue || maxOverlapSize.Value.IsEmpty)
+                return;
+
             if (maxOverlapSize.Value.Width.GreaterThanOrClose(maxOverlapChild.ActualWidth / 2) && maxOverlapSize.Value.Height.GreaterThanOrClose(maxOverlapChild.ActualHeight / 2))
             {
-                AssociatedObject.Children.Remove(dragedChild);
-                AssociatedObject.Children.Insert(AssociatedObject.Children.IndexOf(maxOverlapChild), dragedChild);
+                var targetIndex = AssociatedObject.Children.IndexOf(maxOverlapChild);
+
+                if (IsFromItemsPanelTemplate)
+                {
+                    var sourceIndex = AssociatedObject.Children.IndexOf(dragedChild);
+                    var sourceItem = ItemsContainer.Items[sourceIndex];
+
+                    ItemsContainer.Items.RemoveAt(sourceIndex);
+                    ItemsContainer.Items.Insert(targetIndex, sourceItem);
+
+                    //Update
+                    _dragedChild = AssociatedObject.Children[targetIndex];
+                    _dragedChild.Opacity = 0;
+                }
+                else
+                {
+                    AssociatedObject.Children.Remove(dragedChild);
+                    AssociatedObject.Children.Insert(targetIndex, dragedChild);
+                }
             }
         }
 

@@ -40,7 +40,7 @@ namespace Theme.Behaviors
             get
             {
                 if (_rootAdornerLayer == null)
-                    _rootAdornerLayer = AdornerLayer.GetAdornerLayer(RootElement);
+                    _rootAdornerLayer = AdornerLayer.GetAdornerLayer(AdornerLayerProvider);
 
                 if (_rootAdornerLayer == null)
                     throw new Exception("There is no AdornerLayer in RootElement.");
@@ -49,23 +49,28 @@ namespace Theme.Behaviors
             }
         }
 
-        private UIElement _rootElement = null;
-        private UIElement RootElement
+        private UIElement _adornerLayerProvider = null;
+        private UIElement AdornerLayerProvider
         {
             get
             {
-                if (_rootElement == null)
+                if (_adornerLayerProvider == null)
                 {
+                    DependencyObject topObjectWithAdornerLayer = null;
                     DependencyObject associatedObject = AssociatedObject;
-                    for (DependencyObject i = associatedObject; i != null && AdornerLayer.GetAdornerLayer((Visual)i) != null; i = VisualTreeHelper.GetParent(associatedObject))
+
+                    for (DependencyObject i = associatedObject; i != null; i = VisualTreeHelper.GetParent(associatedObject))
                     {
+                        if (AdornerLayer.GetAdornerLayer((Visual)i) != null)
+                            topObjectWithAdornerLayer = i;
+
                         associatedObject = i;
                     }
 
-                    _rootElement = associatedObject as UIElement;
+                    _adornerLayerProvider = topObjectWithAdornerLayer as UIElement;
                 }
 
-                return _rootElement;
+                return _adornerLayerProvider;
             }
         }
 
@@ -85,38 +90,15 @@ namespace Theme.Behaviors
 
         #region Event
 
-        public event MouseEventHandler DragBegun;
-        public event MouseEventHandler DragFinished;
-        public event MouseEventHandler Dragging;
+        private void OnQueryContinueDrag(object sender, QueryContinueDragEventArgs e)
+        {
+            _elementAdorner.Update();
+        }
 
         private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             StartDrag();
-
-            if (this.DragBegun != null)
-                this.DragBegun(this, e);
-        }
-
-        private void OnMouseMove(object sender, MouseEventArgs e)
-        {
-            HandleDrag();
-
-            if (this.Dragging != null)
-                this.Dragging(this, e);
-        }
-
-        private void OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            AssociatedObject.ReleaseMouseCapture();
-        }
-
-        private void OnLostMouseCapture(object sender, MouseEventArgs e)
-        {
-            EndDrag();
-
-            if (this.DragFinished != null)
-                this.DragFinished(this, e);
-        }
+        } 
 
         #endregion
 
@@ -136,28 +118,20 @@ namespace Theme.Behaviors
 
             AssociatedObject.Opacity = _hiddenWhileDragging ? 0 : 1;
 
-            AssociatedObject.CaptureMouse();
-            AssociatedObject.MouseMove += OnMouseMove;
-            AssociatedObject.LostMouseCapture += this.OnLostMouseCapture;
-            AssociatedObject.AddHandler(UIElement.MouseLeftButtonUpEvent, new MouseButtonEventHandler(OnMouseLeftButtonUp), false);
-        }
+            DragDrop.AddQueryContinueDragHandler(AssociatedObject, new QueryContinueDragEventHandler(OnQueryContinueDrag));
+            DragDrop.DoDragDrop(AssociatedObject, AssociatedObject, DragDropEffects.Move);
 
-        private void HandleDrag()
-        {
-            ElementAdorner.Update();
-            //RootAdornerLayer.Update();
+            EndDrag();
         }
 
         private void EndDrag()
         {
+            DragDrop.RemoveQueryContinueDragHandler(AssociatedObject, new QueryContinueDragEventHandler(OnQueryContinueDrag));
+
             RootAdornerLayer.Remove(ElementAdorner);
             _elementAdorner = null;
 
             AssociatedObject.Opacity = 1;
-
-            AssociatedObject.MouseMove -= OnMouseMove;
-            AssociatedObject.LostMouseCapture -= this.OnLostMouseCapture;
-            AssociatedObject.RemoveHandler(UIElement.MouseLeftButtonUpEvent, new MouseButtonEventHandler(OnMouseLeftButtonUp));
         }
 
         #endregion

@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Adorners\MouseElementAdorner.cs" />
+    <Compile Include="Adorners\MousePanelAdorner.cs" />
     <Compile Include="Behaviors\DragElementAdornerBehavior.cs" />
     <Compile Include="Behaviors\DragItemsPositionBehavior.cs" />
     <Compile Include="Controls\NumericBox.cs" />

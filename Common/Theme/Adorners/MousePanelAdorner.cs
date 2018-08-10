@@ -1,26 +1,25 @@
-﻿using System.Windows.Documents;
-using System.Windows;
+﻿using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Input;
 using Utils.Native;
 
 namespace Theme.Adorners
 {
-    public class MouseElementAdorner : Adorner
+    public class MousePanelAdorner : Adorner
     {
         Point _posRelative;
         Size _adornerElementSize;
         ImageBrush _imageBrush = null;
 
-        public MouseElementAdorner(FrameworkElement adornedElement, Point posRelative)
+        public MousePanelAdorner(UIElement adornedElement, FrameworkElement adornerElement, Point posRelative)
             : base(adornedElement)
         {
             IsHitTestVisible = false;
 
             _posRelative = posRelative;
-            _adornerElementSize = new Size(adornedElement.ActualWidth, adornedElement.ActualHeight);
-            _imageBrush = ConstructImageBrush(adornedElement);
+            _adornerElementSize = new Size(adornerElement.ActualWidth, adornerElement.ActualHeight);
+            _imageBrush = ConstructImageBrush(adornerElement);
         }
 
         public void Update()
@@ -68,3 +67,4 @@ namespace Theme.Adorners
         }
     }
 }
+
