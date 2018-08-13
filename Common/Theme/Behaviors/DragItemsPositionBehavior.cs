@@ -101,6 +101,14 @@ namespace Theme.Behaviors
             }
         }
 
+        public static readonly DependencyProperty MoveItemFromItemsSourceProperty =
+            DependencyProperty.Register("MoveItemFromItemsSource", typeof(Action<int, int>), typeof(DragItemsPositionBehavior));
+        public Action<int, int> MoveItemFromItemsSource
+        {
+            get { return (Action<int, int>)GetValue(MoveItemFromItemsSourceProperty); }
+            set { SetValue(MoveItemFromItemsSourceProperty, value); }
+        }
+
         #region Override
 
         protected override void OnAttached()
@@ -220,14 +228,29 @@ namespace Theme.Behaviors
                 if (IsFromItemsPanelTemplate)
                 {
                     var sourceIndex = AssociatedObject.Children.IndexOf(dragedChild);
-                    var sourceItem = ItemsContainer.Items[sourceIndex];
 
-                    ItemsContainer.Items.RemoveAt(sourceIndex);
-                    ItemsContainer.Items.Insert(targetIndex, sourceItem);
+                    if (ItemsContainer.ItemsSource != null)
+                    {
+                        if (MoveItemFromItemsSource != null)
+                        {
+                            MoveItemFromItemsSource(sourceIndex, targetIndex);
 
-                    //Update
-                    _dragedChild = AssociatedObject.Children[targetIndex];
-                    _dragedChild.Opacity = 0;
+                            //if use ObservableCollection.Move(...) to exchange position, follow code is unnecessary.
+                            //else use ObservableCollection.RemoveAt(...) and ObservableCollection.Insert(...) to exchange position, follow code is necessary.
+                            _dragedChild = AssociatedObject.Children[targetIndex];
+                            _dragedChild.Opacity = 0;
+                        }
+                    }
+                    else
+                    {
+                        var sourceItem = ItemsContainer.Items[sourceIndex];
+
+                        ItemsContainer.Items.RemoveAt(sourceIndex);
+                        ItemsContainer.Items.Insert(targetIndex, sourceItem);
+
+                        _dragedChild = AssociatedObject.Children[targetIndex];
+                        _dragedChild.Opacity = 0;
+                    }
                 }
                 else
                 {
@@ -235,7 +258,7 @@ namespace Theme.Behaviors
                     AssociatedObject.Children.Insert(targetIndex, dragedChild);
                 }
             }
-        }
+        } 
 
         private Size GetOverlapSize(Rect rect1, Rect rect2)
         {

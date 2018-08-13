@@ -27,5 +27,17 @@ namespace DevUtils.ViewModels
         {
             get { return _utilData.MineUtils; }
         }
+
+        private Action<int, int> _moveMineUtilPosAction = null;
+        public Action<int, int> MoveMineUtilPosAction
+        {
+            get
+            {
+                if(_moveMineUtilPosAction == null)
+                    _moveMineUtilPosAction = (si, ti) => AllUtils.Move(si, ti); 
+
+                return _moveMineUtilPosAction;
+            }
+        }
     }
 }
