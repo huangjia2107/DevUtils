@@ -4,7 +4,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using DevUtils.Models;
+using Prism.Commands;
 using Prism.Mvvm;
 
 namespace DevUtils.ViewModels
@@ -38,6 +42,6 @@ namespace DevUtils.ViewModels
 
                 return _moveMineUtilPosAction;
             }
-        }
+        } 
     }
 }

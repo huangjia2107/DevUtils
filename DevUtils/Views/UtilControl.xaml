@@ -30,10 +30,8 @@
                         <Grid>
                             <Border BorderBrush="LightGray" BorderThickness="1" Background="#05D3D3D3" CornerRadius="1"
                                     Visibility="{Binding IsMouseOver,ElementName=border,Converter={StaticResource boolToVisibilityConverter},ConverterParameter={x:Static Visibility.Visible}}"/>
-                            <Border x:Name="border" Height="55" Padding="5" Margin="0,8" Background="Transparent">
-                                <i:Interaction.Behaviors>
-                                    <behaviors:DragElementAdornerBehavior/>
-                                </i:Interaction.Behaviors>
+                            <Border x:Name="border" Height="55" Padding="5" Margin="0,8" Background="Transparent"
+                                    BorderThickness="1" BorderBrush="{x:Null}" CornerRadius="1">
                                 <Grid IsHitTestVisible="False">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="45"/>
@@ -76,7 +74,10 @@
 
                 <TextBlock x:Name="NameTextBlock" Grid.Column="2" VerticalAlignment="Center" Text="全部工具"  FontSize="16"/>
             </Grid>
-            <ListBox Grid.IsSharedSizeScope="True"
+            <ListBox x:Name="UtilTypeListBox"
+                     Grid.IsSharedSizeScope="True"
+                     SelectionChanged="UtilTypeListBox_OnSelectionChanged"
+                     SelectedIndex="0"
                      SelectedValuePath="Key"
                      FontSize="14"
                      BorderThickness="0,1"
@@ -101,7 +102,8 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <RadioButton Height="60" FontSize="16" HorizontalContentAlignment="Right" AllowDrop="True"
+            <RadioButton x:Name="MiniUtilsRadioButton" Height="60" FontSize="16" HorizontalContentAlignment="Right"
+                         Click="MiniUtilsRadioButton_OnClick"
                          Style="{DynamicResource {x:Static themes:ResourceKeys.UtilRadioButtonStyleKey}}">
                 <Grid Margin="0,0,35,0">
                     <Grid.ColumnDefinitions>
@@ -119,11 +121,12 @@
             <Path Data="M0,0 H5" Stretch="Fill" Stroke="LightGray" StrokeThickness="1"/>
         </StackPanel>
 
-        <ScrollViewer Grid.Column="1"
+        <ScrollViewer x:Name="AllUtilScrollViewer" Grid.Column="1" 
+                      ScrollChanged="ScrollViewer_OnScrollChanged"
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto">
             <StackPanel Margin="30,0,30,5">
-                <ItemsControl ItemsSource="{Binding ClassifiedUtils}">
+                <ItemsControl x:Name="AllUtilsItemsControl" ItemsSource="{Binding ClassifiedUtils}">
                     <ItemsControl.ItemContainerStyle>
                         <Style>
                             <Setter Property="Control.Margin" Value="0,10,0,0"/>
@@ -149,7 +152,7 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
-                <Grid Height="40" Margin="0,10,0,0">
+                <Grid x:Name="MiniUtilsGrid" Height="40" Margin="0,10,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="3"/>
                         <ColumnDefinition Width="Auto"/>

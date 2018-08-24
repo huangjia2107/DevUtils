@@ -155,6 +155,10 @@
       <Project>{12d80fee-9832-44c6-bfc0-f7702175742b}</Project>
       <Name>Theme</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Common\Utils\Utils.csproj">
+      <Project>{fe016c9a-53bf-4583-837c-a343ee3d8366}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Interfaces\UtilModelInterface\UtilModelInterface.csproj">
       <Project>{70665092-fd85-43d8-9aee-06cc59556595}</Project>
       <Name>UtilModelInterface</Name>

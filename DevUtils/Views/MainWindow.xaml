@@ -6,15 +6,9 @@
         xmlns:prism="http://prismlibrary.com/"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:behaviors="clr-namespace:Theme.Behaviors;assembly=Theme"
-        xmlns:helps="clr-namespace:DevUtils.Helps"
         prism:ViewModelLocator.AutoWireViewModel="True"
         Style="{DynamicResource {x:Static themes:ResourceKeys.MiniUserWindowStyleKey}}"
         Title="{Binding Title}" WindowStartupLocation="CenterScreen">
-
-    <controls:UserWindow.Resources>
-        <helps:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
-    </controls:UserWindow.Resources>
-
     <controls:UserWindow.TitleBarContent>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <controls:StatusToggle Width="30" CheckedToolTip="点击取消固定" UnCheckedToolTip="点击固定">
@@ -72,7 +66,6 @@
                     </Button>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
-        </ItemsControl>
-
+        </ItemsControl> 
     </Grid>
 </controls:UserWindow>
