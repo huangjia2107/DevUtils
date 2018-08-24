@@ -13,7 +13,7 @@ namespace Theme.Behaviors
 {
     public class DragItemsPositionBehavior : Behavior<Panel>
     {
-        private Point _cacheMouseDownPos;
+        private Point _cacheMouseDownPosToChild;
         private UIElement _dragedChild = null;
 
         private MousePanelAdorner _panelAdorner = null;
@@ -126,9 +126,14 @@ namespace Theme.Behaviors
         #region Event
 
         private void OnQueryContinueDrag(object sender, QueryContinueDragEventArgs e)
-        {
+        { 
             _panelAdorner.Update();
             MoveChild(_dragedChild);
+        }
+
+        private void OnMouseMove(object sender, MouseEventArgs e)
+        {
+            StartDrag();
         }
 
         private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -138,12 +143,14 @@ namespace Theme.Behaviors
 
             foreach (UIElement child in AssociatedObject.Children)
             {
-                _cacheMouseDownPos = e.GetPosition(child);
+                _cacheMouseDownPosToChild = e.GetPosition(child);
 
-                var hitResult = VisualTreeHelper.HitTest(child, _cacheMouseDownPos);
+                var hitResult = VisualTreeHelper.HitTest(child, _cacheMouseDownPosToChild);
                 if (hitResult != null)
                 {
-                    StartDrag(child);
+                    _dragedChild = child; 
+                    AssociatedObject.PreviewMouseMove += OnMouseMove;
+
                     break;
                 }
             }
@@ -161,22 +168,24 @@ namespace Theme.Behaviors
             return new MousePanelAdorner(panel, draggedChild as FrameworkElement, Mouse.GetPosition(draggedChild));
         }
 
-        private void StartDrag(UIElement dragedChild)
+        private void StartDrag()
         {
-            _dragedChild = dragedChild;
+            if (_panelAdorner != null || _dragedChild == null)
+                return;
 
             RootAdornerLayer.Add(GetPanelAdorner(AssociatedObject, _dragedChild));
             _dragedChild.Opacity = 0;
 
             DragDrop.AddQueryContinueDragHandler(AssociatedObject, OnQueryContinueDrag);
             DragDrop.DoDragDrop(AssociatedObject, _dragedChild, DragDropEffects.Move);
+            DragDrop.RemoveQueryContinueDragHandler(AssociatedObject, OnQueryContinueDrag);
 
             EndDrag();
         }
 
         private void EndDrag()
-        { 
-            DragDrop.RemoveQueryContinueDragHandler(AssociatedObject, OnQueryContinueDrag);
+        {
+            AssociatedObject.PreviewMouseMove -= OnMouseMove;
 
             RootAdornerLayer.Remove(_panelAdorner);
             _panelAdorner = null;
@@ -194,7 +203,7 @@ namespace Theme.Behaviors
             var posToPanel = AssociatedObject.PointFromScreen(new Point(screenPos.X, screenPos.Y));
             var dragedElement = dragedChild as FrameworkElement;
 
-            var childRect = new Rect(posToPanel.X - _cacheMouseDownPos.X, posToPanel.Y - _cacheMouseDownPos.Y, dragedElement.ActualWidth, dragedElement.ActualHeight);
+            var childRect = new Rect(posToPanel.X - _cacheMouseDownPosToChild.X, posToPanel.Y - _cacheMouseDownPosToChild.Y, dragedElement.ActualWidth, dragedElement.ActualHeight);
 
             //find the child which has max overlapping area with dragedChild
             Size? maxOverlapSize = null;
@@ -258,7 +267,7 @@ namespace Theme.Behaviors
                     AssociatedObject.Children.Insert(targetIndex, dragedChild);
                 }
             }
-        } 
+        }
 
         private Size GetOverlapSize(Rect rect1, Rect rect2)
         {

@@ -95,10 +95,15 @@ namespace Theme.Behaviors
             _elementAdorner.Update();
         }
 
-        private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void OnMouseMove(object sender, MouseEventArgs e)
         {
             StartDrag();
-        } 
+        }
+
+        private void OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            AssociatedObject.PreviewMouseMove += OnMouseMove;
+        }
 
         #endregion
 
@@ -114,19 +119,23 @@ namespace Theme.Behaviors
 
         private void StartDrag()
         {
+            if (_elementAdorner != null)
+                return;
+
             RootAdornerLayer.Add(ElementAdorner);
 
             AssociatedObject.Opacity = _hiddenWhileDragging ? 0 : 1;
 
-            DragDrop.AddQueryContinueDragHandler(AssociatedObject, new QueryContinueDragEventHandler(OnQueryContinueDrag));
+            DragDrop.AddQueryContinueDragHandler(AssociatedObject, OnQueryContinueDrag);
             DragDrop.DoDragDrop(AssociatedObject, AssociatedObject, DragDropEffects.Move);
+            DragDrop.RemoveQueryContinueDragHandler(AssociatedObject, OnQueryContinueDrag);
 
             EndDrag();
         }
 
         private void EndDrag()
         {
-            DragDrop.RemoveQueryContinueDragHandler(AssociatedObject, new QueryContinueDragEventHandler(OnQueryContinueDrag));
+            AssociatedObject.PreviewMouseMove -= OnMouseMove;
 
             RootAdornerLayer.Remove(ElementAdorner);
             _elementAdorner = null;

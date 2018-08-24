@@ -48,6 +48,13 @@ namespace Theme.Themes
             get { return new ComponentResourceKey(typeof(ResourceKeys), MainWindowTitlebarCloseBtnStyle); }
         }
 
+        public const string MiniWindowShortcutBtnStyle = "MiniWindowShortcutBtnStyle";
+        public static ComponentResourceKey MiniWindowShortcutBtnStyleKey
+        {
+            get { return new ComponentResourceKey(typeof(ResourceKeys), MiniWindowShortcutBtnStyle); }
+        }
+
+
         #endregion
 
         #region RadioButton

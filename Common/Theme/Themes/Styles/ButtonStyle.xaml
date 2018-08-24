@@ -89,5 +89,23 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    
+
+    <Style x:Key="{x:Static themes:ResourceKeys.MiniWindowShortcutBtnStyleKey}" 
+           BasedOn="{StaticResource {x:Static themes:ResourceKeys.NoBgButtonBaseStyleKey}}"  
+           TargetType="{x:Type Button}">
+        <Setter Property="BorderBrush" Value="{x:Null}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Background" Value="White"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver"  Value="True">
+                <Setter Property="BorderBrush" Value="#3498db"/>
+                
+            </Trigger>
+            <Trigger Property="IsPressed"  Value="True">
+                <Setter Property="BorderBrush" Value="#3498db"/>
+                <Setter Property="Background" Value="#F6F6F6"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
 </ResourceDictionary>

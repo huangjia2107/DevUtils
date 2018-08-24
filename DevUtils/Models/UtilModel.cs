@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Documents;
 using System.Windows.Media;
 using UtilModelInterface;
 
@@ -30,8 +32,15 @@ namespace DevUtils.Models
     [Serializable]
     public class UtilModel
     {
+        public UtilType Type { get; set; }
         public string Name { get; set; }
         public string Discription { get; set; }
         public string IconPath { get; set; }
+    }
+
+    public class ClassifiedUtil
+    {
+        public UtilType Type { get; set; }
+        public List<UtilModel> Utils { get; set; }
     }
 }

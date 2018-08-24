@@ -4,9 +4,17 @@
         xmlns:themes="clr-namespace:Theme.Themes;assembly=Theme"
         xmlns:controls="clr-namespace:Theme.Controls;assembly=Theme"
         xmlns:prism="http://prismlibrary.com/"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:behaviors="clr-namespace:Theme.Behaviors;assembly=Theme"
+        xmlns:helps="clr-namespace:DevUtils.Helps"
         prism:ViewModelLocator.AutoWireViewModel="True"
         Style="{DynamicResource {x:Static themes:ResourceKeys.MiniUserWindowStyleKey}}"
         Title="{Binding Title}" WindowStartupLocation="CenterScreen">
+
+    <controls:UserWindow.Resources>
+        <helps:BoolToVisibilityConverter x:Key="boolToVisibilityConverter"/>
+    </controls:UserWindow.Resources>
+
     <controls:UserWindow.TitleBarContent>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <controls:StatusToggle Width="30" CheckedToolTip="点击取消固定" UnCheckedToolTip="点击固定">
@@ -38,6 +46,33 @@
         <Path Data="M0,0 H5" Stretch="Fill" Stroke="Lavender"  StrokeThickness="1"/>
         <!-- <ContentControl prism:RegionManager.RegionName="ContentRegion" /> -->
 
-        
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding MineUtils}" Height="118">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="7">
+                        <i:Interaction.Behaviors>
+                            <behaviors:DragItemsPositionBehavior MoveItemFromItemsSource="{Binding DataContext.MoveMineUtilPosAction, RelativeSource={RelativeSource AncestorType=ItemsControl}}"/>
+                        </i:Interaction.Behaviors>
+                    </UniformGrid>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Control.Margin" Value="3,8"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Padding="5"
+                            ToolTip="{Binding Name}"
+                            Command="{Binding DataContext.OpenUtilCommand,RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                            CommandParameter="{Binding DataContext,RelativeSource={RelativeSource Self}}"
+                            Style="{DynamicResource {x:Static themes:ResourceKeys.MiniWindowShortcutBtnStyleKey}}">
+                        <Image Source="../Assets/Utils.png"/>
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
     </Grid>
 </controls:UserWindow>

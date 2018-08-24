@@ -18,9 +18,9 @@ namespace DevUtils.ViewModels
             _utilData = utilData;
         }
 
-        public ObservableCollection<UtilModel> AllUtils
+        public IEnumerable<ClassifiedUtil> ClassifiedUtils
         {
-            get { return _utilData.AllUtils; }
+            get { return _utilData.ClassifiedUtils; }
         }
 
         public ObservableCollection<UtilModel> MineUtils
@@ -33,8 +33,8 @@ namespace DevUtils.ViewModels
         {
             get
             {
-                if(_moveMineUtilPosAction == null)
-                    _moveMineUtilPosAction = (si, ti) => AllUtils.Move(si, ti); 
+                if (_moveMineUtilPosAction == null)
+                    _moveMineUtilPosAction = (si, ti) => MineUtils.Move(si, ti);
 
                 return _moveMineUtilPosAction;
             }
