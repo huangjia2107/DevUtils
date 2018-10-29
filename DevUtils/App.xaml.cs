@@ -1,9 +1,7 @@
 ﻿using System.Windows;
-using DevUtils.Datas;
 using DevUtils.Views;
-using Prism.Autofac;
-using Prism.Ioc;
-using Prism.Modularity;
+using Prism.Ioc;          
+using Prism.Unity;
 
 namespace DevUtils
 {
