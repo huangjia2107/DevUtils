@@ -5,6 +5,7 @@
         "**/.git": true,  
         "**/bin": true,  
         "**/obj": true,
-        "**/packages":true
+        "**/packages":true,
+        "**/Libs":true,
     }  
 }

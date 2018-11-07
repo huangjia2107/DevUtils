@@ -1,6 +1,8 @@
-﻿using Prism.Ioc;
+﻿using ColorPix.Services;
+using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
+using UtilModelService;
 
 namespace ColorPix
 {
@@ -8,21 +10,16 @@ namespace ColorPix
     {
         private IRegionManager _regionManager = null;
 
-        public ColorPixModule(IRegionManager regionManager)
-        {
-            _regionManager = regionManager;
-        }
-
         #region IModule Members
 
         public void OnInitialized(IContainerProvider containerProvider)
         {
-            
+            _regionManager = containerProvider.Resolve<IRegionManager>();
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            
+            containerRegistry.Register<IUtilModelService, ColorPixUtilModel>("222");
         }
 
         #endregion

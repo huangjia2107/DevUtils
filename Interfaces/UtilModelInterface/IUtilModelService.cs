@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UtilModelInterface
+namespace UtilModelService
 {
-    public interface IUtilModel
+    public interface IUtilModelService
     {
         string GetName();
-        string GetIconPath();
+        //string GetIconPath();
+
     }
 }

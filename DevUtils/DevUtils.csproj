@@ -157,9 +157,9 @@
       <Project>{fe016c9a-53bf-4583-837c-a343ee3d8366}</Project>
       <Name>Utils</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Interfaces\UtilModelInterface\UtilModelInterface.csproj">
+    <ProjectReference Include="..\Interfaces\UtilModelInterface\UtilModelService.csproj">
       <Project>{70665092-fd85-43d8-9aee-06cc59556595}</Project>
-      <Name>UtilModelInterface</Name>
+      <Name>UtilModelService</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

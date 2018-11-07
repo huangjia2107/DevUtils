@@ -1,6 +1,8 @@
 ﻿using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
+using RegexTester.Services;
+using UtilModelService;
 
 namespace RegexTester
 {
@@ -8,21 +10,16 @@ namespace RegexTester
     {
         private IRegionManager _regionManager = null;
 
-        public RegexTesterModule(IRegionManager regionManager)
-        {
-            _regionManager = regionManager;
-        }
-
         #region IModule Members
 
         public void OnInitialized(IContainerProvider containerProvider)
         {
-
+            _regionManager = containerProvider.Resolve<IRegionManager>();
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
+            containerRegistry.Register<IUtilModelService, RegexTesterUtilModel>("111");
         }
 
         #endregion

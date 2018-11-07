@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Documents;
 using System.Windows.Media;
-using UtilModelInterface;
+using UtilModelService;
 
 namespace DevUtils.Models
 {

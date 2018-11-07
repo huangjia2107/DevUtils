@@ -1,20 +1,17 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using DevUtils.Datas;
 using DevUtils.Models;
 using DevUtils.Views;
 using Prism.Commands;
 using Prism.Mvvm;
-using Prism.Regions;
-using Theme.Extensions;
 
 namespace DevUtils.ViewModels
 {
     public class MainWindowViewModel : BindableBase
-    {
+    {  
         private string _title = "我的工具";
         public string Title
         {

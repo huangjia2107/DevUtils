@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegexTester", "Modules\Rege
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Interfaces", "Interfaces", "{30693CDC-FD07-4B6E-9291-61CEDD35C69D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UtilModelInterface", "Interfaces\UtilModelInterface\UtilModelInterface.csproj", "{70665092-FD85-43D8-9AEE-06CC59556595}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UtilModelService", "Interfaces\UtilModelInterface\UtilModelService.csproj", "{70665092-FD85-43D8-9AEE-06CC59556595}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
