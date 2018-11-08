@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DevUtils.Models;
+using UtilModelService;
 using Utils.Extensions;
 
 namespace DevUtils.Views

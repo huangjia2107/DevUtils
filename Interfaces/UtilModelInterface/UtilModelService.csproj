@@ -7,8 +7,8 @@
     <ProjectGuid>{70665092-FD85-43D8-9AEE-06CC59556595}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UtilModelInterface</RootNamespace>
-    <AssemblyName>UtilModelInterface</AssemblyName>
+    <RootNamespace>UtilModelService</RootNamespace>
+    <AssemblyName>UtilModelService</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,7 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IUtilModelService.cs" />
+    <Compile Include="Datas.cs" />
+    <Compile Include="IUtilModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

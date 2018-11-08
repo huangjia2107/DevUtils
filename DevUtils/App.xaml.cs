@@ -1,4 +1,9 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows;
+using DevUtils.Datas;
+using DevUtils.Models;
 using DevUtils.Views;
 using Prism.Ioc;
 using Prism.Modularity;
@@ -32,7 +37,10 @@ namespace DevUtils
             base.OnInitialized();
 
             //get module service implementations
-            var utilModelServices = Container.Resolve<IUtilModelService[]>();
+            var utilModelServices = Container.Resolve<IUtilModel[]>();
+
+            DataManager.Instance().CurAppData.UtilsData.AllUtils.AddRange(utilModelServices);
+            DataManager.Instance().CurAppData.UtilsData.MineUtils.AddRange(utilModelServices);
         }
     }
 }

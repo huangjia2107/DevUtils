@@ -40,7 +40,7 @@
         <Path Data="M0,0 H5" Stretch="Fill" Stroke="Lavender"  StrokeThickness="1"/>
         <!-- <ContentControl prism:RegionManager.RegionName="ContentRegion" /> -->
 
-        <ItemsControl Grid.Row="1" ItemsSource="{Binding MineUtils}" Height="118">
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding MineUtils}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="7">
@@ -59,7 +59,7 @@
                 <DataTemplate>
                     <Button Padding="5"
                             ToolTip="{Binding Name}"
-                            Command="{Binding DataContext.OpenUtilCommand,RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                            Command="{Binding DataContext.RunUtilCommand,RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                             CommandParameter="{Binding DataContext,RelativeSource={RelativeSource Self}}"
                             Style="{DynamicResource {x:Static themes:ResourceKeys.MiniWindowShortcutBtnStyleKey}}">
                         <Image Source="../Assets/Utils.png"/>

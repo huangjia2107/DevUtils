@@ -10,6 +10,7 @@ using System.Windows.Input;
 using DevUtils.Models;
 using Prism.Commands;
 using Prism.Mvvm;
+using UtilModelService;
 
 namespace DevUtils.ViewModels
 {
@@ -27,7 +28,7 @@ namespace DevUtils.ViewModels
             get { return _utilData.ClassifiedUtils; }
         }
 
-        public ObservableCollection<UtilModel> MineUtils
+        public ObservableCollection<IUtilModel> MineUtils
         {
             get { return _utilData.MineUtils; }
         }
