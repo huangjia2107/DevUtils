@@ -32,8 +32,8 @@ namespace DevUtils.Views
         {
             if (VisualTreeHelper.HitTest(AllUtilScrollViewer, Mouse.GetPosition(AllUtilScrollViewer)) == null)
                 return;
-             
-            if (MiniUtilsGrid.TranslatePoint(new Point(), AllUtilScrollViewer).Y.LessThanOrClose(9))
+
+            if (MiniUtilsGrid.TranslatePoint(new Point(), AllUtilScrollViewer).Y.LessThanOrClose(13))
             {
                 UtilTypeListBox.SelectedValue = null;
                 MiniUtilsRadioButton.IsChecked = true;
@@ -63,9 +63,14 @@ namespace DevUtils.Views
                 || VisualTreeHelper.HitTest(UtilTypeListBox, Mouse.GetPosition(UtilTypeListBox)) == null)
                 return;
 
+            var source = AllUtilsItemsControl.ItemsSource as IEnumerable<ClassifiedUtil>;
+            var util = source.FirstOrDefault(u => u.Type == (UtilType)UtilTypeListBox.SelectedValue);
+            if (source == null || util == null)
+                return;
+
             MiniUtilsRadioButton.IsChecked = false;
 
-            var selectedIndex = UtilTypeListBox.SelectedIndex;
+            var selectedIndex = util.Index;
             if (selectedIndex == 0)
             {
                 AllUtilScrollViewer.ScrollToTop();
@@ -73,6 +78,9 @@ namespace DevUtils.Views
             else
             {
                 var item = AllUtilsItemsControl.ItemContainerGenerator.ContainerFromIndex(selectedIndex) as FrameworkElement;
+                if (item == null)
+                    return;
+
                 var yOffset = item.TranslatePoint(new Point(), AllUtilScrollViewer).Y;
 
                 AllUtilScrollViewer.ScrollToVerticalOffset(AllUtilScrollViewer.VerticalOffset + yOffset - 10);
@@ -83,6 +91,6 @@ namespace DevUtils.Views
         {
             UtilTypeListBox.SelectedValue = null;
             AllUtilScrollViewer.ScrollToBottom();
-        }
+        } 
     }
 }

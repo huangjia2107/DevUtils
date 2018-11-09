@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.Remoting;
-using UtilModelService;
+using DevUtils.ViewModels;
 
 namespace DevUtils.Models
 {
@@ -12,25 +10,27 @@ namespace DevUtils.Models
     {
         public UtilData()
         {
-            AllUtils = new ObservableCollection<IUtilModel>();
-            MineUtils = new ObservableCollection<IUtilModel>(); 
+            AllUtils = new ObservableCollection<UtilViewModel>();
+            MineUtils = new ObservableCollection<UtilViewModel>();
         }
 
         [NonSerialized]
-        private IEnumerable<ClassifiedUtil> _classifiedUtils = null;
-        public IEnumerable<ClassifiedUtil> ClassifiedUtils
+        private ObservableCollection<ClassifiedUtil> _classifiedUtils = null;
+        public ObservableCollection<ClassifiedUtil> ClassifiedUtils
         {
             get
             {
                 if (_classifiedUtils == null)
-                    _classifiedUtils =
-                        AllUtils.GroupBy(u => u.Type).OrderBy(g => g.Key).Select(g => new ClassifiedUtil { Type = g.Key, Utils = g.ToList() });
+                    _classifiedUtils = new ObservableCollection<ClassifiedUtil>(
+                        AllUtils.GroupBy(u => u.Type)
+                                .OrderBy(g => g.Key)
+                                .Select((g, i) => new ClassifiedUtil { Index = i, Type = g.Key, Utils = new ObservableCollection<UtilViewModel>(g) }));
 
                 return _classifiedUtils;
             }
         }
 
-        public ObservableCollection<IUtilModel> AllUtils { get; set; }
-        public ObservableCollection<IUtilModel> MineUtils { get; set; }
+        public ObservableCollection<UtilViewModel> AllUtils { get; set; }
+        public ObservableCollection<UtilViewModel> MineUtils { get; set; }
     }
 }

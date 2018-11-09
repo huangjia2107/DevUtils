@@ -80,12 +80,14 @@
     <Compile Include="Datas\ResourcesMap.cs" />
     <Compile Include="Helps\Converters.cs" />
     <Compile Include="Models\AppData.cs" />
+    <Compile Include="Models\ClassifiedUtil.cs" />
     <Compile Include="Models\SettingModel.cs" />
+    <Compile Include="Models\ShortcutUtilModel.cs" />
     <Compile Include="Models\UtilData.cs" />
-    <Compile Include="Models\UtilModels.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\SettingControlViewModel.cs" />
     <Compile Include="ViewModels\UtilControlViewModel.cs" />
+    <Compile Include="ViewModels\UtilViewModel.cs" />
     <Compile Include="Views\SettingControl.xaml.cs">
       <DependentUpon>SettingControl.xaml</DependentUpon>
     </Compile>

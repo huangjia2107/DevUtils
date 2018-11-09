@@ -20,7 +20,7 @@ namespace DevUtils.ViewModels
             set { SetProperty(ref _title, value); }
         }
 
-        public ObservableCollection<IUtilModel> MineUtils
+        public ObservableCollection<UtilViewModel> MineUtils
         {
             get { return DataManager.Instance().CurAppData.UtilsData.MineUtils; }
         }
@@ -39,13 +39,13 @@ namespace DevUtils.ViewModels
 
         public DelegateCommand SettingCommand { get; set; }
         public DelegateCommand UtilsCommand { get; set; }
-        public DelegateCommand<IUtilModel> RunUtilCommand { get; set; }
+        public DelegateCommand<UtilViewModel> RunUtilCommand { get; set; }
 
         public MainWindowViewModel()
         {
             SettingCommand = new DelegateCommand(OpenSetting);
             UtilsCommand = new DelegateCommand(OpenUtils);
-            RunUtilCommand = new DelegateCommand<IUtilModel>(RunUtil);
+            RunUtilCommand = new DelegateCommand<UtilViewModel>(RunUtil);
         }
 
         private void OpenSetting()
@@ -76,10 +76,10 @@ namespace DevUtils.ViewModels
             }).ShowDialog();
         }
 
-        private void RunUtil(IUtilModel util)
+        private void RunUtil(UtilViewModel utilViewModel)
         {
-            if (util != null)
-                util.Run();
+            if (utilViewModel != null)
+                utilViewModel.Run();
         }
     }
 }

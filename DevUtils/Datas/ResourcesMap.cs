@@ -8,6 +8,20 @@ using UtilModelService;
 
 namespace DevUtils.Datas
 {
+    public class UtilDisplay
+    {
+        public UtilDisplay()
+        {
+            Width = 18;
+            Height = 18;
+        }
+
+        public string Name { get; set; }
+        public double Width { get; set; }
+        public double Height { get; set; }
+        public string Data { get; set; }
+    }
+
     public static class ResourcesMap
     {
         public static Dictionary<UtilType, string> UtilTypeDictionary = new Dictionary<UtilType, string>
