@@ -17,9 +17,9 @@ namespace RegexTester.Services
             get { return "Regex Tester"; }
         }
 
-        public string Discription
+        public string Description
         {
-            get { return "this is a discription about Regex Tester"; }
+            get { return "this is a description about Regex Tester"; }
         }
 
         public UtilType Type

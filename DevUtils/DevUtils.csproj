@@ -50,6 +50,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Wpf.7.1.0.431\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -84,16 +85,24 @@
     <Compile Include="Models\SettingModel.cs" />
     <Compile Include="Models\ShortcutUtilModel.cs" />
     <Compile Include="Models\UtilData.cs" />
+    <Compile Include="ViewModels\AddUtilControlViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\SettingControlViewModel.cs" />
     <Compile Include="ViewModels\UtilControlViewModel.cs" />
     <Compile Include="ViewModels\UtilViewModel.cs" />
+    <Compile Include="Views\AddUtilControl.xaml.cs">
+      <DependentUpon>AddUtilControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SettingControl.xaml.cs">
       <DependentUpon>SettingControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UtilControl.xaml.cs">
       <DependentUpon>UtilControl.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\AddUtilControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CommonWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -10,12 +10,12 @@ namespace DevUtils.Models
 
         public string Name
         {
-            get { return Path.GetFileNameWithoutExtension(_targetPath); }
+            get { return Path.GetFileNameWithoutExtension(_location); }
         }
 
-        public string Discription
+        public string Description
         {
-            get { return _discription; }
+            get { return _description; }
         }
 
         public UtilType Type
@@ -30,15 +30,15 @@ namespace DevUtils.Models
 
         #endregion
 
-        private string _targetPath = null;
-        private string _discription = null;
+        private string _location = null;
+        private string _description = null;
         private UtilType _type;
 
-        public ShortcutUtilModel(string targetPath, string discription, UtilType type)
+        public ShortcutUtilModel(string location, string description, UtilType type)
         {
-            _targetPath = targetPath;
+            _location = location;
             _type = type;
-            _discription = discription;
+            _description = description;
         }
     }
 }

@@ -17,9 +17,9 @@ namespace ColorPix.Services
             get { return "Color Pix"; }
         }
 
-        public string Discription
+        public string Description
         {
-            get { return "this is a discription about Color Pix"; }
+            get { return "this is a description about Color Pix"; }
         }
 
         public UtilType Type

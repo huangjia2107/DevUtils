@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq; 
 using DevUtils.Models;
+using DevUtils.Views;
 using Prism.Commands;
 using Prism.Mvvm;
 
@@ -94,7 +95,16 @@ namespace DevUtils.ViewModels
 
         private void AddUtil()
         {
-            
+            (new CommonWindow
+            {
+                Title = "自定义",
+                Height = 385,
+                Width = 550,
+                Content = new AddUtilControl
+                {
+                    DataContext = new AddUtilControlViewModel()
+                }
+            }).ShowDialog();
         }
     }
 }

@@ -11,6 +11,7 @@
         <ResourceDictionary Source="/Theme;component/Themes/Styles/CheckBoxStyle.xaml"/>
         <ResourceDictionary Source="/Theme;component/Themes/Styles/RadioButtonStyle.xaml"/>
         <ResourceDictionary Source="/Theme;component/Themes/Styles/ListBoxStyle.xaml"/>
+        <ResourceDictionary Source="/Theme;component/Themes/Styles/TabControlStyle.xaml"/>
         
         <ResourceDictionary Source="/Theme;component/Themes/Styles/NumericBoxStyle.xaml"/>
         <ResourceDictionary Source="/Theme;component/Themes/Styles/UserWindowStyle.xaml"/>

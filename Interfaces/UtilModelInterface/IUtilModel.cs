@@ -3,7 +3,7 @@
     public interface IUtilModel
     {
         string Name { get;}
-        string Discription { get; }
+        string Description { get; }
         UtilType Type { get; }
 
         void Run();

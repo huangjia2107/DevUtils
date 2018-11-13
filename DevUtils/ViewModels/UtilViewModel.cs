@@ -24,9 +24,9 @@ namespace DevUtils.ViewModels
             get { return _model.Name; }
         }
 
-        public string Discription
+        public string Description
         {
-            get { return _model.Discription; }
+            get { return _model.Description; }
         }
 
         public UtilType Type
