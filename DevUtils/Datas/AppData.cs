@@ -1,6 +1,7 @@
 ﻿using System;
+using DevUtils.Models;
 
-namespace DevUtils.Models
+namespace DevUtils.Datas
 {
     [Serializable]
     public class AppData

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using DevUtils.Models;
 using DevUtils.ViewModels;
 
-namespace DevUtils.Models
+namespace DevUtils.Datas
 {
     [Serializable]
     public class UtilData

@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Windows.Controls;
-using System.Windows.Interactivity;
+using System.Windows.Controls; 
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Documents;
+using Microsoft.Xaml.Behaviors;
 using Theme.Adorners;
 using Utils.Extensions;
 using Utils.Native;

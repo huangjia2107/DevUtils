@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Windows.Interactivity;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Documents;
+using Microsoft.Xaml.Behaviors;
 using Theme.Adorners;
 
 namespace Theme.Behaviors
