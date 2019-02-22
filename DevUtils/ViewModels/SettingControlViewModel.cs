@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DevUtils.Datas;
 using DevUtils.Models;
+using Prism.Ioc;
 using Prism.Mvvm;
 
 namespace DevUtils.ViewModels
@@ -12,9 +14,9 @@ namespace DevUtils.ViewModels
     {
         private SettingModel _settingModel = null;
 
-        public SettingControlViewModel(SettingModel settingModel)
+        public SettingControlViewModel(IContainerExtension container)
         {
-            _settingModel = settingModel;
+            _settingModel = container.Resolve<AppData>().SettingsData;
         }
 
         public int ShortcutCount

@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:themes="clr-namespace:Theme.Themes;assembly=Theme"
+             xmlns:mvvm="http://prismlibrary.com/"
+             mvvm:ViewModelLocator.AutoWireViewModel="True"
              BorderBrush="#3498db" BorderThickness="1,0,1,1">
     <Grid>
         <Grid.RowDefinitions>

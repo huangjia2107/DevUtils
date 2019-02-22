@@ -23,7 +23,7 @@ namespace DevUtils
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
+            containerRegistry.RegisterSingleton<AppData>();
         }
 
         protected override IModuleCatalog CreateModuleCatalog()
@@ -35,11 +35,13 @@ namespace DevUtils
         {
             base.OnInitialized();
 
-            //get module service implementations
+            var appData = Container.Resolve<AppData>();
             var utilModelServices = Container.Resolve<IUtilModel[]>();
 
-            DataManager.Instance().CurAppData.UtilsData.AllUtils.AddRange(utilModelServices.Select(u => new UtilViewModel(u)));
-            //DataManager.Instance().CurAppData.UtilsData.MineUtils.AddRange(utilModelServices);
+            if (appData == null || utilModelServices == null || utilModelServices.Length == 0)
+                return;
+
+            appData.UtilsData.AllUtils.AddRange(utilModelServices.Select(u => new UtilViewModel(u)));
         }
     }
 }

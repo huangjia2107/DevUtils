@@ -1,4 +1,5 @@
-﻿using System.IO; 
+﻿using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using UtilModelService;
 
@@ -25,7 +26,11 @@ namespace DevUtils.Models
 
         public void Run()
         {
-            MessageBox.Show("Run " + Name);
+            //MessageBox.Show("Run " + Name);
+            if (File.Exists(_location))
+                Process.Start(_location);
+            else
+                MessageBox.Show("Do not find " + Name);
         }
 
         #endregion

@@ -7,6 +7,8 @@
              xmlns:helps="clr-namespace:DevUtils.Helps"
              xmlns:controls="clr-namespace:Theme.Controls;assembly=Theme"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:mvvm="http://prismlibrary.com/"
+             mvvm:ViewModelLocator.AutoWireViewModel="True"
              BorderBrush="#3498db" BorderThickness="1,0,1,1">
     <UserControl.Resources>
 

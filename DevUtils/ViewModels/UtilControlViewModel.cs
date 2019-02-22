@@ -6,6 +6,7 @@ using DevUtils.Datas;
 using DevUtils.Models;
 using DevUtils.Views;
 using Prism.Commands;
+using Prism.Ioc;
 using Prism.Mvvm;
 
 namespace DevUtils.ViewModels
@@ -19,15 +20,15 @@ namespace DevUtils.ViewModels
         public DelegateCommand<UtilViewModel> AddToMineCommand { get; set; }
         public DelegateCommand AddUtilCommand { get; set; }
 
-        public UtilControlViewModel(UtilData utilData)
+        public UtilControlViewModel(IContainerExtension container)
         {
-            _utilData = utilData;
+            _utilData = container.Resolve<AppData>().UtilsData;
 
             DeleteFromMineCommand = new DelegateCommand<UtilViewModel>(DeleteUtilModelFromMine);
             DeleteFromAllCommand = new DelegateCommand<UtilViewModel>(DeleteUtilModelFromAll);
 
             AddToMineCommand = new DelegateCommand<UtilViewModel>(AddToMine);
-            AddUtilCommand=new DelegateCommand(AddUtil);
+            AddUtilCommand = new DelegateCommand(AddUtil);
         }
 
         public IEnumerable<ClassifiedUtil> ClassifiedUtils
@@ -101,10 +102,7 @@ namespace DevUtils.ViewModels
                 Title = "自定义",
                 Height = 385,
                 Width = 550,
-                Content = new AddUtilControl
-                {
-                    DataContext = new AddUtilControlViewModel()
-                }
+                Content = new AddUtilControl()
             }).ShowDialog();
         }
     }

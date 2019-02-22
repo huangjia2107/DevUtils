@@ -4,13 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:themes="clr-namespace:Theme.Themes;assembly=Theme"
-             xmlns:datas="clr-namespace:DevUtils.Datas">
-    <Grid>
+             xmlns:datas="clr-namespace:DevUtils.Datas"
+             xmlns:mvvm="http://prismlibrary.com/"
+             mvvm:ViewModelLocator.AutoWireViewModel="True">
+    <Grid Grid.IsSharedSizeScope="True">
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
-        <TabControl Margin="0,5,0,0" BorderThickness="0,1,0,1" Padding="10,12"
+        <TabControl Margin="0,5,0,0" BorderThickness="0,1,0,0" Padding="10,12,10,10"
                     SelectedIndex="{Binding SelectedIndex, Mode=OneWayToSource}">
             <TabItem>
                 <TabItem.Header>
@@ -19,29 +22,15 @@
                         <TextBlock Text="快捷方式" VerticalAlignment="Center" Margin="5,1,0,0" FontSize="14"/>
                     </StackPanel>
                 </TabItem.Header>
-                 
+
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="10"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="10"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto" SharedSizeGroup="DescriptionColumn"/>
                         <ColumnDefinition Width="8"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="工具类别" VerticalAlignment="Center" FontSize="14"/>
-                    <ComboBox Grid.Row="0" Grid.Column="2" Height="27" Width="200" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="14"
-                              SelectedValue="{Binding Type,Mode=TwoWay}"
-                              SelectedValuePath="Key"
-                              DisplayMemberPath="Value"
-                              ItemsSource="{x:Static datas:ResourcesMap.UtilTypeDictionary}"/>
-
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="程序位置" VerticalAlignment="Center" FontSize="14"/>
-                    <Grid Grid.Row="2" Grid.Column="2">
+                    <TextBlock Grid.Column="0" Text="程序位置" VerticalAlignment="Center" FontSize="14"/>
+                    <Grid Grid.Column="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="8"/>
@@ -55,10 +44,7 @@
                             <Path Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}" Stretch="Fill" Width="20" Height="17" Data="M17.415009,11.589005L25.104004,16.893005 23.071014,18.276001 25.715027,21.865005 24.007019,23.122009 21.31601,19.469009 19.366028,20.794006z M1.3740234,8.4840088C1.2410278,8.4840088,1.131012,8.5920105,1.131012,8.727005L1.131012,25.697006C1.131012,25.831009,1.2410278,25.939011,1.3740234,25.939011L30.707001,25.939011C30.841003,25.939011,30.950012,25.831009,30.950012,25.697006L30.950012,8.727005C30.950012,8.5920105,30.841003,8.4840088,30.707001,8.4840088z M1.4170227,5.7770081C1.2820129,5.7770081,1.1720276,5.8860016,1.1720276,6.0200043L1.1720276,7.2320099C1.1720276,7.3659973,1.2820129,7.473999,1.4170227,7.473999L30.745026,7.473999C30.881012,7.473999,30.991028,7.3659973,30.991028,7.2320099L30.991028,6.0200043C30.991028,5.8860016,30.881012,5.7770081,30.745026,5.7770081z M28.364014,1.576004C28.029022,1.576004,27.758026,1.8460083,27.758026,2.1820068L27.758026,3.2720032C27.758026,3.6080017,28.029022,3.8789978,28.364014,3.8789978L29.252014,3.8789978C29.588013,3.8789978,29.859009,3.6080017,29.859009,3.2720032L29.859009,2.1820068C29.859009,1.8460083,29.588013,1.576004,29.252014,1.576004z M24.485016,1.576004C24.150024,1.576004,23.879028,1.8460083,23.879028,2.1820068L23.879028,3.2720032C23.879028,3.6080017,24.150024,3.8789978,24.485016,3.8789978L25.374023,3.8789978C25.709015,3.8789978,25.981018,3.6080017,25.981018,3.2720032L25.981018,2.1820068C25.981018,1.8460083,25.709015,1.576004,25.374023,1.576004z M20.606018,1.576004C20.271027,1.576004,20,1.8460083,20,2.1820068L20,3.2720032C20,3.6080017,20.271027,3.8789978,20.606018,3.8789978L21.495026,3.8789978C21.830017,3.8789978,22.10202,3.6080017,22.10202,3.2720032L22.10202,2.1820068C22.10202,1.8460083,21.830017,1.576004,21.495026,1.576004z M1.3330078,0L30.667023,0C31.404022,0,32,0.5960083,32,1.3330078L32,26.141998C32,26.878006,31.404022,27.473999,30.667023,27.473999L1.3330078,27.473999C0.59701538,27.473999,0,26.878006,0,26.141998L0,1.3330078C0,0.5960083,0.59701538,0,1.3330078,0z"/>
                         </Button>
                     </Grid>
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="描述信息" VerticalAlignment="Top" Margin="0,5,0,0" FontSize="14"/>
-                    <TextBox Grid.Row="4" Grid.Column="2" FontSize="14"
-                             Text="{Binding Description,Mode=TwoWay}"/>
-                </Grid> 
+                </Grid>
 
             </TabItem>
             <TabItem>
@@ -68,9 +54,54 @@
                         <TextBlock Text="插件" VerticalAlignment="Center" Margin="5,1,0,0" FontSize="14"/>
                     </StackPanel>
                 </TabItem.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" SharedSizeGroup="DescriptionColumn"/>
+                        <ColumnDefinition Width="8"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="插件位置" VerticalAlignment="Center" FontSize="14"/>
+                    <Grid Grid.Column="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="8"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Height="27" VerticalContentAlignment="Center" FontSize="14"
+                                 Text="{Binding Location,Mode=TwoWay}"/>
+                        <Button Grid.Column="2" Height="27" Width="50" Foreground="Black"
+                                Command="{Binding ScanCommand}"
+                                Style="{DynamicResource {x:Static themes:ResourceKeys.NormalButtonStyleKey}}">
+                            <Path Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}" Stretch="Fill" Width="20" Height="17" Data="M17.415009,11.589005L25.104004,16.893005 23.071014,18.276001 25.715027,21.865005 24.007019,23.122009 21.31601,19.469009 19.366028,20.794006z M1.3740234,8.4840088C1.2410278,8.4840088,1.131012,8.5920105,1.131012,8.727005L1.131012,25.697006C1.131012,25.831009,1.2410278,25.939011,1.3740234,25.939011L30.707001,25.939011C30.841003,25.939011,30.950012,25.831009,30.950012,25.697006L30.950012,8.727005C30.950012,8.5920105,30.841003,8.4840088,30.707001,8.4840088z M1.4170227,5.7770081C1.2820129,5.7770081,1.1720276,5.8860016,1.1720276,6.0200043L1.1720276,7.2320099C1.1720276,7.3659973,1.2820129,7.473999,1.4170227,7.473999L30.745026,7.473999C30.881012,7.473999,30.991028,7.3659973,30.991028,7.2320099L30.991028,6.0200043C30.991028,5.8860016,30.881012,5.7770081,30.745026,5.7770081z M28.364014,1.576004C28.029022,1.576004,27.758026,1.8460083,27.758026,2.1820068L27.758026,3.2720032C27.758026,3.6080017,28.029022,3.8789978,28.364014,3.8789978L29.252014,3.8789978C29.588013,3.8789978,29.859009,3.6080017,29.859009,3.2720032L29.859009,2.1820068C29.859009,1.8460083,29.588013,1.576004,29.252014,1.576004z M24.485016,1.576004C24.150024,1.576004,23.879028,1.8460083,23.879028,2.1820068L23.879028,3.2720032C23.879028,3.6080017,24.150024,3.8789978,24.485016,3.8789978L25.374023,3.8789978C25.709015,3.8789978,25.981018,3.6080017,25.981018,3.2720032L25.981018,2.1820068C25.981018,1.8460083,25.709015,1.576004,25.374023,1.576004z M20.606018,1.576004C20.271027,1.576004,20,1.8460083,20,2.1820068L20,3.2720032C20,3.6080017,20.271027,3.8789978,20.606018,3.8789978L21.495026,3.8789978C21.830017,3.8789978,22.10202,3.6080017,22.10202,3.2720032L22.10202,2.1820068C22.10202,1.8460083,21.830017,1.576004,21.495026,1.576004z M1.3330078,0L30.667023,0C31.404022,0,32,0.5960083,32,1.3330078L32,26.141998C32,26.878006,31.404022,27.473999,30.667023,27.473999L1.3330078,27.473999C0.59701538,27.473999,0,26.878006,0,26.141998L0,1.3330078C0,0.5960083,0.59701538,0,1.3330078,0z"/>
+                        </Button>
+                    </Grid>
+                </Grid>
             </TabItem>
-        </TabControl>    
-        <Button Grid.Row="1" Height="35" Width="75" HorizontalAlignment="Right" Margin="0,0,15,0"
+        </TabControl>
+        <Grid Grid.Row="1" Margin="10,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" SharedSizeGroup="DescriptionColumn"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="工具类别" VerticalAlignment="Center" FontSize="14"/>
+            <ComboBox Grid.Row="0" Grid.Column="2" Height="27" Width="200" VerticalContentAlignment="Center" HorizontalAlignment="Left" FontSize="14"
+                      SelectedValue="{Binding Type,Mode=TwoWay}"
+                      SelectedValuePath="Key"
+                      DisplayMemberPath="Value"
+                      ItemsSource="{x:Static datas:ResourcesMap.UtilTypeDictionary}"/>
+
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="描述信息" VerticalAlignment="Top" Margin="0,5,0,0" FontSize="14"/>
+            <TextBox Grid.Row="2" Grid.Column="2" FontSize="14"
+                     Text="{Binding Description,Mode=TwoWay}"/>
+        </Grid>
+
+        <Button Grid.Row="2" Height="35" Width="75" HorizontalAlignment="Right" Margin="0,0,15,0"
                 Content="添加" Command="{Binding AddCommand}"  Foreground="Black"
                 Style="{DynamicResource {x:Static themes:ResourceKeys.NormalButtonStyleKey}}"/>
     </Grid>

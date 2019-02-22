@@ -8,6 +8,10 @@ using Prism.Commands;
 using UtilModelService;
 using DevUtils.Models;
 using System.Windows.Forms;
+using DevUtils.Datas;
+using System.Collections.ObjectModel;
+using DevUtils.Helps;
+using Prism.Ioc;
 
 namespace DevUtils.ViewModels
 {
@@ -31,9 +35,9 @@ namespace DevUtils.ViewModels
         public string Location
         {
             get { return _location; }
-            set 
+            set
             {
-                SetProperty(ref _location, value); 
+                SetProperty(ref _location, value);
                 AddCommand.RaiseCanExecuteChanged();
             }
         }
@@ -48,12 +52,18 @@ namespace DevUtils.ViewModels
         public DelegateCommand AddCommand { get; set; }
         public DelegateCommand ScanCommand { get; set; }
 
-        public AddUtilControlViewModel()
+        private IContainerExtension _container = null;
+        private UtilData _utilData = null;
+
+        public AddUtilControlViewModel(IContainerExtension container)
         {
+            _container = container;
+            _utilData = container.Resolve<AppData>().UtilsData;
+
             AddCommand = new DelegateCommand(Add, CanAdd);
             ScanCommand = new DelegateCommand(Scan);
         }
-        
+
         private bool CanAdd()
         {
             return _location != null && !string.IsNullOrEmpty(_location.Trim());
@@ -61,18 +71,45 @@ namespace DevUtils.ViewModels
 
         private void Add()
         {
-            new ShortcutUtilModel(_location, _description, _type);
+            if (SelectedIndex == 0)
+            {
+                Add(new ShortcutUtilModel(_location, _description, _type));
+            }
+            else
+            {
+                DynamicModuleHelps.Instance().LoadModule(_location);
+            }
+        }
+
+        private void Add(IUtilModel utilModel)
+        {
+            //TO DO: 检测文件是否已经添加过
+
+            var newModel = new UtilViewModel(utilModel);
+            _utilData.AllUtils.Add(newModel);
+
+            var classifiedUtil = _utilData.ClassifiedUtils.FirstOrDefault(u => u.Type == utilModel.Type);
+            if (classifiedUtil != null)
+                classifiedUtil.Utils.Add(newModel);
+            else
+                _utilData.ClassifiedUtils.Add(new ClassifiedUtil
+                {
+                    Type = utilModel.Type,
+                    Utils = new ObservableCollection<UtilViewModel>() { newModel }
+                });
         }
 
         private void Scan()
         {
-            var ofd = new OpenFileDialog();
-            ofd.Filter = "可执行文件 (*.exe)|*.exe";
-            ofd.RestoreDirectory = true;
-            ofd.Multiselect = false;
+            var ofd = new OpenFileDialog
+            {
+                Filter = SelectedIndex == 0 ? "可执行文件 (*.exe)|*.exe" : "插件文件 (*.dll)|*.dll",
+                RestoreDirectory = true,
+                Multiselect = SelectedIndex != 0
+            };
 
             if (ofd.ShowDialog() == DialogResult.OK)
-               Location = ofd.FileName;
+                Location = ofd.FileName;
         }
     }
 }

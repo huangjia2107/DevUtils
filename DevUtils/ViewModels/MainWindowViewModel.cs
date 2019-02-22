@@ -6,6 +6,7 @@ using DevUtils.Datas;
 using DevUtils.Models;
 using DevUtils.Views;
 using Prism.Commands;
+using Prism.Ioc;
 using Prism.Mvvm;
 using UtilModelService;
 
@@ -22,7 +23,7 @@ namespace DevUtils.ViewModels
 
         public ObservableCollection<UtilViewModel> MineUtils
         {
-            get { return DataManager.Instance().CurAppData.UtilsData.MineUtils; }
+            get { return _appData.UtilsData.MineUtils; }
         }
 
         private Action<int, int> _moveMineUtilPosAction = null;
@@ -37,12 +38,16 @@ namespace DevUtils.ViewModels
             }
         }
 
+        private AppData _appData = null; 
+
         public DelegateCommand SettingCommand { get; set; }
         public DelegateCommand UtilsCommand { get; set; }
         public DelegateCommand<UtilViewModel> RunUtilCommand { get; set; }
 
-        public MainWindowViewModel()
-        {
+        public MainWindowViewModel(IContainerExtension container)
+        { 
+            _appData = container.Resolve<AppData>();
+
             SettingCommand = new DelegateCommand(OpenSetting);
             UtilsCommand = new DelegateCommand(OpenUtils);
             RunUtilCommand = new DelegateCommand<UtilViewModel>(RunUtil);
@@ -55,10 +60,7 @@ namespace DevUtils.ViewModels
                 Title = "设置",
                 Height = 385,
                 Width = 550,
-                Content = new SettingControl
-                {
-                    DataContext = new SettingControlViewModel(DataManager.Instance().CurAppData.SettingsData)
-                }
+                Content = new SettingControl()
             }).ShowDialog();
         }
 
@@ -69,10 +71,7 @@ namespace DevUtils.ViewModels
                 Title = "工具",
                 Height = 550,
                 Width = 920,
-                Content = new UtilControl
-                {
-                    DataContext = new UtilControlViewModel(DataManager.Instance().CurAppData.UtilsData)
-                }
+                Content = new UtilControl()
             }).ShowDialog();
         }
 

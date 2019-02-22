@@ -19,7 +19,7 @@ namespace DevUtils.Helps
     {
         SynchronizationContext _context;
 
-        private static DynamicModuleHelps _dynamicModuleHelps = new DynamicModuleHelps(); 
+        private static DynamicModuleHelps _dynamicModuleHelps = new DynamicModuleHelps();
         public static DynamicModuleHelps Instance()
         {
             return _dynamicModuleHelps;
@@ -48,7 +48,7 @@ namespace DevUtils.Helps
                                         where !(assembly is System.Reflection.Emit.AssemblyBuilder)
                                               && assembly.GetType().FullName != "System.Reflection.Emit.InternalAssemblyBuilder"
                                               && !String.IsNullOrEmpty(assembly.Location)
-                                        select assembly.Location);
+                                        select assembly.Location).ToList();
 
                 var loaderType = typeof(InnerModuleInfoLoader);
 
@@ -69,7 +69,7 @@ namespace DevUtils.Helps
 
         public void UnloadModule()
         {
-            
+
         }
 
         /// <summary>
