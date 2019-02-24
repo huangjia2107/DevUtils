@@ -10,6 +10,9 @@ using System.Threading;
 using CommonServiceLocator;
 using Prism.Modularity;
 
+using Prism.Ioc;
+using UtilModelService;
+
 namespace DevUtils.Helps
 {
     /// <summary>
@@ -33,7 +36,7 @@ namespace DevUtils.Helps
         /// <summary>
         /// build the child domain and search for the assemblies.
         /// </summary>
-        public void LoadModule(string path)
+        public IUtilModel LoadModule(string path)
         {
             if (string.IsNullOrEmpty(path))
                 throw new InvalidOperationException("Path cannot be null.");
@@ -59,7 +62,7 @@ namespace DevUtils.Helps
                 var module = loader.GetModuleInfo(path);
 
                 //load
-                ActivateModule(module);
+                return ActivateModule(module);
             }
             finally
             {
@@ -100,13 +103,14 @@ namespace DevUtils.Helps
         /// Uses the IModuleManager to load the modules into memory
         /// </summary>
         /// <param name="module"></param>
-        private void ActivateModule(ModuleInfo module)
+        private IUtilModel ActivateModule(ModuleInfo module)
         {
             if (_context == null || module == null)
-                return;
+                return null;
 
             var catalog = ServiceLocator.Current.GetInstance<IModuleCatalog>();
             var manager = ServiceLocator.Current.GetInstance<IModuleManager>();
+            var container = ServiceLocator.Current.GetInstance<IContainerExtension>();
 
             _context.Send((delegate
             {
@@ -115,6 +119,8 @@ namespace DevUtils.Helps
                 //load
                 manager.LoadModule(module.ModuleName);
             }), null);
+
+            return container.Resolve<IUtilModel>(module.ModuleName);
         }
 
         private class InnerModuleInfoLoader : MarshalByRefObject

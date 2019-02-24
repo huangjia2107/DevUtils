@@ -77,7 +77,12 @@ namespace DevUtils.ViewModels
             }
             else
             {
-                DynamicModuleHelps.Instance().LoadModule(_location);
+                var model = DynamicModuleHelps.Instance().LoadModule(_location);
+                if (model != null)
+                {
+                    //copy files
+                    Add(model);
+                }
             }
         }
 
