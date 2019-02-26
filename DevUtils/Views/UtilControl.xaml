@@ -48,7 +48,10 @@
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <Image Grid.Row="0" Grid.RowSpan="2" Source="../Assets/Utils.png"/>
+                                    <Path Grid.Row="0" Grid.RowSpan="2"
+                                          Stretch="Fill" Width="40" Height="40" Fill="#2FB273"
+                                          Data="M512 0C228.8 0 0 228.8 0 512s228.8 512 512 512 512-228.8 512-512S795.2 0 512 0z m0 848c-185.6 0-336-150.4-336-336s150.4-336 336-336 336 150.4 336 336-150.4 336-336 336z M740.8 377.6s-67.2 68.8-75.2 76.8-30.4 6.4-30.4 6.4-62.4-6.4-72-16c-8-8-16-75.2-16-75.2s-1.6-17.6 6.4-27.2l76.8-76.8s9.6-9.6-3.2-9.6c-40 0-121.6 1.6-160 40l-9.6 8c-44.8 44.8-49.6 113.6-14.4 164.8l-152 136c-17.6 17.6-38.4 72 0 110.4 38.4 38.4 91.2 17.6 110.4 0 0 0 108.8-123.2 136-150.4 51.2 35.2 118.4 32 164.8-14.4l8-8c38.4-38.4 40-118.4 40-160 1.6-12.8-9.6-4.8-9.6-4.8zM361.6 692.8c-25.6 0-44.8-19.2-44.8-44.8 0-25.6 19.2-44.8 44.8-44.8 25.6 0 44.8 19.2 44.8 44.8 0 24-20.8 44.8-44.8 44.8z"/>        
+                                    <Image Grid.Row="0" Grid.RowSpan="2"/>
 
                                     <TextBlock Grid.Row="0" Grid.Column="2" FontSize="14" Margin="0,2,0,0" Text="{Binding Name}" TextTrimming="CharacterEllipsis"  VerticalAlignment="Center"/>
                                     <TextBlock Grid.Row="1" Grid.Column="2" FontSize="12" Foreground="Gray" Margin="0,0,0,5" Text="{Binding Description}" TextTrimming="CharacterEllipsis" ToolTip="{Binding Text,RelativeSource={RelativeSource Self}}" VerticalAlignment="Center"/>
@@ -59,7 +62,7 @@
                                         <Button ToolTip="添加" Height="20" Width="30"
                                                 Command="{Binding DataContext.AddToMineCommand,RelativeSource={RelativeSource AncestorType=ItemsControl,AncestorLevel=2}}"
                                                 CommandParameter="{Binding}"
-                                                Style="{DynamicResource {x:Static themes:ResourceKeys.NormalButtonStyleKey}}">
+                                                Style="{DynamicResource {x:Static themes:ResourceKeys.MiniWindowTitlebarButtonStyleKey}}">
                                             <Button.Visibility>
                                                 <MultiBinding Converter="{StaticResource addUtilToMineVisibilityMultiConverter}">
                                                     <Binding Path="IsMouseOver" ElementName="border"/>
@@ -67,7 +70,8 @@
                                                     <Binding Path="DataContext.IsEdited" RelativeSource="{RelativeSource AncestorType=ItemsControl,AncestorLevel=2}"/>
                                                 </MultiBinding>
                                             </Button.Visibility>
-                                            <Path Fill="{Binding Foreground,RelativeSource={RelativeSource AncestorType=Button}}" Stretch="Fill" Width="20" Height="15" VerticalAlignment="Center" HorizontalAlignment="Center" Data="M0,20.299993L2.7000122,20.299993 2.7000122,26.799994 29.399994,26.799994 29.399994,20.299993 32,20.299993 32,29.400001 0,29.400001z M14.899994,0L17.100006,0 17.100006,14.799992 21.200012,10.700015 24.200012,10.700015 24.299988,10.799991 16,19.000005 14.399994,17.399999 7.7000122,10.700015 7.7999878,10.600009 10.799988,10.600009 14.899994,14.700016z"/>
+                                            <Path Fill="{Binding Foreground,RelativeSource={RelativeSource AncestorType=Button}}" Stretch="Fill" Width="30" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                                  Data="M54.602995,886.85714 L968.76191,886.85714 C969.14142,849.3721 969.13761,296.46804 966.85716,267.88571 L54.984114,267.88571 M649.14286,586.28571 C649.14286,590.62857 645.25714,594.28571 640.57143,594.28571 L544,594.28571 544,691.31429 C544,695.77143 540.34286,699.42857 536,699.42857 L488,699.42857 C483.65714,699.42857 480,695.77143 480,691.31429 L480,594.28571 383.42857,594.28571 C378.74286,594.28571 374.85714,590.62857 374.85714,586.28571 L374.85714,538.28571 C374.85714,533.94286 378.74286,530.28571 383.42857,530.28571 L480,530.28571 480,433.25714 C480,428.8 483.65714,425.14286 488,425.14286 L536,425.14286 C540.34286,425.14286 544,428.8 544,433.25714 L544,530.28571 640.57143,530.28571 C645.25714,530.28571 649.14286,533.94286 649.14286,538.28571 L649.14286,586.28571 z"/>
                                         </Button>
                                         <Button ToolTip="移除"
                                                 Command="{Binding DataContext.DeleteFromAllCommand,RelativeSource={RelativeSource AncestorType=ItemsControl,AncestorLevel=2}}"
@@ -104,9 +108,9 @@
                     <ColumnDefinition Width="10"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Path Stretch="Fill" Width="20" Height="20"
+                <Path Stretch="Fill" Width="22" Height="22"
                       Fill="{Binding Foreground,ElementName=NameTextBlock}"
-                      Data="M13,17L19,17 19,19 13,19z M21,16L24,16 24,21 21,21z M8,16L11,16 11,21 8,21z M3,7C2.448,7,2,7.448,2,8L2,17 3,17 6,17 6,19 4,19 4,28 28,28 28,19 26,19 26,17 29,17 30,17 30,8C30,7.448,29.552,7,29,7L25,7 7,7z M8,2L8,5 24,5 24,2z M7,0L25,0C25.552999,0,26,0.4470005,26,1L26,5 29,5C30.653999,5,32,6.3459997,32,8L32,18C32,18.553,31.552999,19,31,19L30,19 30,29C30,29.552979,29.553009,30,29,30L3,30C2.446991,30,2,29.552979,2,29L2,19 1,19C0.44700003,19,0,18.553,0,18L0,8C0,6.3459997,1.346,5,3,5L6,5 6,1C6,0.4470005,6.447,0,7,0z"/>
+                      Data="M512 0C229.23008 0 0 229.23008 0 512s229.23008 512 512 512 512-229.23008 512-512S794.76992 0 512 0zM413.09056 647.2064c-135.88864 0-246.04928-107.48928-246.04928-240.07552 0-36.38144 5.00736-56.54016 13.31968-78.07744 8.31872-21.53728 23.3088-9.33248 33.2416 0.59648 9.92896 9.92768 77.98784 80.87296 77.98784 80.87296 10.94528 11.35744 29.19808 11.68256 40.54912 0.73088l82.52032-79.57376c11.35744-10.94656 11.69408-29.19296 0.7424-40.54912 0 0-65.52704-68.45312-79.168-82.0928-13.63968-13.63968-20.42368-22.6112 5.7152-30.86976 26.13248-8.26752 36.24576-11.11424 71.14112-11.11424 135.89376 0 246.04928 107.47776 246.04928 240.0768C659.13984 539.71712 548.9856 647.2064 413.09056 647.2064zM858.22208 768.6784c-0.6528 14.42176-15.93984 27.7184-15.93984 27.7184l-56.5184 52.23168c0 0-9.42464 9.59616-26.44608 9.59616s-32.3776-15.39968-32.3776-15.39968S572.92544 683.59808 560.6848 671.37152c-4.2752-3.73632-5.56928-16.256 3.06048-20.5312 8.57216-5.32096 37.0432-21.39648 55.72992-40.08064 15.34336-15.21024 23.87072-27.80928 33.06112-40.4992 6.68288-11.0016 17.1904-8.99968 27.30368 1.1136 12.61056 12.61056 162.95936 167.74144 162.95936 167.74144S858.86336 754.25664 858.22208 768.6784zM766.55104 737.21344c-19.80032 0-35.8528 16.05248-35.8528 35.85152 0 19.80032 16.05248 35.84256 35.8528 35.84256 19.79904 0 35.84-16.04224 35.84-35.84256C802.39104 753.26592 786.35008 737.21344 766.55104 737.21344z"/>
 
                 <TextBlock x:Name="NameTextBlock" Grid.Column="2" VerticalAlignment="Center" Text="全部工具"  FontSize="16"/>
             </Grid>
@@ -147,9 +151,9 @@
                         <ColumnDefinition Width="12"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <Path Stretch="Fill" Width="20" Height="20"
+                    <Path Stretch="Fill" Width="22" Height="22"
                           Fill="{Binding Foreground,RelativeSource={RelativeSource AncestorType=RadioButton}}"
-                          Data="M13,17L19,17 19,19 13,19z M21,16L24,16 24,21 21,21z M8,16L11,16 11,21 8,21z M3,7C2.448,7,2,7.448,2,8L2,17 3,17 6,17 6,19 4,19 4,28 28,28 28,19 26,19 26,17 29,17 30,17 30,8C30,7.448,29.552,7,29,7L25,7 7,7z M8,2L8,5 24,5 24,2z M7,0L25,0C25.552999,0,26,0.4470005,26,1L26,5 29,5C30.653999,5,32,6.3459997,32,8L32,18C32,18.553,31.552999,19,31,19L30,19 30,29C30,29.552979,29.553009,30,29,30L3,30C2.446991,30,2,29.552979,2,29L2,19 1,19C0.44700003,19,0,18.553,0,18L0,8C0,6.3459997,1.346,5,3,5L6,5 6,1C6,0.4470005,6.447,0,7,0z"/>
+                          Data="M511 69.3c-244.2 0-442.2 198-442.2 442.2s198 442.2 442.2 442.2 442.2-198 442.2-442.2S755.2 69.3 511 69.3z m249.8 681.4c0 10.4-8.5 18.8-19 18.8H280.2c-10.5 0-19-8.4-19-18.8v-50.8c0-101.7 61.8-191.9 157.5-229.8l10.8-4.3-9.2-7.1c-35.9-28-56.5-69.8-56.5-114.7 0-80.4 66-145.9 147.2-145.9S658.2 263.5 658.2 344c0 44.9-20.6 86.7-56.5 114.7l-9.2 7.1 10.8 4.3C699 508 760.8 598.2 760.8 699.9v50.8z"/>
 
                     <TextBlock Grid.Column="2" VerticalAlignment="Center" Text="我的工具"/>
                 </Grid>
@@ -159,7 +163,7 @@
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="60"/>     
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid>
@@ -174,20 +178,22 @@
                             Command="{Binding AddUtilCommand}" 
                             IsEnabled="{Binding IsEdited,Converter={StaticResource boolConverter}}"
                             Style="{DynamicResource {x:Static themes:ResourceKeys.MiniWindowTitlebarButtonStyleKey}}">
-                        <Path Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Stretch="Fill" Width="35" Height="35" VerticalAlignment="Center" HorizontalAlignment="Center" Data="M22.25,11.5 L25.75,11.5 25.75,22.25 36.5,22.25 36.5,25.75 25.75,25.75 25.75,36.5 22.25,36.5 22.25,25.75 11.5,25.75 11.5,22.25 22.25,22.25 z M24,2.2574258 C11.991908,2.2574258 2.2574258,11.991908 2.2574258,24 2.2574258,36.008095 11.991908,45.742577 24,45.742577 36.008095,45.742577 45.742577,36.008095 45.742577,24 45.742577,11.991908 36.008095,2.2574258 24,2.2574258 z M24,0 C37.254833,0 48,10.745167 48,24 48,37.254833 37.254833,48 24,48 10.745167,48 0,37.254833 0,24 0,10.745167 10.745167,0 24,0 z" />
+                        <Path Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Stretch="Fill" Width="35" Height="35" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                              Data="M512 1024C229.239467 1024 0 794.760533 0 512 0 229.239467 229.239467 0 512 0 794.760533 0 1024 229.239467 1024 512 1024 794.760533 794.760533 1024 512 1024ZM739.555556 477.866667 546.133333 477.866667 546.133333 284.444444C546.133333 265.580089 530.8416 250.311111 512 250.311111 493.1584 250.311111 477.866667 265.580089 477.866667 284.444444L477.866667 477.866667 284.444444 477.866667C265.602844 477.866667 250.311111 493.1584 250.311111 512 250.311111 530.8416 265.602844 546.133333 284.444444 546.133333L477.866667 546.133333 477.866667 739.555556C477.866667 758.397156 493.1584 773.688889 512 773.688889 530.8416 773.688889 546.133333 758.397156 546.133333 739.555556L546.133333 546.133333 739.555556 546.133333C758.397156 546.133333 773.688889 530.8416 773.688889 512 773.688889 493.1584 758.397156 477.866667 739.555556 477.866667Z" />
                     </Button>
                     <controls:StatusToggle CheckedToolTip="退出编辑" UnCheckedToolTip="编辑" Margin="15,0,0,0"
                                            IsChecked="{Binding IsEdited,Mode=TwoWay}">
                         <controls:StatusToggle.CheckedContent>
-                            <Path Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=controls:StatusToggle}}" Stretch="Fill" Width="35" Height="35"  VerticalAlignment="Center" HorizontalAlignment="Center" Data="M36.360527,12.988 L39.049,15.778473 20.668192,35.646999 9.3409996,26.793966 12.175531,23.593775 20.497425,30.07666 z M24,2.2574258 C11.991908,2.2574258 2.2574258,11.991908 2.2574258,24 2.2574258,36.008095 11.991908,45.742577 24,45.742577 36.008095,45.742577 45.742577,36.008095 45.742577,24 45.742577,11.991908 36.008095,2.2574258 24,2.2574258 z M24,0 C37.254833,0 48,10.745167 48,24 48,37.254833 37.254833,48 24,48 10.745167,48 0,37.254833 0,24 0,10.745167 10.745167,0 24,0 z" />
+                            <Path Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=controls:StatusToggle}}" Stretch="Fill" Width="35" Height="35"  VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                  Data="M512 1024C229.7 1024 0 794.3 0 512 0 229.7 229.7 0 512 0c282.3 0 512 229.7 512 512C1024 794.3 794.3 1024 512 1024L512 1024zM757.7 376.2c-14.3-14.2-37.5-14.1-51.7 0.3L439.4 646l-118-121.3c-14.1-14.5-37.3-14.8-51.7-0.7-14.5 14.1-14.8 37.3-0.7 51.7l144 148c0.1 0.1 0.2 0.1 0.3 0.2 0.1 0.1 0.1 0.2 0.2 0.3 2.3 2.3 5.2 3.7 7.9 5.2 1.4 0.8 2.6 2 4 2.6 4.4 1.8 9.1 2.7 13.8 2.7 4.6 0 9.3-0.9 13.7-2.7 1.4-0.6 2.5-1.8 3.9-2.5 2.7-1.5 5.6-2.9 7.9-5.2 0.1-0.1 0.1-0.2 0.2-0.3 0.1-0.1 0.2-0.1 0.3-0.2l292.8-296C772.2 413.5 772 390.4 757.7 376.2L757.7 376.2z" />
                         </controls:StatusToggle.CheckedContent>
                         <controls:StatusToggle.UnCheckedContent>
-                            <Path Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=controls:StatusToggle}}" Stretch="Fill" Width="35" Height="35" VerticalAlignment="Center" HorizontalAlignment="Center" Data="M13.705043,31.298584 L18.05921,34.956066 12.660032,36.959 z M25.374205,15.362317 L31.382948,20.413166 20.932949,32.778984 14.924204,27.728161 z M31.208797,10.834 C32.079632,10.834 32.950462,11.182328 33.734207,11.791896 35.388786,13.185234 35.650051,15.710646 34.169624,17.36525 L32.863377,18.932739 26.854631,13.881917 28.160881,12.314401 C28.944626,11.269417 30.076698,10.834 31.208797,10.834 z M24,2.2574258 C11.991908,2.2574258 2.2574258,11.991908 2.2574258,24 2.2574258,36.008095 11.991908,45.742577 24,45.742577 36.008095,45.742577 45.742577,36.008095 45.742577,24 45.742577,11.991908 36.008095,2.2574258 24,2.2574258 z M24,0 C37.254833,0 48,10.745167 48,24 48,37.254833 37.254833,48 24,48 10.745167,48 0,37.254833 0,24 0,10.745167 10.745167,0 24,0 z" />
+                            <Path Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=controls:StatusToggle}}" Stretch="Fill" Width="35" Height="35" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                                  Data="M511.979 30.125c-266.13 0-481.871 215.741-481.871 481.871s215.741 481.871 481.871 481.871S993.85 778.126 993.85 511.996 778.109 30.125 511.979 30.125zM459.644 693.015c-15.876 18.135-22.818 22.486-44.972 30.657-34.111 12.787-96.687 36.27-137.374 51.515-7.706 3.056-36.735 1.495-24.578-27.036 13.784-39.757 34.045-98.414 45.636-131.894 8.436-23.615 11.758-29.76 28.73-45.603l175.271-175.271 124.055 124.088C626.413 519.471 508.469 642.264 459.644 693.015zM653.084 492.867 528.996 368.779l26.605-26.605 124.088 124.121L653.084 492.867zM759.469 386.482l-53.176 53.209L582.205 315.569l53.209-53.176c19.596-19.596 51.316-19.596 70.912 0l53.209 53.176C779.065 335.166 779.065 366.919 759.469 386.482z" />
                         </controls:StatusToggle.UnCheckedContent>
                     </controls:StatusToggle>
                 </StackPanel>
             </Grid>
-
             <ScrollViewer x:Name="AllUtilScrollViewer" Grid.Row="1" 
                           ScrollChanged="ScrollViewer_OnScrollChanged"
                           HorizontalScrollBarVisibility="Disabled"
@@ -258,7 +264,9 @@
                                                 <RowDefinition Height="10"/>
                                                 <RowDefinition Height="auto"/>
                                             </Grid.RowDefinitions>
-                                            <Image Grid.Row="0" Source="../Assets/Utils.png" Width="45" Height="45"/>
+                                            <Path Grid.Row="0" Stretch="Fill" Width="45" Height="45" Fill="#2FB273"
+                                                  Data="M512 0C228.8 0 0 228.8 0 512s228.8 512 512 512 512-228.8 512-512S795.2 0 512 0z m0 848c-185.6 0-336-150.4-336-336s150.4-336 336-336 336 150.4 336 336-150.4 336-336 336z M740.8 377.6s-67.2 68.8-75.2 76.8-30.4 6.4-30.4 6.4-62.4-6.4-72-16c-8-8-16-75.2-16-75.2s-1.6-17.6 6.4-27.2l76.8-76.8s9.6-9.6-3.2-9.6c-40 0-121.6 1.6-160 40l-9.6 8c-44.8 44.8-49.6 113.6-14.4 164.8l-152 136c-17.6 17.6-38.4 72 0 110.4 38.4 38.4 91.2 17.6 110.4 0 0 0 108.8-123.2 136-150.4 51.2 35.2 118.4 32 164.8-14.4l8-8c38.4-38.4 40-118.4 40-160 1.6-12.8-9.6-4.8-9.6-4.8zM361.6 692.8c-25.6 0-44.8-19.2-44.8-44.8 0-25.6 19.2-44.8 44.8-44.8 25.6 0 44.8 19.2 44.8 44.8 0 24-20.8 44.8-44.8 44.8z"/>
+                                            <Image Grid.Row="0" Width="45" Height="45"/>
                                             <TextBlock Grid.Row="2" FontSize="13" Foreground="Gray" Text="{Binding Name}" TextTrimming="CharacterEllipsis" HorizontalAlignment="Center"/>
 
                                             <Button Grid.RowSpan="3" HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="移除"
