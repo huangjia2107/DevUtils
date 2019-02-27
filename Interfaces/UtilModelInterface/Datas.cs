@@ -2,7 +2,7 @@
 {
     public enum UtilType
     {
-        Color,
+        Color = 0,
         File,
         Debug,
         Test,

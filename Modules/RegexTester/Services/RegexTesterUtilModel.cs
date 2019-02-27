@@ -27,6 +27,8 @@ namespace RegexTester.Services
             get { return UtilType.Test; }
         }
 
+        public string Location { get; set; }
+
         public void Run()
         {
             MessageBox.Show("Run RegexTester");

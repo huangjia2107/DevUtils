@@ -6,6 +6,7 @@
         xmlns:prism="http://prismlibrary.com/"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:behaviors="clr-namespace:Theme.Behaviors;assembly=Theme"
+        xmlns:helps="clr-namespace:DevUtils.Helps"
         prism:ViewModelLocator.AutoWireViewModel="True"
         Style="{DynamicResource {x:Static themes:ResourceKeys.MiniUserWindowStyleKey}}"
         Title="{Binding Title}" WindowStartupLocation="CenterScreen">
@@ -31,6 +32,10 @@
             </Button>
         </StackPanel>
     </controls:UserWindow.TitleBarContent>
+    <controls:UserWindow.Resources>
+        <helps:FileIconConverter x:Key="fileIconConverter"/>
+        <helps:NullToVisibilityConverter x:Key="nullToVisibilityConverter"/>
+    </controls:UserWindow.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -64,13 +69,14 @@
                             Style="{DynamicResource {x:Static themes:ResourceKeys.MiniWindowShortcutBtnStyleKey}}">
                         <Grid>
                             <Path Stretch="Fill" Fill="#2FB273"
-                                  Data="M512 0C228.8 0 0 228.8 0 512s228.8 512 512 512 512-228.8 512-512S795.2 0 512 0z m0 848c-185.6 0-336-150.4-336-336s150.4-336 336-336 336 150.4 336 336-150.4 336-336 336z M740.8 377.6s-67.2 68.8-75.2 76.8-30.4 6.4-30.4 6.4-62.4-6.4-72-16c-8-8-16-75.2-16-75.2s-1.6-17.6 6.4-27.2l76.8-76.8s9.6-9.6-3.2-9.6c-40 0-121.6 1.6-160 40l-9.6 8c-44.8 44.8-49.6 113.6-14.4 164.8l-152 136c-17.6 17.6-38.4 72 0 110.4 38.4 38.4 91.2 17.6 110.4 0 0 0 108.8-123.2 136-150.4 51.2 35.2 118.4 32 164.8-14.4l8-8c38.4-38.4 40-118.4 40-160 1.6-12.8-9.6-4.8-9.6-4.8zM361.6 692.8c-25.6 0-44.8-19.2-44.8-44.8 0-25.6 19.2-44.8 44.8-44.8 25.6 0 44.8 19.2 44.8 44.8 0 24-20.8 44.8-44.8 44.8z"/>
-                            <Image/>
+                                  Data="M512 0C228.8 0 0 228.8 0 512s228.8 512 512 512 512-228.8 512-512S795.2 0 512 0z m0 848c-185.6 0-336-150.4-336-336s150.4-336 336-336 336 150.4 336 336-150.4 336-336 336z M740.8 377.6s-67.2 68.8-75.2 76.8-30.4 6.4-30.4 6.4-62.4-6.4-72-16c-8-8-16-75.2-16-75.2s-1.6-17.6 6.4-27.2l76.8-76.8s9.6-9.6-3.2-9.6c-40 0-121.6 1.6-160 40l-9.6 8c-44.8 44.8-49.6 113.6-14.4 164.8l-152 136c-17.6 17.6-38.4 72 0 110.4 38.4 38.4 91.2 17.6 110.4 0 0 0 108.8-123.2 136-150.4 51.2 35.2 118.4 32 164.8-14.4l8-8c38.4-38.4 40-118.4 40-160 1.6-12.8-9.6-4.8-9.6-4.8zM361.6 692.8c-25.6 0-44.8-19.2-44.8-44.8 0-25.6 19.2-44.8 44.8-44.8 25.6 0 44.8 19.2 44.8 44.8 0 24-20.8 44.8-44.8 44.8z"
+                                  Visibility="{Binding Source,ElementName=img,Converter={StaticResource nullToVisibilityConverter}}"/>
+                            <Image x:Name="img" Source="{Binding Location,Converter={StaticResource fileIconConverter}}"/>
                         </Grid>
-                        
+
                     </Button>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
-        </ItemsControl> 
+        </ItemsControl>
     </Grid>
 </controls:UserWindow>

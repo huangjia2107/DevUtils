@@ -24,6 +24,12 @@ namespace DevUtils.Models
             get { return _type; }
         }
 
+        public string Location
+        {
+            get { return _location; }
+            set { _location = value; }
+        }
+
         public void Run()
         {
             //MessageBox.Show("Run " + Name);

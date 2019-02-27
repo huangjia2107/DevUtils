@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Linq; 
+using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
@@ -11,7 +12,7 @@ namespace DevUtils.Helps
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return !(bool) value;
+            return !(bool)value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
@@ -19,7 +20,6 @@ namespace DevUtils.Helps
             throw new NotImplementedException();
         }
     }
-
 
     public class BoolToBrushConverter : IValueConverter
     {
@@ -29,6 +29,22 @@ namespace DevUtils.Helps
                 return Brushes.Transparent;
 
             return (bool)value ? (Brush)parameter : Brushes.Transparent;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class NullToVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (value == null || value == DependencyProperty.UnsetValue)
+                return Visibility.Visible;
+
+            return Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
@@ -69,6 +85,28 @@ namespace DevUtils.Helps
             throw new NotImplementedException();
         }
     }
+
+    public class FileIconConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (value == null || value == DependencyProperty.UnsetValue)
+                return null;
+
+            var location = (string)value;
+
+            if (File.Exists(location))
+                return Utils.GetIcon(location);
+
+            return null;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 
     public class BoolAndBoolToVisibilityMultiConverter : IMultiValueConverter
     {
@@ -125,7 +163,4 @@ namespace DevUtils.Helps
             throw new NotImplementedException();
         }
     }
-
-
-
 }

@@ -27,6 +27,8 @@ namespace ColorPix.Services
             get { return UtilType.Color; }
         }
 
+        public string Location { get; set; }
+
         public void Run()
         {
             MessageBox.Show("Run ColorPix");

@@ -34,6 +34,11 @@ namespace DevUtils.ViewModels
             get { return _model.Type; }
         }
 
+        public string Location
+        {
+            get { return _model.Location; }
+        }
+
         public void Run()
         {
             _model.Run();

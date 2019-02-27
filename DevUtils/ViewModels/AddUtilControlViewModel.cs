@@ -77,11 +77,14 @@ namespace DevUtils.ViewModels
             }
             else
             {
-                var model = DynamicModuleHelps.Instance().LoadModule(_location);
-                if (model != null)
+                var module = DynamicModuleHelps.Instance().LoadModule(_location);
+                if (module != null)
                 {
+                    var utilModel = _container.Resolve<IUtilModel>(module.ModuleName);
+                    utilModel.Location = _location;
+                  
                     //copy files
-                    Add(model);
+                    Add(utilModel);
                 }
             }
         }
@@ -93,15 +96,39 @@ namespace DevUtils.ViewModels
             var newModel = new UtilViewModel(utilModel);
             _utilData.AllUtils.Add(newModel);
 
-            var classifiedUtil = _utilData.ClassifiedUtils.FirstOrDefault(u => u.Type == utilModel.Type);
-            if (classifiedUtil != null)
-                classifiedUtil.Utils.Add(newModel);
-            else
-                _utilData.ClassifiedUtils.Add(new ClassifiedUtil
+            var newClassifiedUtil = new ClassifiedUtil
+            {
+                Type = utilModel.Type,
+                Utils = new ObservableCollection<UtilViewModel>() { newModel }
+            };
+
+            var isFinish = false;
+            for (int i = 0; i < _utilData.ClassifiedUtils.Count; i++)
+            {
+                var classifiedUtil = _utilData.ClassifiedUtils[i];
+                if (classifiedUtil.Type == utilModel.Type)
                 {
-                    Type = utilModel.Type,
-                    Utils = new ObservableCollection<UtilViewModel>() { newModel }
-                });
+                    classifiedUtil.Utils.Add(newModel);
+                    return;
+                }
+
+                if (!isFinish && classifiedUtil.Type > utilModel.Type)
+                {
+                    newClassifiedUtil.Index = i;
+                    _utilData.ClassifiedUtils.Insert(i, newClassifiedUtil);
+                    isFinish = true;
+                    continue;
+                }
+
+                if (isFinish)
+                    classifiedUtil.Index++;
+            }
+
+            if (!isFinish)
+            {
+                newClassifiedUtil.Index = _utilData.ClassifiedUtils.Count;
+                _utilData.ClassifiedUtils.Add(newClassifiedUtil);
+            }
         }
 
         private void Scan()
