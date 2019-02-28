@@ -5,6 +5,7 @@ using DevUtils.Datas;
 using DevUtils.ViewModels;
 using DevUtils.Views;
 using Prism.Ioc;
+using Prism.Mvvm;
 using Prism.Modularity;
 using Prism.Unity;
 using UtilModelService;
@@ -23,6 +24,12 @@ namespace DevUtils
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            //for view-viewmodel map
+            ViewModelLocationProvider.Register<MainWindow, MainWindowViewModel>();
+            ViewModelLocationProvider.Register<SettingControl, SettingControlViewModel>();
+            ViewModelLocationProvider.Register<UtilControl, UtilControlViewModel>();
+            ViewModelLocationProvider.Register<AddUtilControl, AddUtilControlViewModel>();
+        
             containerRegistry.RegisterSingleton<AppData>();
         }
 
