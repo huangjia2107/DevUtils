@@ -16,7 +16,7 @@ namespace DevUtils.Helps
     {
         public static ImageSource GetIcon(string fileName)
         {
-            var icon = ImageHelper.GetIcon(fileName);
+            var icon = ImageHelper.GetIcon(fileName, IconSize.ExtraLarge);
             if (icon == null)
                 return null;
 
