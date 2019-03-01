@@ -24,18 +24,23 @@ namespace DevUtils
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            //for view-viewmodel map
-            ViewModelLocationProvider.Register<MainWindow, MainWindowViewModel>();
-            ViewModelLocationProvider.Register<SettingControl, SettingControlViewModel>();
-            ViewModelLocationProvider.Register<UtilControl, UtilControlViewModel>();
-            ViewModelLocationProvider.Register<AddUtilControl, AddUtilControlViewModel>();
-        
             containerRegistry.RegisterSingleton<AppData>();
         }
 
         protected override IModuleCatalog CreateModuleCatalog()
         {
             return new DirectoryModuleCatalog() { ModulePath = @".\Modules" };
+        }
+
+        protected override void ConfigureViewModelLocator()
+        {
+            base.ConfigureViewModelLocator();
+
+            //for view-viewmodel map
+            ViewModelLocationProvider.Register<MainWindow, MainWindowViewModel>();
+            ViewModelLocationProvider.Register<SettingControl, SettingControlViewModel>();
+            ViewModelLocationProvider.Register<UtilControl, UtilControlViewModel>();
+            ViewModelLocationProvider.Register<AddUtilControl, AddUtilControlViewModel>();
         }
 
         protected override void OnInitialized()
