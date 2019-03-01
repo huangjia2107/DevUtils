@@ -2,10 +2,10 @@
 {
     public enum UtilType
     {
-        Color = 0,
-        File,
+        Coder = 0,
+        Tester,
         Debug,
-        Test,
+        Office,
         Misc
     }
 }

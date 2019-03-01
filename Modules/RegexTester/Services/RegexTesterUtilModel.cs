@@ -24,7 +24,7 @@ namespace RegexTester.Services
 
         public UtilType Type
         {
-            get { return UtilType.Test; }
+            get { return UtilType.Tester; }
         }
 
         public string Location { get; set; }
