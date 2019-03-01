@@ -17,6 +17,17 @@ namespace DevUtils
     /// </summary>
     public partial class App : PrismApplication
     {
+        protected override void ConfigureViewModelLocator()
+        {
+            base.ConfigureViewModelLocator();
+
+            //for view-viewmodel map
+            ViewModelLocationProvider.Register<MainWindow, MainWindowViewModel>();
+            ViewModelLocationProvider.Register<SettingControl, SettingControlViewModel>();
+            ViewModelLocationProvider.Register<UtilControl, UtilControlViewModel>();
+            ViewModelLocationProvider.Register<AddUtilControl, AddUtilControlViewModel>();
+        }
+
         protected override Window CreateShell()
         {
             return Container.Resolve<MainWindow>();
@@ -32,28 +43,17 @@ namespace DevUtils
             return new DirectoryModuleCatalog() { ModulePath = @".\Modules" };
         }
 
-        protected override void ConfigureViewModelLocator()
-        {
-            base.ConfigureViewModelLocator();
-
-            //for view-viewmodel map
-            ViewModelLocationProvider.Register<MainWindow, MainWindowViewModel>();
-            ViewModelLocationProvider.Register<SettingControl, SettingControlViewModel>();
-            ViewModelLocationProvider.Register<UtilControl, UtilControlViewModel>();
-            ViewModelLocationProvider.Register<AddUtilControl, AddUtilControlViewModel>();
-        }
-
         protected override void OnInitialized()
         {
             base.OnInitialized();
 
             var appData = Container.Resolve<AppData>();
-            var utilModelServices = Container.Resolve<IUtilModel[]>();
+            var utilModels = Container.Resolve<IUtilModel[]>();
 
-            if (appData == null || utilModelServices == null || utilModelServices.Length == 0)
+            if (appData == null || utilModels == null || utilModels.Length == 0)
                 return;
 
-            appData.UtilsData.AllUtils.AddRange(utilModelServices.Select(u => new UtilViewModel(u)));
+            appData.UtilsData.AllUtils.AddRange(utilModels.Select(u => new UtilViewModel(u)));
         }
     }
 }
