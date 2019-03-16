@@ -8,6 +8,7 @@ using DevUtils.Views;
 using Prism.Commands;
 using Prism.Ioc;
 using Prism.Mvvm;
+using UtilModelService;
 
 namespace DevUtils.ViewModels
 {
@@ -18,6 +19,8 @@ namespace DevUtils.ViewModels
         public DelegateCommand<UtilViewModel> DeleteFromMineCommand { get; set; }
         public DelegateCommand<UtilViewModel> DeleteFromAllCommand { get; set; }
         public DelegateCommand<UtilViewModel> AddToMineCommand { get; set; }
+
+        public DelegateCommand<UtilType?> AddUtilByTypeCommand { get; set; }
         public DelegateCommand AddUtilCommand { get; set; }
 
         public UtilControlViewModel(IContainerExtension container)
@@ -28,6 +31,7 @@ namespace DevUtils.ViewModels
             DeleteFromAllCommand = new DelegateCommand<UtilViewModel>(DeleteUtilModelFromAll);
 
             AddToMineCommand = new DelegateCommand<UtilViewModel>(AddToMine);
+            AddUtilByTypeCommand = new DelegateCommand<UtilType?>(AddUtilByType);
             AddUtilCommand = new DelegateCommand(AddUtil);
         }
 
@@ -67,14 +71,16 @@ namespace DevUtils.ViewModels
                 return;
 
             classifiedUtil.Utils.Remove(utilViewModel);
+            classifiedUtil.RefreshIsEmpty();
+
             DeleteUtilModelFromMine(utilViewModel);
 
-            if (classifiedUtil.Utils.Count == 0)
-            {
-                _utilData.ClassifiedUtils.Remove(classifiedUtil);
+            //if (classifiedUtil.Utils.Count == 0)
+            //{
+            //    _utilData.ClassifiedUtils.Remove(classifiedUtil);
 
-                //TDO: notify ui to update selection status
-            }
+            //    //TDO: notify ui to update selection status
+            //}
         }
 
         private void DeleteUtilModelFromMine(UtilViewModel utilViewModel)
@@ -95,6 +101,17 @@ namespace DevUtils.ViewModels
             }
         }
 
+        private void AddUtilByType(UtilType? utilType)
+        {
+            (new CommonWindow
+            {
+                Title = "自定义",
+                Height = 385,
+                Width = 550,
+                Content = new AddUtilControl() { DataContext = new AddUtilControlViewModel(utilType.Value) }
+            }).ShowDialog();
+        }
+
         private void AddUtil()
         {
             (new CommonWindow
@@ -102,7 +119,7 @@ namespace DevUtils.ViewModels
                 Title = "自定义",
                 Height = 385,
                 Width = 550,
-                Content = new AddUtilControl()
+                Content = new AddUtilControl() { DataContext = new AddUtilControlViewModel(UtilType.Coder) }
             }).ShowDialog();
         }
     }

@@ -25,7 +25,7 @@ namespace DevUtils
             ViewModelLocationProvider.Register<MainWindow, MainWindowViewModel>();
             ViewModelLocationProvider.Register<SettingControl, SettingControlViewModel>();
             ViewModelLocationProvider.Register<UtilControl, UtilControlViewModel>();
-            ViewModelLocationProvider.Register<AddUtilControl, AddUtilControlViewModel>();
+            //ViewModelLocationProvider.Register<AddUtilControl, AddUtilControlViewModel>();
         }
 
         protected override Window CreateShell()

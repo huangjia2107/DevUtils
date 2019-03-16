@@ -165,7 +165,7 @@
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="60"/>     
+                <RowDefinition Height="60"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid>
@@ -221,7 +221,27 @@
                                         <TextBlock Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center" Margin="5,0,0,0" FontWeight="Medium"  Foreground="#3498db" FontSize="14"/>
                                         <Path Grid.Column="2" Stretch="Fill" Data="M0,0 H5" Stroke="LightGray" StrokeThickness="2" StrokeDashArray="1,1" Margin="10,0,0,0"/>
                                     </Grid>
-                                    <ItemsControl Style="{StaticResource AllUtilsItemsControlStyle}" ItemsSource="{Binding Utils}" />
+                                    <Grid>
+                                        <UniformGrid Columns="3"
+                                                     Visibility="{Binding IsEmpty,Converter={StaticResource boolToVisibilityConverter},ConverterParameter={x:Static Visibility.Visible}}">
+                                            <Button Height="71" ToolTip="添加" 
+                                                    Padding="10,5,20,5"
+                                                    HorizontalContentAlignment="Stretch"
+                                                    VerticalContentAlignment="Stretch"
+                                                    Command="{Binding DataContext.AddUtilByTypeCommand,RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                    CommandParameter="{Binding Type}"
+                                                    Style="{DynamicResource {x:Static themes:ResourceKeys.MiniWindowTitlebarButtonStyleKey}}">
+                                                <Grid>
+                                                    <Rectangle StrokeThickness="1" StrokeDashArray="3,3"
+                                                               Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                                    <Path Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Stretch="Fill" Height="20" Width="20" VerticalAlignment="Center" HorizontalAlignment="Center" Data="M1024 487.619048H536.380952V0h-48.761904v487.619048H0v48.761904h487.619048v487.619048h48.761904V536.380952h487.619048z" />
+                                                </Grid>
+                                            </Button>
+                                        </UniformGrid>
+                                        <ItemsControl Style="{StaticResource AllUtilsItemsControlStyle}" 
+                                                      ItemsSource="{Binding Utils}" 
+                                                      Visibility="{Binding IsEmpty,Converter={StaticResource boolToVisibilityConverter},ConverterParameter={x:Static Visibility.Collapsed}}"/>
+                                    </Grid>
                                 </StackPanel>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>

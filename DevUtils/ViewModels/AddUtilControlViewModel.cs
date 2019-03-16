@@ -12,6 +12,7 @@ using DevUtils.Datas;
 using System.Collections.ObjectModel;
 using DevUtils.Helps;
 using Prism.Ioc;
+using CommonServiceLocator;
 
 namespace DevUtils.ViewModels
 {
@@ -55,10 +56,12 @@ namespace DevUtils.ViewModels
         private IContainerExtension _container = null;
         private UtilData _utilData = null;
 
-        public AddUtilControlViewModel(IContainerExtension container)
+        public AddUtilControlViewModel(UtilType utilType)
         {
-            _container = container;
-            _utilData = container.Resolve<AppData>().UtilsData;
+            _type = utilType;
+
+            _container = ServiceLocator.Current.GetInstance<IContainerExtension>();
+            _utilData = _container.Resolve<AppData>().UtilsData;
 
             AddCommand = new DelegateCommand(Add, CanAdd);
             ScanCommand = new DelegateCommand(Scan);
@@ -82,7 +85,7 @@ namespace DevUtils.ViewModels
                 {
                     var utilModel = _container.Resolve<IUtilModel>(module.ModuleName);
                     utilModel.Location = _location;
-                  
+
                     //copy files
                     Add(utilModel);
                 }
@@ -109,6 +112,8 @@ namespace DevUtils.ViewModels
                 if (classifiedUtil.Type == utilModel.Type)
                 {
                     classifiedUtil.Utils.Add(newModel);
+                    classifiedUtil.RefreshIsEmpty();
+
                     return;
                 }
 

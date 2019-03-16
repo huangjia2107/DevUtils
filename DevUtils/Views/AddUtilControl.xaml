@@ -5,8 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:themes="clr-namespace:Theme.Themes;assembly=Theme"
              xmlns:datas="clr-namespace:DevUtils.Datas"
-             xmlns:mvvm="http://prismlibrary.com/"
-             mvvm:ViewModelLocator.AutoWireViewModel="True">
+             xmlns:mvvm="http://prismlibrary.com/">
     <Grid Grid.IsSharedSizeScope="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
