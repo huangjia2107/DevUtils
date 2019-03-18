@@ -21,6 +21,27 @@ namespace DevUtils.ViewModels
             set { SetProperty(ref _title, value); }
         }
 
+        private double _height = 0d;
+        public double Height
+        {
+            get { return _height; }
+            set { SetProperty(ref _height, value); }
+        }
+
+        private SizeToContent _sizeToContent = SizeToContent.Manual;
+        public SizeToContent SizeToContent
+        {
+            get { return _sizeToContent; }
+            set { SetProperty(ref _sizeToContent, value); }
+        }
+
+        private bool _isExpanded;
+        public bool IsExpanded
+        {
+            get { return _isExpanded; }
+            set { SetProperty(ref _isExpanded, value); }
+        }
+
         public ObservableCollection<UtilViewModel> MineUtils
         {
             get { return _appData.UtilsData.MineUtils; }
@@ -44,6 +65,8 @@ namespace DevUtils.ViewModels
         public DelegateCommand UtilsCommand { get; set; }
         public DelegateCommand<UtilViewModel> RunUtilCommand { get; set; }
 
+        public DelegateCommand ExpandCommand { get; set; }
+
         public MainWindowViewModel(IContainerExtension container)
         { 
             _appData = container.Resolve<AppData>();
@@ -51,6 +74,7 @@ namespace DevUtils.ViewModels
             SettingCommand = new DelegateCommand(OpenSetting);
             UtilsCommand = new DelegateCommand(OpenUtils);
             RunUtilCommand = new DelegateCommand<UtilViewModel>(RunUtil);
+            ExpandCommand = new DelegateCommand(Expand);
         }
 
         private void OpenSetting()
@@ -79,6 +103,17 @@ namespace DevUtils.ViewModels
         {
             if (utilViewModel != null)
                 utilViewModel.Run();
+        }
+
+        private void Expand()
+        {
+            if (IsExpanded)
+                SizeToContent = SizeToContent.Height;
+            else
+            {
+                SizeToContent = SizeToContent.Manual;
+                Height = 88;
+            }
         }
     }
 }

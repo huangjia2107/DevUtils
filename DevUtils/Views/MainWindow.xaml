@@ -1,15 +1,18 @@
 ﻿<controls:UserWindow x:Class="DevUtils.Views.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:themes="clr-namespace:Theme.Themes;assembly=Theme"
-        xmlns:controls="clr-namespace:Theme.Controls;assembly=Theme"
-        xmlns:prism="http://prismlibrary.com/"
-        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        xmlns:behaviors="clr-namespace:Theme.Behaviors;assembly=Theme"
-        xmlns:helps="clr-namespace:DevUtils.Helps"
-        prism:ViewModelLocator.AutoWireViewModel="True"
-        Style="{DynamicResource {x:Static themes:ResourceKeys.MiniUserWindowStyleKey}}"
-        Title="{Binding Title}" WindowStartupLocation="CenterScreen">
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:themes="clr-namespace:Theme.Themes;assembly=Theme"
+                     xmlns:controls="clr-namespace:Theme.Controls;assembly=Theme"
+                     xmlns:prism="http://prismlibrary.com/"
+                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+                     xmlns:behaviors="clr-namespace:Theme.Behaviors;assembly=Theme"
+                     xmlns:helps="clr-namespace:DevUtils.Helps"
+                     prism:ViewModelLocator.AutoWireViewModel="True"
+                     Style="{DynamicResource {x:Static themes:ResourceKeys.MiniUserWindowStyleKey}}"
+                     Title="{Binding Title}" 
+                     SizeToContent="{Binding SizeToContent,Mode=TwoWay}"
+                     Height="{Binding Height,Mode=TwoWay}"
+                     WindowStartupLocation="CenterScreen"> 
     <controls:UserWindow.TitleBarContent>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <controls:StatusToggle Width="30" CheckedToolTip="点击取消固定" UnCheckedToolTip="点击固定">
@@ -32,51 +35,83 @@
             </Button>
         </StackPanel>
     </controls:UserWindow.TitleBarContent>
-    <controls:UserWindow.Resources>
+    <controls:UserWindow.Resources> 
         <helps:FileIconConverter x:Key="fileIconConverter"/>
-        <helps:NullToVisibilityConverter x:Key="nullToVisibilityConverter"/>
+        <helps:NullToVisibilityConverter x:Key="nullToVisibilityConverter"/> 
     </controls:UserWindow.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Path Data="M0,0 H5" Stretch="Fill" Stroke="Lavender"  StrokeThickness="1"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <Path Grid.ColumnSpan="2" Data="M0,0 H5" Stretch="Fill" Stroke="Lavender"  StrokeThickness="1"/>
         <!-- <ContentControl prism:RegionManager.RegionName="ContentRegion" /> -->
 
-        <ItemsControl Grid.Row="1" ItemsSource="{Binding MineUtils}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid Columns="7">
-                        <i:Interaction.Behaviors>
-                            <behaviors:DragItemsPositionBehavior MoveItemFromItemsSource="{Binding DataContext.MoveMineUtilPosAction, RelativeSource={RelativeSource AncestorType=ItemsControl}}"/>
-                        </i:Interaction.Behaviors>
-                    </UniformGrid>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemContainerStyle>
-                <Style>
-                    <Setter Property="Control.Margin" Value="3,8"/>
-                </Style>
-            </ItemsControl.ItemContainerStyle>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Button Padding="5"
-                            ToolTip="{Binding Name}"
-                            Command="{Binding DataContext.RunUtilCommand,RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                            CommandParameter="{Binding DataContext,RelativeSource={RelativeSource Self}}"
-                            Style="{DynamicResource {x:Static themes:ResourceKeys.MiniWindowShortcutBtnStyleKey}}">
-                        <Grid>
-                            <Path Stretch="Fill" Fill="#2FB273"
+        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding MineUtils}" x:Name="ddd">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel>
+                            <i:Interaction.Behaviors>
+                                <behaviors:DragItemsPositionBehavior MoveItemFromItemsSource="{Binding DataContext.MoveMineUtilPosAction, RelativeSource={RelativeSource AncestorType=ItemsControl}}"/>
+                            </i:Interaction.Behaviors>
+                        </WrapPanel>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemContainerStyle>
+                    <Style>
+                        <Setter Property="Control.Margin" Value="6"/>
+                        <Setter Property="Control.Width" Value="45"/>
+                        <Setter Property="Control.Height" Value="45"/>
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Padding="5"
+                                ToolTip="{Binding Name}"
+                                Command="{Binding DataContext.RunUtilCommand,RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                CommandParameter="{Binding}"
+                                Style="{DynamicResource {x:Static themes:ResourceKeys.MiniWindowShortcutBtnStyleKey}}">
+                            <Grid>
+                                <Path Stretch="Fill" Fill="#2FB273"
                                   Data="M512 0C228.8 0 0 228.8 0 512s228.8 512 512 512 512-228.8 512-512S795.2 0 512 0z m0 848c-185.6 0-336-150.4-336-336s150.4-336 336-336 336 150.4 336 336-150.4 336-336 336z M740.8 377.6s-67.2 68.8-75.2 76.8-30.4 6.4-30.4 6.4-62.4-6.4-72-16c-8-8-16-75.2-16-75.2s-1.6-17.6 6.4-27.2l76.8-76.8s9.6-9.6-3.2-9.6c-40 0-121.6 1.6-160 40l-9.6 8c-44.8 44.8-49.6 113.6-14.4 164.8l-152 136c-17.6 17.6-38.4 72 0 110.4 38.4 38.4 91.2 17.6 110.4 0 0 0 108.8-123.2 136-150.4 51.2 35.2 118.4 32 164.8-14.4l8-8c38.4-38.4 40-118.4 40-160 1.6-12.8-9.6-4.8-9.6-4.8zM361.6 692.8c-25.6 0-44.8-19.2-44.8-44.8 0-25.6 19.2-44.8 44.8-44.8 25.6 0 44.8 19.2 44.8 44.8 0 24-20.8 44.8-44.8 44.8z"
                                   Visibility="{Binding Source,ElementName=img,Converter={StaticResource nullToVisibilityConverter}}"/>
-                            <Image x:Name="img" Source="{Binding Location,Converter={StaticResource fileIconConverter}}"/>
-                        </Grid>
+                                <Image x:Name="img" Source="{Binding Location,Converter={StaticResource fileIconConverter}}"/>
+                            </Grid>
 
-                    </Button>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <controls:StatusToggle x:Name="ExpandStatusToggle" Grid.Row="1" Grid.Column="1" Width="30" Height="60" VerticalAlignment="Bottom"
+                               CheckedToolTip="折叠" UnCheckedToolTip="展开"
+                               Command="{Binding ExpandCommand}"
+                               IsChecked="{Binding IsExpanded,Mode=TwoWay}">
+            <controls:StatusToggle.CheckedContent>
+                <Path Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=controls:StatusToggle}}" Stretch="Fill" Margin="0,1,0,0" Height="10" Width="14" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                      Data="M512 785.066667a17.015467 17.015467 0 0 1-12.066133-5.000534l-256-256a17.0496 17.0496 0 1 1 24.132266-24.132266L512 743.867733l243.933867-243.933866a17.0496 17.0496 0 1 1 24.132266 24.132266l-256 256A17.015467 17.015467 0 0 1 512 785.066667z m0-256a17.015467 17.015467 0 0 1-12.066133-5.000534l-256-256a17.0496 17.0496 0 1 1 24.132266-24.132266L512 487.867733l243.933867-243.933866a17.0496 17.0496 0 1 1 24.132266 24.132266l-256 256A17.015467 17.015467 0 0 1 512 529.066667z">
+                    <Path.LayoutTransform>
+                        <RotateTransform Angle="180"/>
+                    </Path.LayoutTransform>
+                </Path>
+            </controls:StatusToggle.CheckedContent>
+            <controls:StatusToggle.UnCheckedContent>
+                <Path Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=controls:StatusToggle}}" Stretch="Fill" Height="10" Width="14" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                      Data="M512 785.066667a17.015467 17.015467 0 0 1-12.066133-5.000534l-256-256a17.0496 17.0496 0 1 1 24.132266-24.132266L512 743.867733l243.933867-243.933866a17.0496 17.0496 0 1 1 24.132266 24.132266l-256 256A17.015467 17.015467 0 0 1 512 785.066667z m0-256a17.015467 17.015467 0 0 1-12.066133-5.000534l-256-256a17.0496 17.0496 0 1 1 24.132266-24.132266L512 487.867733l243.933867-243.933866a17.0496 17.0496 0 1 1 24.132266 24.132266l-256 256A17.015467 17.015467 0 0 1 512 529.066667z" />
+            </controls:StatusToggle.UnCheckedContent>
+        </controls:StatusToggle>
+
+        <Button ToolTip="更多" Grid.Row="1" Grid.Column="1" Width="30" Height="60" VerticalAlignment="Bottom" Visibility="Collapsed"
+                Command="{Binding UtilsCommand}" 
+                Style="{DynamicResource {x:Static themes:ResourceKeys.MiniWindowTitlebarButtonStyleKey}}">
+            <Path Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Stretch="Fill" Height="10" Width="14" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                  Data="M512 785.066667a17.015467 17.015467 0 0 1-12.066133-5.000534l-256-256a17.0496 17.0496 0 1 1 24.132266-24.132266L512 743.867733l243.933867-243.933866a17.0496 17.0496 0 1 1 24.132266 24.132266l-256 256A17.015467 17.015467 0 0 1 512 785.066667z m0-256a17.015467 17.015467 0 0 1-12.066133-5.000534l-256-256a17.0496 17.0496 0 1 1 24.132266-24.132266L512 487.867733l243.933867-243.933866a17.0496 17.0496 0 1 1 24.132266 24.132266l-256 256A17.015467 17.015467 0 0 1 512 529.066667z" />
+        </Button>
     </Grid>
 </controls:UserWindow>

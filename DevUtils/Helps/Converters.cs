@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -7,7 +8,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 
 namespace DevUtils.Helps
-{
+{ 
     public class BoolConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
