@@ -204,7 +204,7 @@
                     <ItemsControl x:Name="AllUtilsItemsControl" ItemsSource="{Binding ClassifiedUtils}">
                         <ItemsControl.ItemContainerStyle>
                             <Style>
-                                <Setter Property="Control.Margin" Value="0,10,0,0"/>
+                                <Setter Property="Control.Margin" Value="0,3,0,7"/>
                             </Style>
                         </ItemsControl.ItemContainerStyle>
                         <ItemsControl.ItemTemplate>
@@ -257,7 +257,7 @@
                         <TextBlock Grid.Column="1" Text="我的工具" VerticalAlignment="Center" Margin="5,0,0,0" FontWeight="Medium"  Foreground="#3498db" FontSize="14"/>
                         <Path Grid.Column="2" Stretch="Fill" Data="M0,0 H5" Stroke="LightGray" StrokeThickness="2" StrokeDashArray="1,1" Margin="10,0,0,0"/>
                     </Grid>
-                    <ItemsControl BorderThickness="0,0,0,1" Height="331" ItemsSource="{Binding MineUtils}"
+                    <ItemsControl BorderThickness="0,0,0,1" MinHeight="411" ItemsSource="{Binding MineUtils}"
                                   Background="{x:Null}" BorderBrush="LightGray" FocusVisualStyle="{x:Null}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -309,8 +309,7 @@
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                    <Grid Height="80"></Grid>
+                    </ItemsControl> 
                 </StackPanel>
             </ScrollViewer>
         </Grid>

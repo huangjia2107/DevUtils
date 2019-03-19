@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
+using Utils.Extensions;
 
 namespace DevUtils.Helps
 { 
@@ -63,6 +64,23 @@ namespace DevUtils.Helps
 
             var v = (Visibility)parameter;
             return (bool)value ? v : (v == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class DoubleToVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (value == null || value == DependencyProperty.UnsetValue || parameter == null)
+                return Visibility.Collapsed;
+
+            var v = (Visibility)parameter;
+            return ((double)value).GreaterThan(0) ? v : (v == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

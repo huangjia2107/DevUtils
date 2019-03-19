@@ -83,14 +83,19 @@ namespace DevUtils.Views
 
                 var yOffset = item.TranslatePoint(new Point(), AllUtilScrollViewer).Y;
 
-                AllUtilScrollViewer.ScrollToVerticalOffset(AllUtilScrollViewer.VerticalOffset + yOffset - 10);
+                AllUtilScrollViewer.ScrollToVerticalOffset(AllUtilScrollViewer.VerticalOffset + yOffset-2);
             }
         }
 
         private void MiniUtilsRadioButton_OnClick(object sender, RoutedEventArgs e)
         {
             UtilTypeListBox.SelectedValue = null;
-            AllUtilScrollViewer.ScrollToBottom();
+
+            var yOffset = MiniUtilsGrid.TranslatePoint(new Point(), AllUtilScrollViewer).Y;
+
+            AllUtilScrollViewer.ScrollToVerticalOffset(AllUtilScrollViewer.VerticalOffset + yOffset - 2);
+
+           // AllUtilScrollViewer.ScrollToBottom();
         } 
     }
 }

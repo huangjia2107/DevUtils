@@ -9,6 +9,7 @@ using Prism.Commands;
 using Prism.Ioc;
 using Prism.Mvvm;
 using UtilModelService;
+using System.Windows.Controls;
 
 namespace DevUtils.ViewModels
 {
@@ -33,7 +34,14 @@ namespace DevUtils.ViewModels
         {
             get { return _sizeToContent; }
             set { SetProperty(ref _sizeToContent, value); }
-        }
+        } 
+
+        private ScrollBarVisibility _verticalScrollBarVisibility= ScrollBarVisibility.Disabled;
+        public ScrollBarVisibility VerticalScrollBarVisibility
+        {
+            get { return _verticalScrollBarVisibility; }
+            set { SetProperty(ref _verticalScrollBarVisibility, value); }
+        } 
 
         private bool _isExpanded;
         public bool IsExpanded
@@ -65,7 +73,8 @@ namespace DevUtils.ViewModels
         public DelegateCommand UtilsCommand { get; set; }
         public DelegateCommand<UtilViewModel> RunUtilCommand { get; set; }
 
-        public DelegateCommand ExpandCommand { get; set; }
+        public DelegateCommand ExpandOrCollapseCommand { get; set; }
+        public DelegateCommand CollapseCommand { get; set; }
 
         public MainWindowViewModel(IContainerExtension container)
         { 
@@ -74,7 +83,8 @@ namespace DevUtils.ViewModels
             SettingCommand = new DelegateCommand(OpenSetting);
             UtilsCommand = new DelegateCommand(OpenUtils);
             RunUtilCommand = new DelegateCommand<UtilViewModel>(RunUtil);
-            ExpandCommand = new DelegateCommand(Expand);
+            ExpandOrCollapseCommand = new DelegateCommand(ExpandOrCollapse);
+            CollapseCommand = new DelegateCommand(Collapse);
         }
 
         private void OpenSetting()
@@ -105,12 +115,27 @@ namespace DevUtils.ViewModels
                 utilViewModel.Run();
         }
 
-        private void Expand()
+        private void ExpandOrCollapse()
         {
-            if (IsExpanded)
+            ExpandOrCollapse(IsExpanded); 
+        }
+
+        private void Collapse()
+        {
+            IsExpanded = false;
+            ExpandOrCollapse();
+        }
+
+        private void ExpandOrCollapse(bool isExpand)
+        {
+            if (isExpand)
+            {
+                VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
                 SizeToContent = SizeToContent.Height;
+            }
             else
             {
+                VerticalScrollBarVisibility = ScrollBarVisibility.Disabled;
                 SizeToContent = SizeToContent.Manual;
                 Height = 88;
             }

@@ -37,12 +37,14 @@
     </controls:UserWindow.TitleBarContent>
     <controls:UserWindow.Resources> 
         <helps:FileIconConverter x:Key="fileIconConverter"/>
-        <helps:NullToVisibilityConverter x:Key="nullToVisibilityConverter"/> 
+        <helps:NullToVisibilityConverter x:Key="nullToVisibilityConverter"/>
+        <helps:DoubleToVisibilityConverter x:Key="doubleToVisibilityConverter"/>
     </controls:UserWindow.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -51,7 +53,9 @@
         <Path Grid.ColumnSpan="2" Data="M0,0 H5" Stretch="Fill" Stroke="Lavender"  StrokeThickness="1"/>
         <!-- <ContentControl prism:RegionManager.RegionName="ContentRegion" /> -->
 
-        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer x:Name="UtilsScrollViewer" Grid.Row="1" 
+                      HorizontalScrollBarVisibility="Disabled" 
+                      VerticalScrollBarVisibility="{Binding VerticalScrollBarVisibility}">
             <ItemsControl ItemsSource="{Binding MineUtils}" x:Name="ddd">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -91,8 +95,9 @@
 
         <controls:StatusToggle x:Name="ExpandStatusToggle" Grid.Row="1" Grid.Column="1" Width="30" Height="60" VerticalAlignment="Bottom"
                                CheckedToolTip="折叠" UnCheckedToolTip="展开"
-                               Command="{Binding ExpandCommand}"
-                               IsChecked="{Binding IsExpanded,Mode=TwoWay}">
+                               Command="{Binding ExpandOrCollapseCommand}"
+                               IsChecked="{Binding IsExpanded,Mode=TwoWay}"
+                               Visibility="{Binding ScrollableHeight,ElementName=UtilsScrollViewer,Converter={StaticResource doubleToVisibilityConverter},ConverterParameter={x:Static Visibility.Collapsed}}">
             <controls:StatusToggle.CheckedContent>
                 <Path Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=controls:StatusToggle}}" Stretch="Fill" Margin="0,1,0,0" Height="10" Width="14" VerticalAlignment="Center" HorizontalAlignment="Center" 
                       Data="M512 785.066667a17.015467 17.015467 0 0 1-12.066133-5.000534l-256-256a17.0496 17.0496 0 1 1 24.132266-24.132266L512 743.867733l243.933867-243.933866a17.0496 17.0496 0 1 1 24.132266 24.132266l-256 256A17.015467 17.015467 0 0 1 512 785.066667z m0-256a17.015467 17.015467 0 0 1-12.066133-5.000534l-256-256a17.0496 17.0496 0 1 1 24.132266-24.132266L512 487.867733l243.933867-243.933866a17.0496 17.0496 0 1 1 24.132266 24.132266l-256 256A17.015467 17.015467 0 0 1 512 529.066667z">
@@ -107,11 +112,30 @@
             </controls:StatusToggle.UnCheckedContent>
         </controls:StatusToggle>
 
-        <Button ToolTip="更多" Grid.Row="1" Grid.Column="1" Width="30" Height="60" VerticalAlignment="Bottom" Visibility="Collapsed"
-                Command="{Binding UtilsCommand}" 
-                Style="{DynamicResource {x:Static themes:ResourceKeys.MiniWindowTitlebarButtonStyleKey}}">
-            <Path Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Stretch="Fill" Height="10" Width="14" VerticalAlignment="Center" HorizontalAlignment="Center" 
-                  Data="M512 785.066667a17.015467 17.015467 0 0 1-12.066133-5.000534l-256-256a17.0496 17.0496 0 1 1 24.132266-24.132266L512 743.867733l243.933867-243.933866a17.0496 17.0496 0 1 1 24.132266 24.132266l-256 256A17.015467 17.015467 0 0 1 512 785.066667z m0-256a17.015467 17.015467 0 0 1-12.066133-5.000534l-256-256a17.0496 17.0496 0 1 1 24.132266-24.132266L512 487.867733l243.933867-243.933866a17.0496 17.0496 0 1 1 24.132266 24.132266l-256 256A17.015467 17.015467 0 0 1 512 529.066667z" />
+        <Button Grid.Row="2" Grid.ColumnSpan="2" Height="17" ToolTip="折叠" 
+                Command="{Binding CollapseCommand}" 
+                Style="{DynamicResource {x:Static themes:ResourceKeys.MiniWindowTitlebarButtonStyleKey}}"
+                Visibility="{Binding ScrollableHeight,ElementName=UtilsScrollViewer,Converter={StaticResource doubleToVisibilityConverter},ConverterParameter={x:Static Visibility.Visible}}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Path Grid.Column="0" Data="M0,0 H5" Width="55" Stretch="Fill" StrokeThickness="1" Margin="0,2,10,0"
+                      HorizontalAlignment="Right"
+                      Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                <Path Grid.Column="1" Stretch="Fill" Height="10" Width="16" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                      Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"  
+                      Data="M512 785.066667a17.015467 17.015467 0 0 1-12.066133-5.000534l-256-256a17.0496 17.0496 0 1 1 24.132266-24.132266L512 743.867733l243.933867-243.933866a17.0496 17.0496 0 1 1 24.132266 24.132266l-256 256A17.015467 17.015467 0 0 1 512 785.066667z m0-256a17.015467 17.015467 0 0 1-12.066133-5.000534l-256-256a17.0496 17.0496 0 1 1 24.132266-24.132266L512 487.867733l243.933867-243.933866a17.0496 17.0496 0 1 1 24.132266 24.132266l-256 256A17.015467 17.015467 0 0 1 512 529.066667z">
+                    <Path.LayoutTransform>
+                        <RotateTransform Angle="180"/>
+                    </Path.LayoutTransform>
+                </Path>
+                <Path Grid.Column="2" Data="M0,0 H5" Width="55" Stretch="Fill" StrokeThickness="1" Margin="10,2,0,0"
+                      HorizontalAlignment="Left"
+                      Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+            </Grid>
         </Button>
     </Grid>
 </controls:UserWindow>

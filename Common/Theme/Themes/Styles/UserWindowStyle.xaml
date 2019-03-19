@@ -145,7 +145,7 @@
         <Setter Property="Width" Value="372" />
         <Setter Property="Height" Value="88" />
         <Setter Property="MinHeight" Value="88" />
-        <Setter Property="MaxHeight" Value="316" />
+        <Setter Property="MaxHeight" Value="333" />
         <Setter Property="BorderBrush" Value="Lavender"/>
         <Setter Property="Foreground" Value="#646465"/>
         <Setter Property="Background" Value="White"/>
