@@ -19,12 +19,12 @@ namespace DevUtils.ViewModels
             _settingModel = container.Resolve<AppData>().SettingsData;
         }
 
-        public int ShortcutCount
+        public bool AutoRemoveInvalidUtils
         {
-            get { return _settingModel.ShortcutCount; }
+            get { return _settingModel.AutoRemoveInvalidUtils; }
             set
             {
-                _settingModel.ShortcutCount = value;
+                _settingModel.AutoRemoveInvalidUtils = value;
                 RaisePropertyChanged();
             }
         }

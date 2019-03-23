@@ -13,6 +13,8 @@ using System.Collections.ObjectModel;
 using DevUtils.Helps;
 using Prism.Ioc;
 using CommonServiceLocator;
+using Prism.Events;
+using DevUtils.Events;
 
 namespace DevUtils.ViewModels
 {
@@ -54,6 +56,9 @@ namespace DevUtils.ViewModels
         public DelegateCommand ScanCommand { get; set; }
 
         private IContainerExtension _container = null;
+        private IEventAggregator _eventAggregator = null;
+        private AddUtilEvent _addUtilEvent = null;
+
         private UtilData _utilData = null;
 
         public AddUtilControlViewModel(UtilType utilType)
@@ -63,8 +68,11 @@ namespace DevUtils.ViewModels
             _container = ServiceLocator.Current.GetInstance<IContainerExtension>();
             _utilData = _container.Resolve<AppData>().UtilsData;
 
+            _eventAggregator = ServiceLocator.Current.GetInstance<IEventAggregator>();
+            _addUtilEvent = _eventAggregator.GetEvent<AddUtilEvent>();
+
             AddCommand = new DelegateCommand(Add, CanAdd);
-            ScanCommand = new DelegateCommand(Scan);
+            ScanCommand = new DelegateCommand(Scan); 
         }
 
         private bool CanAdd()
@@ -95,45 +103,8 @@ namespace DevUtils.ViewModels
         private void Add(IUtilModel utilModel)
         {
             //TO DO: 检测文件是否已经添加过
-
-            var newModel = new UtilViewModel(utilModel);
-            _utilData.AllUtils.Add(newModel);
-
-            var newClassifiedUtil = new ClassifiedUtil
-            {
-                Type = utilModel.Type,
-                Utils = new ObservableCollection<UtilViewModel>() { newModel }
-            };
-
-            var isFinish = false;
-            for (int i = 0; i < _utilData.ClassifiedUtils.Count; i++)
-            {
-                var classifiedUtil = _utilData.ClassifiedUtils[i];
-                if (classifiedUtil.Type == utilModel.Type)
-                {
-                    classifiedUtil.Utils.Add(newModel);
-                    classifiedUtil.RefreshIsEmpty();
-
-                    return;
-                }
-
-                if (!isFinish && classifiedUtil.Type > utilModel.Type)
-                {
-                    newClassifiedUtil.Index = i;
-                    _utilData.ClassifiedUtils.Insert(i, newClassifiedUtil);
-                    isFinish = true;
-                    continue;
-                }
-
-                if (isFinish)
-                    classifiedUtil.Index++;
-            }
-
-            if (!isFinish)
-            {
-                newClassifiedUtil.Index = _utilData.ClassifiedUtils.Count;
-                _utilData.ClassifiedUtils.Add(newClassifiedUtil);
-            }
+            _utilData.AllUtils.Add(utilModel);
+            _addUtilEvent.Publish(utilModel); 
         }
 
         private void Scan()

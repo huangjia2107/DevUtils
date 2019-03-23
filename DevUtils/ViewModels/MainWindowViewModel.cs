@@ -10,6 +10,9 @@ using Prism.Ioc;
 using Prism.Mvvm;
 using UtilModelService;
 using System.Windows.Controls;
+using System.Linq;
+using Prism.Events;
+using DevUtils.Events;
 
 namespace DevUtils.ViewModels
 {
@@ -49,10 +52,17 @@ namespace DevUtils.ViewModels
             get { return _isExpanded; }
             set { SetProperty(ref _isExpanded, value); }
         }
-
+         
+        private ObservableCollection<UtilViewModel> _mineUtils;
         public ObservableCollection<UtilViewModel> MineUtils
         {
-            get { return _appData.UtilsData.MineUtils; }
+            get
+            {
+                if (_mineUtils == null)
+                    _mineUtils = new ObservableCollection<UtilViewModel>(_appData.UtilsData.MineUtils.Select(u => new UtilViewModel(u)));
+
+                return _mineUtils;
+            }
         }
 
         private Action<int, int> _moveMineUtilPosAction = null;
@@ -61,12 +71,27 @@ namespace DevUtils.ViewModels
             get
             {
                 if (_moveMineUtilPosAction == null)
-                    _moveMineUtilPosAction = (si, ti) => MineUtils.Move(si, ti);
+                    _moveMineUtilPosAction = (si, ti) =>
+                    { 
+                        if (si == ti)
+                            return;
+
+                        _mineUtils.Move(si, ti);
+
+                        var util = _appData.UtilsData.MineUtils[si];
+
+                        _appData.UtilsData.MineUtils.RemoveAt(si);
+                        _appData.UtilsData.MineUtils.Insert(si < ti ? Math.Max(0, ti - 1) : ti, util);
+
+                        _moveMineUtilsEvent.Publish(new MoveUtilParam { Token = 1, SourceIndex = si, TargetIndex = ti });
+                    };
 
                 return _moveMineUtilPosAction;
             }
         }
 
+        private IEventAggregator _eventAggregator = null;
+        private MoveMineUtilsEvent _moveMineUtilsEvent = null;
         private AppData _appData = null; 
 
         public DelegateCommand SettingCommand { get; set; }
@@ -76,9 +101,16 @@ namespace DevUtils.ViewModels
         public DelegateCommand ExpandOrCollapseCommand { get; set; }
         public DelegateCommand CollapseCommand { get; set; }
 
-        public MainWindowViewModel(IContainerExtension container)
-        { 
+        public MainWindowViewModel(IContainerExtension container, IEventAggregator eventAggregator)
+        {
             _appData = container.Resolve<AppData>();
+            _eventAggregator = eventAggregator;
+
+            _eventAggregator.GetEvent<AddToMineUtilsEvent>().Subscribe(AddToMineUtils);
+            _eventAggregator.GetEvent<DeleteFromMineUtilsEvent>().Subscribe(DeleteFromMineUtils);
+
+            _moveMineUtilsEvent = _eventAggregator.GetEvent<MoveMineUtilsEvent>();
+            _moveMineUtilsEvent.Subscribe(MoveMineUtils, ThreadOption.PublisherThread, false, p => p.Token == 0);
 
             SettingCommand = new DelegateCommand(OpenSetting);
             UtilsCommand = new DelegateCommand(OpenUtils);
@@ -140,5 +172,35 @@ namespace DevUtils.ViewModels
                 Height = 88;
             }
         }
-    }
-}
+
+        #region IEventAggregator
+
+        public void AddToMineUtils(IUtilModel utilModel)
+        {
+            var utilViewModel = _mineUtils.FirstOrDefault(vm => vm.Model == utilModel);
+            if (utilViewModel != null)
+                return;
+
+            _mineUtils.Add(new UtilViewModel(utilModel));
+        }
+
+        public void DeleteFromMineUtils(IUtilModel utilModel)
+        {
+            var utilViewModel = _mineUtils.FirstOrDefault(vm => vm.Model == utilModel);
+            if (utilViewModel == null)
+                return;
+
+            _mineUtils.Remove(utilViewModel);
+        }
+
+        public void MoveMineUtils(MoveUtilParam param)
+        {
+            if (param.SourceIndex >= _mineUtils.Count || param.TargetIndex >= _mineUtils.Count)
+                return;
+
+            _mineUtils.Move(param.SourceIndex, param.TargetIndex);
+        }
+
+        #endregion
+    }    
+}        

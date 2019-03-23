@@ -6,10 +6,10 @@
              xmlns:datas="clr-namespace:DevUtils.Datas"
              xmlns:helps="clr-namespace:DevUtils.Helps"
              xmlns:controls="clr-namespace:Theme.Controls;assembly=Theme"
-             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-             xmlns:mvvm="http://prismlibrary.com/"
-             mvvm:ViewModelLocator.AutoWireViewModel="True"
-             BorderBrush="#3498db" BorderThickness="1,0,1,1">
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             BorderBrush="#3498db" BorderThickness="1,0,1,1"> 
     <UserControl.Resources>
 
         <helps:BoolConverter x:Key="boolConverter"/>
@@ -177,7 +177,7 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="2" Orientation="Horizontal">
                     <Button Margin="15,0,0,0" ToolTip="添加"
-                            Command="{Binding AddUtilCommand}" 
+                            Command="{Binding OpenAddUtilCommand}" 
                             IsEnabled="{Binding IsEdited,Converter={StaticResource boolConverter}}"
                             Style="{DynamicResource {x:Static themes:ResourceKeys.MiniWindowTitlebarButtonStyleKey}}">
                         <Path Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Stretch="Fill" Width="35" Height="35" VerticalAlignment="Center" HorizontalAlignment="Center" 
@@ -228,7 +228,7 @@
                                                     Padding="10,5,20,5"
                                                     HorizontalContentAlignment="Stretch"
                                                     VerticalContentAlignment="Stretch"
-                                                    Command="{Binding DataContext.AddUtilByTypeCommand,RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                    Command="{Binding DataContext.OpenAddUtilByTypeCommand,RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                     CommandParameter="{Binding Type}"
                                                     Style="{DynamicResource {x:Static themes:ResourceKeys.MiniWindowTitlebarButtonStyleKey}}">
                                                 <Grid>
@@ -262,9 +262,9 @@
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel>
-                                    <i:Interaction.Behaviors>
+                                    <b:Interaction.Behaviors>
                                         <behaviors:DragItemsPositionBehavior MoveItemFromItemsSource="{Binding DataContext.MoveMineUtilPosAction, RelativeSource={RelativeSource AncestorType=ItemsControl}}"/>
-                                    </i:Interaction.Behaviors>
+                                    </b:Interaction.Behaviors>
                                 </WrapPanel>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>

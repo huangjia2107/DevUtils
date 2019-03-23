@@ -84,6 +84,8 @@
     </ApplicationDefinition>
     <Compile Include="Datas\DataManager.cs" />
     <Compile Include="Datas\ResourcesMap.cs" />
+    <Compile Include="Events\SyncMineUtilsEvent.cs" />
+    <Compile Include="Events\AddUtilEvent.cs" />
     <Compile Include="Helps\Converters.cs" />
     <Compile Include="Datas\AppData.cs" />
     <Compile Include="Helps\DynamicModuleHelps.cs" />

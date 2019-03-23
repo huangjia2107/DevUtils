@@ -32,32 +32,8 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
                     </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="8"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <!--Show Count-->
-                    <TextBlock Grid.Column="0" Text="常用显示个数" VerticalAlignment="Center"/>
-                    <ListBox Grid.Row="0" Grid.Column="2" Width="250" Height="27" HorizontalAlignment="Left" BorderThickness="0,1,1,1"
-                             ItemContainerStyle="{DynamicResource {x:Static themes:ResourceKeys.HorizontalListBoxItemStyleKey}}"
-                             SelectedItem="{Binding ShortcutCount,Mode=TwoWay}">
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <UniformGrid Rows="1"/>
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
-                        <ListBox.ItemsSource>
-                            <x:Array Type="system:Int32">
-                                <system:Int32>3</system:Int32>
-                                <system:Int32>4</system:Int32>
-                                <system:Int32>5</system:Int32>
-                                <system:Int32>6</system:Int32>
-                                <system:Int32>7</system:Int32>
-                                <system:Int32>8</system:Int32>
-                            </x:Array>
-                        </ListBox.ItemsSource>
-                    </ListBox>
+                    <CheckBox VerticalAlignment="Center" Content="自动移除已失效的工具" 
+                              IsChecked="{Binding AutoRemoveInvalidUtils,Mode=TwoWay}"/>
                 </Grid>
             </Grid>
 

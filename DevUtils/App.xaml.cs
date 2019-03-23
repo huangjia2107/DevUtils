@@ -53,7 +53,7 @@ namespace DevUtils
             if (appData == null || utilModels == null || utilModels.Length == 0)
                 return;
 
-            appData.UtilsData.AllUtils.AddRange(utilModels.Select(u => new UtilViewModel(u)));
+            appData.UtilsData.AllUtils.AddRange(utilModels);
         }
     }
 }

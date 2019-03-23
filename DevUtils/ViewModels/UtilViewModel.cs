@@ -5,11 +5,11 @@ namespace DevUtils.ViewModels
 {
     public class UtilViewModel : BindableBase
     {
-        private IUtilModel _model = null;
+        public IUtilModel Model { get; private set; }
 
         public UtilViewModel(IUtilModel utilModel)
         {
-            _model = utilModel;
+            Model = utilModel;
         }
 
         private bool _isMine;
@@ -21,27 +21,27 @@ namespace DevUtils.ViewModels
 
         public string Name
         {
-            get { return _model.Name; }
+            get { return Model.Name; }
         }
 
         public string Description
         {
-            get { return _model.Description; }
+            get { return Model.Description; }
         }
 
         public UtilType Type
         {
-            get { return _model.Type; }
+            get { return Model.Type; }
         }
 
         public string Location
         {
-            get { return _model.Location; }
+            get { return Model.Location; }
         }
 
         public void Run()
         {
-            _model.Run();
+            Model.Run();
         }
     }
 }
