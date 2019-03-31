@@ -9,6 +9,7 @@ using Prism.Mvvm;
 using Prism.Modularity;
 using Prism.Unity;
 using UtilModelService;
+using CommandService;
 
 namespace DevUtils
 {
@@ -36,6 +37,7 @@ namespace DevUtils
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton<AppData>();
+            //containerRegistry.RegisterSingleton<IApplicationCommands, ApplicationCommands>();
         }
 
         protected override IModuleCatalog CreateModuleCatalog()
@@ -48,7 +50,7 @@ namespace DevUtils
             base.OnInitialized();
 
             var appData = Container.Resolve<AppData>();
-            var utilModels = Container.Resolve<IUtilModel[]>();
+            var utilModels = Container.Resolve<UtilModel[]>();
 
             if (appData == null || utilModels == null || utilModels.Length == 0)
                 return;

@@ -13,11 +13,11 @@ namespace DevUtils.Datas
     {
         public UtilData()
         {
-            AllUtils = new List<IUtilModel>();
-            MineUtils = new List<IUtilModel>();
+            AllUtils = new List<UtilModel>();
+            MineUtils = new List<UtilModel>();
         }
 
-        public List<IUtilModel> AllUtils { get; set; }
-        public List<IUtilModel> MineUtils { get; set; }
+        public List<UtilModel> AllUtils { get; set; }
+        public List<UtilModel> MineUtils { get; set; }
     }
 }

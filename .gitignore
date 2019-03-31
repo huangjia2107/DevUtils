@@ -3,3 +3,15 @@
 ################################################################################
 
 *.suo
+/Common/Theme/bin/Debug
+/Common/Theme/obj/Debug
+/Common/Utils/bin/Debug
+/Common/Utils/obj/Debug
+/DevUtils/bin/Debug
+/DevUtils/obj/Debug
+/Interfaces/CommandService/bin/Debug
+/Interfaces/CommandService/obj/Debug
+/Interfaces/UtilModelInterface/bin/Debug
+/Interfaces/UtilModelInterface/obj/Debug
+/Modules/ColorPix/obj/Debug
+/Modules/RegexTester/obj/Debug

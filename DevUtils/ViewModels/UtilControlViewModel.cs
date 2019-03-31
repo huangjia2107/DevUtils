@@ -25,7 +25,7 @@ namespace DevUtils.ViewModels
                 if (_classifiedUtils == null)
                 {
                     _classifiedUtils = new ObservableCollection<ClassifiedUtil>(
-                          _utilData.AllUtils.Select(u=>new UtilViewModel(u))
+                          _utilData.AllUtils.Select(u=>new UtilViewModel(u) { IsMine= _utilData.MineUtils.Contains(u) })
                                             .GroupBy(u => u.Type)
                                             .OrderBy(g => g.Key)
                                             .Select((g, i) => new ClassifiedUtil { Index = i, Type = g.Key, Utils = new ObservableCollection<UtilViewModel>(g) }));
@@ -114,12 +114,12 @@ namespace DevUtils.ViewModels
 
         private UtilData _utilData = null;
 
-        public DelegateCommand<UtilViewModel> DeleteFromMineCommand { get; set; }
-        public DelegateCommand<UtilViewModel> DeleteFromAllCommand { get; set; }
-        public DelegateCommand<UtilViewModel> AddToMineCommand { get; set; }
+        public DelegateCommand<UtilViewModel> DeleteFromMineCommand { get; private set; }
+        public DelegateCommand<UtilViewModel> DeleteFromAllCommand { get; private set; }
+        public DelegateCommand<UtilViewModel> AddToMineCommand { get; private set; }
 
-        public DelegateCommand<UtilType?> OpenAddUtilByTypeCommand { get; set; }
-        public DelegateCommand OpenAddUtilCommand { get; set; }
+        public DelegateCommand<UtilType?> OpenAddUtilByTypeCommand { get; private set; }
+        public DelegateCommand OpenAddUtilCommand { get; private set; }
 
         public UtilControlViewModel(IContainerExtension container, IEventAggregator eventAggregator)
         {
@@ -207,7 +207,7 @@ namespace DevUtils.ViewModels
 
         #region IEventAggregator
 
-        private void AddUtil(IUtilModel utilModel)
+        private void AddUtil(UtilModel utilModel)
         {
             if (utilModel == null)
                 return; 

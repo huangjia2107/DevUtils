@@ -52,8 +52,8 @@ namespace DevUtils.ViewModels
             set { SetProperty(ref _description, value); }
         }
 
-        public DelegateCommand AddCommand { get; set; }
-        public DelegateCommand ScanCommand { get; set; }
+        public DelegateCommand AddCommand { get; private set; }
+        public DelegateCommand ScanCommand { get; private set; }
 
         private IContainerExtension _container = null;
         private IEventAggregator _eventAggregator = null;
@@ -91,7 +91,7 @@ namespace DevUtils.ViewModels
                 var module = DynamicModuleHelps.Instance().LoadModule(_location);
                 if (module != null)
                 {
-                    var utilModel = _container.Resolve<IUtilModel>(module.ModuleName);
+                    var utilModel = _container.Resolve<UtilModel>(module.ModuleName);
                     utilModel.Location = _location;
 
                     //copy files
@@ -100,7 +100,7 @@ namespace DevUtils.ViewModels
             }
         }
 
-        private void Add(IUtilModel utilModel)
+        private void Add(UtilModel utilModel)
         {
             //TO DO: 检测文件是否已经添加过
             _utilData.AllUtils.Add(utilModel);

@@ -4,15 +4,20 @@
                      xmlns:themes="clr-namespace:Theme.Themes;assembly=Theme"
                      xmlns:controls="clr-namespace:Theme.Controls;assembly=Theme"
                      xmlns:prism="http://prismlibrary.com/"
-                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                      xmlns:behaviors="clr-namespace:Theme.Behaviors;assembly=Theme"
-                     xmlns:helps="clr-namespace:DevUtils.Helps"
+                     xmlns:helps="clr-namespace:DevUtils.Helps" 
                      prism:ViewModelLocator.AutoWireViewModel="True"
                      Style="{DynamicResource {x:Static themes:ResourceKeys.MiniUserWindowStyleKey}}"
                      Title="{Binding Title}" 
                      SizeToContent="{Binding SizeToContent,Mode=TwoWay}"
                      Height="{Binding Height,Mode=TwoWay}"
-                     WindowStartupLocation="CenterScreen"> 
+                     WindowStartupLocation="CenterScreen">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding ClosingCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <controls:UserWindow.TitleBarContent>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <controls:StatusToggle Width="30" CheckedToolTip="点击取消固定" UnCheckedToolTip="点击固定">

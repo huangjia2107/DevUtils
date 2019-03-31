@@ -19,7 +19,7 @@ namespace ColorPix
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.Register<IUtilModel, ColorPixUtilModel>("ColorPixModule");
+            containerRegistry.Register<UtilModel, ColorPixUtilModel>("ColorPixModule");
         }
 
         #endregion

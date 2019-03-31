@@ -1,5 +1,5 @@
-﻿using System.IO; 
-using System.Text; 
+﻿using System.IO;
+using System.Text;
 using System.Xml.Serialization;
 
 namespace Utils.IO
@@ -20,7 +20,7 @@ namespace Utils.IO
                     return true;
                 }
             }
-            catch
+            catch(System.Exception ex)
             {
                 return false;
             }
@@ -35,9 +35,12 @@ namespace Utils.IO
 
                 using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                 {
-                    instance = (T)(new XmlSerializer(typeof(T))).Deserialize(fs);
+                    using (var sr = new StreamReader(fs, Encoding.UTF8))
+                    {
+                        instance = (T)(new XmlSerializer(typeof(T))).Deserialize(sr);
+                    }
 
-                    return false;
+                    return true;
                 }
             }
             catch

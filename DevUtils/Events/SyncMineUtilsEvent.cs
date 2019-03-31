@@ -16,11 +16,11 @@ namespace DevUtils.Events
         public int TargetIndex { get; set; }
     }
 
-    public class AddToMineUtilsEvent : PubSubEvent<IUtilModel>
+    public class AddToMineUtilsEvent : PubSubEvent<UtilModel>
     {
     }
 
-    public class DeleteFromMineUtilsEvent : PubSubEvent<IUtilModel>
+    public class DeleteFromMineUtilsEvent : PubSubEvent<UtilModel>
     {
 
     }

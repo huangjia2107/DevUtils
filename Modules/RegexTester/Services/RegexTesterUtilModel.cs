@@ -7,29 +7,20 @@ using System.Windows;
 using UtilModelService;
 
 namespace RegexTester.Services
-{
-    public class RegexTesterUtilModel : IUtilModel
+{ 
+    public class RegexTesterUtilModel : UtilModel
     {
-        #region IUtilModel Members
+        #region IUtilModel Members 
 
-        public string Name
-        {
-            get { return "Regex Tester"; }
-        }
+        public override string Name => "Regex Tester"; 
 
-        public string Description
-        {
-            get { return "this is a description about Regex Tester"; }
-        }
+        public override string Description => "this is a description about Regex Tester"; 
 
-        public UtilType Type
-        {
-            get { return UtilType.Tester; }
-        }
+        public override UtilType Type => UtilType.Tester;
 
-        public string Location { get; set; }
-
-        public void Run()
+        public override string Location { get; set; } 
+         
+        public override void Run()
         {
             MessageBox.Show("Run RegexTester");
         }

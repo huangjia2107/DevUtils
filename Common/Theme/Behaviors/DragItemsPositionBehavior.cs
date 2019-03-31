@@ -3,11 +3,11 @@ using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Documents;
-using Microsoft.Xaml.Behaviors;
+using System.Windows.Documents; 
 using Theme.Adorners;
 using Utils.Extensions;
 using Utils.Native;
+using System.Windows.Interactivity;
 
 namespace Theme.Behaviors
 {

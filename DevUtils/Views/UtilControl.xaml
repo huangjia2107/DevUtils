@@ -6,7 +6,7 @@
              xmlns:datas="clr-namespace:DevUtils.Datas"
              xmlns:helps="clr-namespace:DevUtils.Helps"
              xmlns:controls="clr-namespace:Theme.Controls;assembly=Theme"
-             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
              BorderBrush="#3498db" BorderThickness="1,0,1,1"> 
@@ -262,9 +262,9 @@
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel>
-                                    <b:Interaction.Behaviors>
+                                    <i:Interaction.Behaviors>
                                         <behaviors:DragItemsPositionBehavior MoveItemFromItemsSource="{Binding DataContext.MoveMineUtilPosAction, RelativeSource={RelativeSource AncestorType=ItemsControl}}"/>
-                                    </b:Interaction.Behaviors>
+                                    </i:Interaction.Behaviors>
                                 </WrapPanel>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>

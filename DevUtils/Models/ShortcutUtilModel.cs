@@ -1,43 +1,36 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using UtilModelService;
 
 namespace DevUtils.Models
 {
-    public class ShortcutUtilModel : IUtilModel
+    [Serializable]
+    public class ShortcutUtilModel : UtilModel
     {
-        #region IUtilModel Members
+        #region IUtilModel Members 
 
-        public string Name
-        {
-            get { return Path.GetFileNameWithoutExtension(_location); }
-        }
+        public override string Name => Path.GetFileNameWithoutExtension(_location);
 
-        public string Description
-        {
-            get { return _description; }
-        }
+        public override string Description => _description;
 
-        public UtilType Type
-        {
-            get { return _type; }
-        }
+        public override UtilType Type => _type;
 
-        public string Location
+        public override string Location
         {
             get { return _location; }
             set { _location = value; }
         }
 
-        public void Run()
+        public override void Run()
         {
             //MessageBox.Show("Run " + Name);
             if (File.Exists(_location))
                 Process.Start(_location);
             else
                 MessageBox.Show("Do not find " + Name);
-        }
+        } 
 
         #endregion
 

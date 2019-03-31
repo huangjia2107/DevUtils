@@ -3,8 +3,8 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Documents;
-using Microsoft.Xaml.Behaviors;
 using Theme.Adorners;
+using System.Windows.Interactivity;
 
 namespace Theme.Behaviors
 {

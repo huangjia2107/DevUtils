@@ -5,9 +5,9 @@ namespace DevUtils.ViewModels
 {
     public class UtilViewModel : BindableBase
     {
-        public IUtilModel Model { get; private set; }
+        public UtilModel Model { get; private set; }
 
-        public UtilViewModel(IUtilModel utilModel)
+        public UtilViewModel(UtilModel utilModel)
         {
             Model = utilModel;
         }

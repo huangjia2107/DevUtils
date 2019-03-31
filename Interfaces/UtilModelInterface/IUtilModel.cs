@@ -1,14 +1,17 @@
-﻿namespace UtilModelService
-{
-    public interface IUtilModel
+﻿using System;
+using System.Xml.Serialization;
+
+namespace UtilModelService
+{ 
+    public abstract class UtilModel
     {
-        string Name { get; }
-        string Description { get; }
-        UtilType Type { get; }
+        public abstract string Name { get; }
+        public abstract string Description { get; }
+        public abstract UtilType Type { get; }
 
-        string Location { get; set; }
+        public abstract string Location { get; set; }
 
-        void Run();
+        public abstract void Run();
         //string GetIconPath();
 
     }
