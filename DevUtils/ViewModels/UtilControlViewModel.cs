@@ -25,7 +25,7 @@ namespace DevUtils.ViewModels
                 if (_classifiedUtils == null)
                 {
                     _classifiedUtils = new ObservableCollection<ClassifiedUtil>(
-                          _utilData.AllUtils.Select(u=>new UtilViewModel(u) { IsMine= _utilData.MineUtils.Contains(u) })
+                          _utilData.AllUtils.Select(u => new UtilViewModel(u) { IsMine= _utilData.MineUtils.Exists(token => token == u.Token) })
                                             .GroupBy(u => u.Type)
                                             .OrderBy(g => g.Key)
                                             .Select((g, i) => new ClassifiedUtil { Index = i, Type = g.Key, Utils = new ObservableCollection<UtilViewModel>(g) }));
@@ -69,7 +69,7 @@ namespace DevUtils.ViewModels
             get
             {
                 if (_mineUtils == null)
-                    _mineUtils = new ObservableCollection<UtilViewModel>(_utilData.MineUtils.Select(u => new UtilViewModel(u)));
+                    _mineUtils = new ObservableCollection<UtilViewModel>(_utilData.MineUtils.Select(token => new UtilViewModel(_utilData.AllUtils.FirstOrDefault(u => u.Token == token))));
 
                 return _mineUtils;
             }
@@ -156,8 +156,7 @@ namespace DevUtils.ViewModels
 
             DeleteUtilModelFromMine(utilViewModel);
 
-            if (_utilData.AllUtils.Contains(utilViewModel.Model))
-                _utilData.AllUtils.Remove(utilViewModel.Model);
+            _utilData.AllUtils.RemoveAll(u => u.Token == utilViewModel.Token);
         }
 
         private void DeleteUtilModelFromMine(UtilViewModel utilViewModel)
@@ -177,8 +176,8 @@ namespace DevUtils.ViewModels
             if (!_mineUtils.Contains(utilViewModel)) 
                 _mineUtils.Add(utilViewModel);  
 
-            if (!_utilData.MineUtils.Contains(utilViewModel.Model))
-                _utilData.MineUtils.Add(utilViewModel.Model);
+            if (!_utilData.MineUtils.Contains(utilViewModel.Model.Token))
+                _utilData.MineUtils.Add(utilViewModel.Model.Token);
 
             _addToMineUtilsEvent.Publish(utilViewModel.Model);
         }
@@ -207,7 +206,7 @@ namespace DevUtils.ViewModels
 
         #region IEventAggregator
 
-        private void AddUtil(UtilModel utilModel)
+        private void AddUtil(IUtilModel utilModel)
         {
             if (utilModel == null)
                 return; 

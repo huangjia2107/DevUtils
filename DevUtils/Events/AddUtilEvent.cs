@@ -8,7 +8,7 @@ using UtilModelService;
 
 namespace DevUtils.Events
 {
-    public class AddUtilEvent :PubSubEvent<UtilModel>
+    public class AddUtilEvent :PubSubEvent<IUtilModel>
     {
     }
 }

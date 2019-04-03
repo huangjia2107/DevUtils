@@ -61,7 +61,7 @@ namespace DevUtils.ViewModels
             get
             {
                 if (_mineUtils == null)
-                    _mineUtils = new ObservableCollection<UtilViewModel>(_appData.UtilsData.MineUtils.Select(u => new UtilViewModel(u)));
+                    _mineUtils = new ObservableCollection<UtilViewModel>(_appData.UtilsData.MineUtils.Select(token => new UtilViewModel(_appData.UtilsData.AllUtils.FirstOrDefault(u => token == u.Token))));
 
                 return _mineUtils;
             }
@@ -103,7 +103,7 @@ namespace DevUtils.ViewModels
         public DelegateCommand ExpandOrCollapseCommand { get; private set; }
         public DelegateCommand CollapseCommand { get; private set; }
 
-        public DelegateCommand ClosingCommand { get; private set; }
+        public DelegateCommand<CancelEventArgs> ClosingCommand { get; private set; }
 
         public MainWindowViewModel(IContainerExtension container, IEventAggregator eventAggregator)
         {
@@ -123,7 +123,7 @@ namespace DevUtils.ViewModels
             ExpandOrCollapseCommand = new DelegateCommand(ExpandOrCollapse);
             CollapseCommand = new DelegateCommand(Collapse);
 
-            ClosingCommand = new DelegateCommand(Closing);
+            ClosingCommand = new DelegateCommand<CancelEventArgs>(Closing);
 
         }
 
@@ -181,14 +181,14 @@ namespace DevUtils.ViewModels
             }
         }
 
-        private void Closing()
+        private void Closing(CancelEventArgs e)
         {
-            //FileHelper.SaveToXmlFile<AppData>(AppDomain.CurrentDomain.BaseDirectory + "settings.xml",_appData);
+            FileHelper.SaveToJsonFile(ResourcesMap.LocationDictionary[Location.SettingFile], _appData);
         }
 
         #region IEventAggregator
 
-        public void AddToMineUtils(UtilModel utilModel)
+        public void AddToMineUtils(IUtilModel utilModel)
         {
             var utilViewModel = _mineUtils.FirstOrDefault(vm => vm.Model == utilModel);
             if (utilViewModel != null)
@@ -197,7 +197,7 @@ namespace DevUtils.ViewModels
             _mineUtils.Add(new UtilViewModel(utilModel));
         }
 
-        public void DeleteFromMineUtils(UtilModel utilModel)
+        public void DeleteFromMineUtils(IUtilModel utilModel)
         {
             var utilViewModel = _mineUtils.FirstOrDefault(vm => vm.Model == utilModel);
             if (utilViewModel == null)

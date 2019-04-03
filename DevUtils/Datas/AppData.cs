@@ -2,8 +2,7 @@
 using DevUtils.Models;
 
 namespace DevUtils.Datas
-{
-    [Serializable]
+{ 
     public class AppData
     {
         public AppData()

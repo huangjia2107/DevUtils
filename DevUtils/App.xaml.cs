@@ -10,6 +10,8 @@ using Prism.Modularity;
 using Prism.Unity;
 using UtilModelService;
 using CommandService;
+using Utils.IO;
+using DevUtils.Models;
 
 namespace DevUtils
 {
@@ -36,7 +38,12 @@ namespace DevUtils
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterSingleton<AppData>();
+            var localAppData = FileHelper.LoadFromJsonFile<AppData>(ResourcesMap.LocationDictionary[Location.SettingFile]);
+            if (localAppData != null)
+                containerRegistry.RegisterInstance(localAppData);
+            else
+                containerRegistry.RegisterSingleton<AppData>();
+            
             //containerRegistry.RegisterSingleton<IApplicationCommands, ApplicationCommands>();
         }
 
@@ -50,12 +57,21 @@ namespace DevUtils
             base.OnInitialized();
 
             var appData = Container.Resolve<AppData>();
-            var utilModels = Container.Resolve<UtilModel[]>();
+            var utilModels = Container.Resolve<IUtilModel[]>();
 
-            if (appData == null || utilModels == null || utilModels.Length == 0)
+            if (appData == null)
                 return;
 
-            appData.UtilsData.AllUtils.AddRange(utilModels);
+            //check if exists
+
+
+            //merge all and mine utils
+            if(utilModels != null && utilModels.Length > 0)
+            {
+
+            } 
+
+            appData.UtilsData.AllUtils.AddRange(utilModels.Select(u=>new UtilModel(u.Token, u.Name, u.Description,u.Location, u.Type)));
         }
     }
 }

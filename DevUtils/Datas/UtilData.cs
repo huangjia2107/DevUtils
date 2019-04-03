@@ -7,17 +7,16 @@ using UtilModelService;
 using System.Collections.Generic;
 
 namespace DevUtils.Datas
-{
-    [Serializable]
+{ 
     public class UtilData
     {
         public UtilData()
         {
             AllUtils = new List<UtilModel>();
-            MineUtils = new List<UtilModel>();
+            MineUtils = new List<string>();
         }
 
         public List<UtilModel> AllUtils { get; set; }
-        public List<UtilModel> MineUtils { get; set; }
+        public List<string> MineUtils { get; set; }
     }
 }

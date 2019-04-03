@@ -8,19 +8,21 @@ using UtilModelService;
 
 namespace RegexTester.Services
 { 
-    public class RegexTesterUtilModel : UtilModel
+    public class RegexTesterUtilModel : IUtilModel
     {
         #region IUtilModel Members 
 
-        public override string Name => "Regex Tester"; 
+        public string Token => "5586f330-55e7-4e63-b8c2-cb95919ea192";
 
-        public override string Description => "this is a description about Regex Tester"; 
+        public string Name => "Regex Tester"; 
 
-        public override UtilType Type => UtilType.Tester;
+        public string Description => "this is a description about Regex Tester"; 
 
-        public override string Location { get; set; } 
+        public UtilType Type => UtilType.Tester;
+
+        public string Location { get; set; } 
          
-        public override void Run()
+        public void Run()
         {
             MessageBox.Show("Run RegexTester");
         }

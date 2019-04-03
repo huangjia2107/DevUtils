@@ -8,19 +8,21 @@ using UtilModelService;
 
 namespace ColorPix.Services
 {
-    public class ColorPixUtilModel : UtilModel
+    public class ColorPixUtilModel : IUtilModel
     {
         #region IUtilModel Members 
 
-        public override string Name => "Color Pix";
-         
-        public override string Description => "this is a description about Color Pix";
-         
-        public override UtilType Type => UtilType.Tester;
+        public string Token => "361d828e-8831-45e0-ac7a-78ba929c4af5";
 
-        public override string Location { get; set; } 
+        public string Name => "Color Pix";
          
-        public override void Run()
+        public string Description => "this is a description about Color Pix";
+         
+        public UtilType Type => UtilType.Tester;
+
+        public string Location { get; set; } 
+         
+        public void Run()
         {
             MessageBox.Show("Run ColorPix");
         }

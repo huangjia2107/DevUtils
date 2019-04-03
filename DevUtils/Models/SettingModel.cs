@@ -1,8 +1,7 @@
 ﻿using System;
 
 namespace DevUtils.Models
-{
-    [Serializable]
+{ 
     public class SettingModel
     {  
         public bool AutoRemoveInvalidUtils { get; set; }

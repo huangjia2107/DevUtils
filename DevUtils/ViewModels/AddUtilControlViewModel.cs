@@ -84,15 +84,15 @@ namespace DevUtils.ViewModels
         {
             if (SelectedIndex == 0)
             {
-                Add(new ShortcutUtilModel(_location, _description, _type));
+                Add(new UtilModel(_location, _description, _type));
             }
             else
             {
                 var module = DynamicModuleHelps.Instance().LoadModule(_location);
                 if (module != null)
                 {
-                    var utilModel = _container.Resolve<UtilModel>(module.ModuleName);
-                    utilModel.Location = _location;
+                    var utilModel = _container.Resolve<IUtilModel>(module.ModuleName);
+                    //utilModel.Location = _location;
 
                     //copy files
                     Add(utilModel);
@@ -100,10 +100,10 @@ namespace DevUtils.ViewModels
             }
         }
 
-        private void Add(UtilModel utilModel)
+        private void Add(IUtilModel utilModel)
         {
             //TO DO: 检测文件是否已经添加过
-            _utilData.AllUtils.Add(utilModel);
+            _utilData.AllUtils.Add(new UtilModel(utilModel.Token, utilModel.Name, utilModel.Description, utilModel.Location, utilModel.Type));
             _addUtilEvent.Publish(utilModel); 
         }
 

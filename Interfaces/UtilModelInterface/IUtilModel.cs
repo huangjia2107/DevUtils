@@ -3,15 +3,17 @@ using System.Xml.Serialization;
 
 namespace UtilModelService
 { 
-    public abstract class UtilModel
-    {
-        public abstract string Name { get; }
-        public abstract string Description { get; }
-        public abstract UtilType Type { get; }
+    public interface IUtilModel
+    { 
+        string Token { get; }
 
-        public abstract string Location { get; set; }
+        string Name { get; }
+        string Description { get; }
+        UtilType Type { get; }
 
-        public abstract void Run();
+        string Location { get; }
+
+        void Run();
         //string GetIconPath();
 
     }

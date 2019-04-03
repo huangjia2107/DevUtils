@@ -5,9 +5,9 @@ namespace DevUtils.ViewModels
 {
     public class UtilViewModel : BindableBase
     {
-        public UtilModel Model { get; private set; }
+        public IUtilModel Model { get; private set; }
 
-        public UtilViewModel(UtilModel utilModel)
+        public UtilViewModel(IUtilModel utilModel)
         {
             Model = utilModel;
         }
@@ -17,6 +17,11 @@ namespace DevUtils.ViewModels
         {
             get { return _isMine; }
             set { SetProperty(ref _isMine, value); }
+        }
+
+        public string Token
+        {
+            get { return Model.Token; }
         }
 
         public string Name

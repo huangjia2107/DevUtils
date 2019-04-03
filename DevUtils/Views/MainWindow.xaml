@@ -15,7 +15,7 @@
                      WindowStartupLocation="CenterScreen">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
-            <i:InvokeCommandAction Command="{Binding ClosingCommand}"/>
+            <prism:InvokeCommandAction Command="{Binding ClosingCommand}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <controls:UserWindow.TitleBarContent>

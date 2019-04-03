@@ -8,6 +8,11 @@ using UtilModelService;
 
 namespace DevUtils.Datas
 {
+    public enum Location
+    {
+        SettingFile
+    }
+
     public class UtilDisplay
     {
         public UtilDisplay()
@@ -24,6 +29,11 @@ namespace DevUtils.Datas
 
     public static class ResourcesMap
     {
+        public static Dictionary<Location, string> LocationDictionary = new Dictionary<Location, string>
+        {
+            {Location.SettingFile,           AppDomain.CurrentDomain.BaseDirectory + "Datas//Setting.json"},
+        };
+
         public static Dictionary<UtilType, string> UtilTypeDictionary = new Dictionary<UtilType, string>
         {
             {UtilType.Coder,           "编码利器"},

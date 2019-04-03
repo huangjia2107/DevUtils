@@ -19,7 +19,7 @@ namespace RegexTester
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.Register<UtilModel, RegexTesterUtilModel>("RegexTesterModule");
+            containerRegistry.Register<IUtilModel, RegexTesterUtilModel>("RegexTesterModule");
         }
 
         #endregion
