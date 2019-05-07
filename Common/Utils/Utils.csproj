@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Extensions\CornerRadiusEx.cs" />
     <Compile Include="Extensions\DoubleEx.cs" />
+  	<Compile Include="Extensions\DateTimeEx.cs" />
     <Compile Include="IO\FileHelper.cs" />
     <Compile Include="Media\ImageHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
