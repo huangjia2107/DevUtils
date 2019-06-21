@@ -6,10 +6,11 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
+using DevUtils.Datas;
 using Utils.Extensions;
 
 namespace DevUtils.Helps
-{ 
+{
     public class BoolConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
@@ -126,6 +127,22 @@ namespace DevUtils.Helps
         }
     }
 
+    public class StaticToOpacityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (value == null || value == DependencyProperty.UnsetValue)
+                return 1;
+
+            var status = (Status)value;
+            return status == Status.Normal ? 1 : 0.5;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 
     public class BoolAndBoolToVisibilityMultiConverter : IMultiValueConverter
     {
@@ -169,9 +186,32 @@ namespace DevUtils.Helps
 
             var isMouseOver = (bool)values[0];
             var isMine = (bool)values[1];
-            var isEidted = (bool)values[2];
+            var isEdited = (bool)values[2];
+            var status = (Status)values[3];
 
-            if (isMouseOver && !isMine && !isEidted)
+            if (isMouseOver && !isMine && !isEdited && status == Status.Normal)
+                return Visibility.Visible;
+
+            return Visibility.Collapsed;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class DeleteUtilVisibilityMultiConverter : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (values.Contains(null) || values.Contains(DependencyProperty.UnsetValue))
+                return Visibility.Collapsed;
+
+            var isEdited = (bool)values[0];
+            var status = (Status)values[1];
+
+            if (isEdited || status != Status.Normal)
                 return Visibility.Visible;
 
             return Visibility.Collapsed;

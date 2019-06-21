@@ -25,7 +25,12 @@ namespace DevUtils.Events
 
     }
 
-    public class MoveMineUtilsEvent: PubSubEvent<MoveUtilParam>
+    public class MoveMineUtilsEvent : PubSubEvent<MoveUtilParam>
     {
+    }
+
+    public class RefreshMineUtilsEvent : PubSubEvent
+    {
+
     }
 }

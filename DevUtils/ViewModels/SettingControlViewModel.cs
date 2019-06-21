@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using DevUtils.Datas;
-using DevUtils.Models;
+using DevUtils.Events;
+using Prism.Events;
 using Prism.Ioc;
 using Prism.Mvvm;
 
@@ -12,49 +9,63 @@ namespace DevUtils.ViewModels
 {
     public class SettingControlViewModel : BindableBase
     {
-        private SettingModel _settingModel = null;
+        private AppData _appData = null;
 
-        public SettingControlViewModel(IContainerExtension container)
+        private IEventAggregator _eventAggregator = null;
+        private RefreshMineUtilsEvent _refreshMineUtilsEvent = null;
+
+        public SettingControlViewModel(IContainerExtension container, IEventAggregator eventAggregator)
         {
-            _settingModel = container.Resolve<AppData>().SettingsData;
+            _appData = container.Resolve<AppData>();
+            _eventAggregator = eventAggregator;
+
+            _refreshMineUtilsEvent = _eventAggregator.GetEvent<RefreshMineUtilsEvent>();
         }
 
         public bool AutoRemoveInvalidUtils
         {
-            get { return _settingModel.AutoRemoveInvalidUtils; }
+            get { return _appData.SettingsData.AutoRemoveInvalidUtils; }
             set
             {
-                _settingModel.AutoRemoveInvalidUtils = value;
+                if (value)
+                {
+                    _appData.UtilsData.AllUtils.RemoveAll(util => !File.Exists(util.Location));
+                    _appData.UtilsData.MineUtils.RemoveAll(token => !_appData.UtilsData.AllUtils.Exists(util => util.Token == token));
+
+                    _refreshMineUtilsEvent.Publish();
+                }
+
+                _appData.SettingsData.AutoRemoveInvalidUtils = value;
                 RaisePropertyChanged();
             }
         }
 
         public bool IsStartupWithSystem
         {
-            get { return _settingModel.IsStartupWithSystem; }
+            get { return _appData.SettingsData.IsStartupWithSystem; }
             set
             {
-                _settingModel.IsStartupWithSystem = value;
+                _appData.SettingsData.IsStartupWithSystem = value;
                 RaisePropertyChanged();
             }
         }
 
         public bool IsSystemTrayAfterStartup
         {
-            get { return _settingModel.IsSystemTrayAfterStartup; }
+            get { return _appData.SettingsData.IsSystemTrayAfterStartup; }
             set
             {
-                _settingModel.IsSystemTrayAfterStartup = value;
+                _appData.SettingsData.IsSystemTrayAfterStartup = value;
                 RaisePropertyChanged();
             }
         }
 
         public bool IsSystemTrayAfterClose
         {
-            get { return _settingModel.IsSystemTrayAfterClose; }
+            get { return _appData.SettingsData.IsSystemTrayAfterClose; }
             set
             {
-                _settingModel.IsSystemTrayAfterClose = value;
+                _appData.SettingsData.IsSystemTrayAfterClose = value;
                 RaisePropertyChanged();
             }
         }

@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using DevUtils.Datas;
@@ -43,7 +45,7 @@ namespace DevUtils
                 containerRegistry.RegisterInstance(localAppData);
             else
                 containerRegistry.RegisterSingleton<AppData>();
-            
+
             //containerRegistry.RegisterSingleton<IApplicationCommands, ApplicationCommands>();
         }
 
@@ -62,16 +64,26 @@ namespace DevUtils
             if (appData == null)
                 return;
 
-            //check if exists
-
-
-            //merge all and mine utils
-            if(utilModels != null && utilModels.Length > 0)
+            //check AllUtils
+            if(appData.SettingsData.AutoRemoveInvalidUtils)
             {
+                appData.UtilsData.AllUtils.RemoveAll(util => !File.Exists(util.Location))
+            }
 
-            } 
+            //merge utilModels
+            if (utilModels != null && utilModels.Length > 0)
+            {
+                Array.ForEach(utilModels, util =>
+                {
+                    if (!appData.UtilsData.AllUtils.Exists(u => u.Token == util.Token))
+                    {
+                        appData.UtilsData.AllUtils.Add(new UtilModel(util.Token, util.Name, util.Description, util.Location, util.Type));
+                    }
+                });  
+            }
 
-            appData.UtilsData.AllUtils.AddRange(utilModels.Select(u=>new UtilModel(u.Token, u.Name, u.Description,u.Location, u.Type)));
+            //check MineUtils
+            appData.UtilsData.MineUtils.RemoveAll(token => !appData.UtilsData.AllUtils.Exists(util => util.Token == token));
         }
     }
 }

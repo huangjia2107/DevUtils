@@ -39,14 +39,14 @@ namespace DevUtils.ViewModels
         {
             get { return _sizeToContent; }
             set { SetProperty(ref _sizeToContent, value); }
-        } 
+        }
 
-        private ScrollBarVisibility _verticalScrollBarVisibility= ScrollBarVisibility.Disabled;
+        private ScrollBarVisibility _verticalScrollBarVisibility = ScrollBarVisibility.Disabled;
         public ScrollBarVisibility VerticalScrollBarVisibility
         {
             get { return _verticalScrollBarVisibility; }
             set { SetProperty(ref _verticalScrollBarVisibility, value); }
-        } 
+        }
 
         private bool _isExpanded;
         public bool IsExpanded
@@ -54,14 +54,14 @@ namespace DevUtils.ViewModels
             get { return _isExpanded; }
             set { SetProperty(ref _isExpanded, value); }
         }
-         
+
         private ObservableCollection<UtilViewModel> _mineUtils;
         public ObservableCollection<UtilViewModel> MineUtils
         {
             get
             {
                 if (_mineUtils == null)
-                    _mineUtils = new ObservableCollection<UtilViewModel>(_appData.UtilsData.MineUtils.Select(token => new UtilViewModel(_appData.UtilsData.AllUtils.FirstOrDefault(u => token == u.Token))));
+                    InitLocalMineUtils();
 
                 return _mineUtils;
             }
@@ -74,7 +74,7 @@ namespace DevUtils.ViewModels
             {
                 if (_moveMineUtilPosAction == null)
                     _moveMineUtilPosAction = (si, ti) =>
-                    { 
+                    {
                         if (si == ti)
                             return;
 
@@ -94,8 +94,8 @@ namespace DevUtils.ViewModels
 
         private IEventAggregator _eventAggregator = null;
         private MoveMineUtilsEvent _moveMineUtilsEvent = null;
-        private AppData _appData = null; 
-
+        private AppData _appData = null;
+         
         public DelegateCommand SettingCommand { get; private set; }
         public DelegateCommand UtilsCommand { get; private set; }
         public DelegateCommand<UtilViewModel> RunUtilCommand { get; private set; }
@@ -112,10 +112,11 @@ namespace DevUtils.ViewModels
 
             _eventAggregator.GetEvent<AddToMineUtilsEvent>().Subscribe(AddToMineUtils);
             _eventAggregator.GetEvent<DeleteFromMineUtilsEvent>().Subscribe(DeleteFromMineUtils);
+            _eventAggregator.GetEvent<RefreshMineUtilsEvent>().Subscribe(RefreshMineUtils);
 
             _moveMineUtilsEvent = _eventAggregator.GetEvent<MoveMineUtilsEvent>();
             _moveMineUtilsEvent.Subscribe(MoveMineUtils, ThreadOption.PublisherThread, false, p => p.Token == 0);
-
+             
             SettingCommand = new DelegateCommand(OpenSetting);
             UtilsCommand = new DelegateCommand(OpenUtils);
             RunUtilCommand = new DelegateCommand<UtilViewModel>(RunUtil);
@@ -125,6 +126,11 @@ namespace DevUtils.ViewModels
 
             ClosingCommand = new DelegateCommand<CancelEventArgs>(Closing);
 
+        }
+
+        private void InitLocalMineUtils()
+        {
+            _mineUtils = new ObservableCollection<UtilViewModel>(_appData.UtilsData.MineUtils.Select(token => new UtilViewModel(_appData.UtilsData.AllUtils.FirstOrDefault(u => token == u.Token))));
         }
 
         private void OpenSetting()
@@ -151,13 +157,15 @@ namespace DevUtils.ViewModels
 
         private void RunUtil(UtilViewModel utilViewModel)
         {
-            if (utilViewModel != null)
-                utilViewModel.Run();
+            if (utilViewModel == null || utilViewModel.Status != Status.Normal)
+                return;
+
+            utilViewModel.Run();
         }
 
         private void ExpandOrCollapse()
         {
-            ExpandOrCollapse(IsExpanded); 
+            ExpandOrCollapse(IsExpanded);
         }
 
         private void Collapse()
@@ -214,6 +222,12 @@ namespace DevUtils.ViewModels
             _mineUtils.Move(param.SourceIndex, param.TargetIndex);
         }
 
+        public void RefreshMineUtils()
+        {
+            InitLocalMineUtils();
+            RaisePropertyChanged(nameof(MineUtils));
+        }
+
         #endregion
-    }    
-}        
+    }
+}

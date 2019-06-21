@@ -1,4 +1,6 @@
-﻿using Prism.Mvvm;
+﻿using System.IO;
+using DevUtils.Datas;
+using Prism.Mvvm;
 using UtilModelService;
 
 namespace DevUtils.ViewModels
@@ -19,30 +21,22 @@ namespace DevUtils.ViewModels
             set { SetProperty(ref _isMine, value); }
         }
 
-        public string Token
+        private Status _status = Status.Normal;
+        public Status Status
         {
-            get { return Model.Token; }
+            get { return File.Exists(Model.Location) ? _status : Status.NoExist; }
+            set { SetProperty(ref _status, value); }
         }
 
-        public string Name
-        {
-            get { return Model.Name; }
-        }
+        public string Token => Model.Token;
 
-        public string Description
-        {
-            get { return Model.Description; }
-        }
+        public string Name => Model.Name;
 
-        public UtilType Type
-        {
-            get { return Model.Type; }
-        }
+        public string Description => Model.Description;
 
-        public string Location
-        {
-            get { return Model.Location; }
-        }
+        public UtilType Type => Model.Type;
+
+        public string Location => Model.Location;
 
         public void Run()
         {
