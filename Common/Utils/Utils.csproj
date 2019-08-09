@@ -31,7 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -46,7 +46,7 @@
   <ItemGroup>
     <Compile Include="Extensions\CornerRadiusEx.cs" />
     <Compile Include="Extensions\DoubleEx.cs" />
-  	<Compile Include="Extensions\DateTimeEx.cs" />
+    <Compile Include="Extensions\DateTimeEx.cs" />
     <Compile Include="IO\FileHelper.cs" />
     <Compile Include="Media\ImageHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

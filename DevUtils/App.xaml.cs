@@ -67,7 +67,7 @@ namespace DevUtils
             //check AllUtils
             if(appData.SettingsData.AutoRemoveInvalidUtils)
             {
-                appData.UtilsData.AllUtils.RemoveAll(util => !File.Exists(util.Location))
+                appData.UtilsData.AllUtils.RemoveAll(util => !File.Exists(util.Location));
             }
 
             //merge utilModels
